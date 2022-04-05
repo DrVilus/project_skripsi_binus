@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
+
+import 'package:project_skripsi/Palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +26,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Palette.mainBackground
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -70,48 +74,101 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 80,
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.25).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                    painter: CustomPainterAppbar(),
+                  ),
+                ],
+              ),
+            )
+          ),
+          Positioned(
+            top: -25,
+            left: -30,
+            child: ElevatedButton(
+              child: const Text(
+                'Button',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(150, 150),
+                shape: const CircleBorder(),
+                primary: Palette.widgetBackground1,
+                side: const BorderSide(width: 2.5, color: Colors.white)
+
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+          ),
+          )
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+class CustomPainterAppbar extends CustomPainter{
+
+  @override
+  void paint(Canvas canvas, Size size) {
+
+
+
+    Paint paint0 = Paint()
+      ..color = const Color.fromARGB(255, 255, 255, 255)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6;
+
+
+    Path path0 = Path();
+    path0.moveTo(0,size.height*0.7500000);
+    path0.lineTo(size.width*0.8125000,size.height*0.7500000);
+    path0.lineTo(size.width*0.8750000,size.height*0.3600000);
+    path0.lineTo(size.width*0.8750000,size.height*0.0050000);
+    path0.lineTo(0,0);
+    path0.lineTo(0,size.height*0.7500000);
+    path0.close();
+
+    canvas.drawPath(path0, paint0);
+
+
+    Paint paint1 = Paint()
+      ..color = Palette.widgetBackground1
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 3.38;
+
+
+    Path path1 = Path();
+    path1.moveTo(0,size.height*0.7500000);
+    path1.lineTo(size.width*0.8125000,size.height*0.7500000);
+    path1.lineTo(size.width*0.8750000,size.height*0.3600000);
+    path1.lineTo(size.width*0.8750000,size.height*0.0050000);
+    path1.lineTo(0,0);
+    path1.lineTo(0,size.height*0.7500000);
+    path1.close();
+
+    canvas.drawPath(path1, paint1);
+
+
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+
+}
+
+
+
 
 
