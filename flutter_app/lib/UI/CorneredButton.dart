@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import 'Palette.dart';
+
+class CorneredButton extends StatelessWidget {
+  const CorneredButton({Key? key, this.child}) : super(key: key);
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: (){},
+      child: child,
+      style: ElevatedButton.styleFrom(
+        primary: Palette.widgetBackground1,
+        side: const BorderSide(width: 3.0, color: Colors.white),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(30),
+            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+}

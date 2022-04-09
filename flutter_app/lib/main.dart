@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:project_skripsi/GetStarted.dart';
-import 'dart:ui' as ui;
-
-import 'package:project_skripsi/Palette.dart';
-import 'package:project_skripsi/UI/CustomAppbar.dart';
+import 'package:project_skripsi/Pages/GetStarted.dart';
+import 'package:project_skripsi/UI/Palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,89 +51,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    //Placeholder main to put loading during first launch
+    Future.delayed(Duration.zero, () async {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const GetStartedPage()),
+      );
+    });
     return Scaffold(
-      body: Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                          child: Container(
-                            child: GetStartedPage(),
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(top: 20),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.width * 0.5,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 3),
-                              color: Palette.widgetBackground1,
-                              borderRadius: const BorderRadius.only(
-                                bottomRight: Radius.circular(40),
-                                topRight: Radius.circular(10),
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                              ),
-                            ),
-                          )
-                      ),
-                      Positioned(
-                        left: MediaQuery.of(context).size.width * 0.3,
-                        child: Container(
-                          child: Text("Fuck",style: GoogleFonts.getFont('Inter'),),
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.width * 0.1,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 3),
-                            color: Palette.widgetBackground1,
-                            borderRadius: BorderRadius.circular(10)
-                          ),
-                        ),
-                      )
-
-                    ],
-                  )
-
-                ],
-              )
-            ],
-          ),
-          SafeArea(
-            child: CustomAppbar(
-              title: "Test",
-              sideBarOpacity: 0,
-            ),
-          ),
-        ],
-      ) // This trailing comma makes auto-formatting nicer for build methods.
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

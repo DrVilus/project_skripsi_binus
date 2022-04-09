@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Palette.dart';
+import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
   const CustomAppbar({Key? key, this.title, this.sideBarOpacity = 1.0}) : super(key: key);
