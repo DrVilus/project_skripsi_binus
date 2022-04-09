@@ -9,6 +9,7 @@ class PageScraper(webdriver.Edge):
         self.web_element = None
         options = webdriver.EdgeOptions()
         options.add_extension('C:/Dev/WebDriver/ublock.crx')
+        # options.add_argument("--headless")
         super(PageScraper, self).__init__(options=options)
 
     # Scroll to the botom of the page

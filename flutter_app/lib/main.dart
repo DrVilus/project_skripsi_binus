@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:project_skripsi/GetStarted.dart';
 import 'dart:ui' as ui;
 
 import 'package:project_skripsi/Palette.dart';
+import 'package:project_skripsi/UI/CustomAppbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -76,96 +79,67 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 80,
-              child: Stack(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CustomPaint(
-                    size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.25).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: CustomPainterAppbar(),
-                  ),
-                ],
-              ),
-            )
-          ),
-          Positioned(
-            top: -25,
-            left: -30,
-            child: ElevatedButton(
-              child: const Text(
-                'Button',
-                style: TextStyle(fontSize: 24),
-              ),
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(150, 150),
-                shape: const CircleBorder(),
-                primary: Palette.widgetBackground1,
-                side: const BorderSide(width: 2.5, color: Colors.white)
+                  Stack(
+                    children: [
+                      ClipRRect(
+                          child: Container(
+                            child: GetStartedPage(),
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(top: 20),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 3),
+                              color: Palette.widgetBackground1,
+                              borderRadius: const BorderRadius.only(
+                                bottomRight: Radius.circular(40),
+                                topRight: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                              ),
+                            ),
+                          )
+                      ),
+                      Positioned(
+                        left: MediaQuery.of(context).size.width * 0.3,
+                        child: Container(
+                          child: Text("Fuck",style: GoogleFonts.getFont('Inter'),),
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.width * 0.1,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 3),
+                            color: Palette.widgetBackground1,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                        ),
+                      )
 
+                    ],
+                  )
+
+                ],
+              )
+            ],
+          ),
+          SafeArea(
+            child: CustomAppbar(
+              title: "Test",
+              sideBarOpacity: 0,
             ),
           ),
-          )
         ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ) // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
-
-class CustomPainterAppbar extends CustomPainter{
-
-  @override
-  void paint(Canvas canvas, Size size) {
-
-
-
-    Paint paint0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 6;
-
-
-    Path path0 = Path();
-    path0.moveTo(0,size.height*0.7500000);
-    path0.lineTo(size.width*0.8125000,size.height*0.7500000);
-    path0.lineTo(size.width*0.8750000,size.height*0.3600000);
-    path0.lineTo(size.width*0.8750000,size.height*0.0050000);
-    path0.lineTo(0,0);
-    path0.lineTo(0,size.height*0.7500000);
-    path0.close();
-
-    canvas.drawPath(path0, paint0);
-
-
-    Paint paint1 = Paint()
-      ..color = Palette.widgetBackground1
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 3.38;
-
-
-    Path path1 = Path();
-    path1.moveTo(0,size.height*0.7500000);
-    path1.lineTo(size.width*0.8125000,size.height*0.7500000);
-    path1.lineTo(size.width*0.8750000,size.height*0.3600000);
-    path1.lineTo(size.width*0.8750000,size.height*0.0050000);
-    path1.lineTo(0,0);
-    path1.lineTo(0,size.height*0.7500000);
-    path1.close();
-
-    canvas.drawPath(path1, paint1);
-
-
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-
 }
 
 

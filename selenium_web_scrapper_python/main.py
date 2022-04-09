@@ -2,6 +2,7 @@ from ShopScrapper import ShopScrapper
 from Tokped import Tokopedia
 import requests
 import json
+from flask import Flask
 
 headers = {"Content-Type": "application/json; charset=utf-8", "x-hasura-admin-secret": "mythesis"}
 menu_options = {
