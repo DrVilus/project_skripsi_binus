@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:project_skripsi/Pages/GetStarted.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 
@@ -25,26 +26,15 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Palette.mainBackground
+        scaffoldBackgroundColor: Palette.mainBackground,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -52,16 +42,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  void executeAfterBuild() async {
+    Future.delayed(const Duration(milliseconds: 2000), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => const GetStartedPage(),
+            transitionDuration: Duration.zero,
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Placeholder main to put loading during first launch
-    Future.delayed(Duration.zero, () async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const GetStartedPage()),
-      );
-    });
-    return Scaffold(
+    WidgetsBinding.instance!.addPostFrameCallback((_) => executeAfterBuild());
+    return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
       ),

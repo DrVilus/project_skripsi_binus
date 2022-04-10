@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'Palette.dart';
 
 class CorneredButton extends StatelessWidget {
-  const CorneredButton({Key? key, this.child}) : super(key: key);
-  final Widget? child;
+  const CorneredButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
+  final Widget child;
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: (){},
+      onPressed: () => onPressed(),
       child: child,
       style: ElevatedButton.styleFrom(
         primary: Palette.widgetBackground1,
