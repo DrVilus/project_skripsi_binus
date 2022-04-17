@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../UI/CustomAppbar.dart';
+import '../../UI/CustomAppbar.dart';
 
 class BuildSchemaPage extends StatefulWidget {
   const BuildSchemaPage({Key? key}) : super(key: key);
@@ -14,16 +14,15 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: CustomAppbar(
-              title: "PC Build #1",
-              sideBarOpacity: 0,
-            ),
-          ),
-        ],
-      ),
+      body: SafeArea(
+        child: CustomAppbar(
+          title: "PC Build #1",
+          sideBarOpacity: 1,
+          children: [
+            Container(),
+          ],
+        ),
+      )
     );
   }
 }
