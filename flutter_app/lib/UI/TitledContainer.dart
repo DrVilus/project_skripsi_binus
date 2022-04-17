@@ -34,7 +34,7 @@ class TitledContainer extends StatelessWidget {
                 width: width ?? MediaQuery.of(context).size.width * 0.8,
                 height: height ?? MediaQuery.of(context).size.height * 0.3,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 3),
+                  border: Border.all(color: Colors.white, width: 2),
                   color: Palette.widgetBackground1,
                   borderRadius: BorderRadius.only(
                     bottomRight: bottomRightRadius,
@@ -53,7 +53,7 @@ class TitledContainer extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.3,
               height: MediaQuery.of(context).size.width * 0.1,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 3),
+                  border: Border.all(color: Colors.white, width: 2),
                   color: Palette.widgetBackground1,
                   borderRadius: BorderRadius.circular(10)
               ),

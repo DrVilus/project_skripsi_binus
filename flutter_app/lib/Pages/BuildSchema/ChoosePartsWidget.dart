@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../../UI/Palette.dart';
 
+//Bukan page, dijadikan widget dan di-toggle melalui CustomAppbar
 class ChoosePartsWidget extends StatefulWidget {
-  const ChoosePartsWidget({Key? key}) : super(key: key);
+  const ChoosePartsWidget({Key? key, required this.toggleSideBar}) : super(key: key);
+  final Function toggleSideBar;
 
   @override
   State<ChoosePartsWidget> createState() => _ChoosePartsWidgetState();
@@ -15,8 +17,7 @@ class ChoosePartsWidget extends StatefulWidget {
 class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: Stack(
           children: [
             CustomPaint(
@@ -40,13 +41,21 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
               ),
             ),
             Positioned(
+              top: 0,
+              child: Container(
+                color: Colors.white.withOpacity(0.5),
+                width: MediaQuery.of(context).size.width*0.82,
+                height: (MediaQuery.of(context).size.width*0.95*1.446629213483146).toDouble(),
+                child: Text("Fuck", style: TextStyles.interStyle1,),
+              ),
+            ),
+            Positioned(
               right: 0,
               top: 10,
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  print("fuck");
-
+                  widget.toggleSideBar();
                 },
                 child: Container(
                   width: 50,
@@ -57,7 +66,6 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
             )
           ],
         )
-      ),
     );
   }
 }

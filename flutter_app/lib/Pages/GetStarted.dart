@@ -21,7 +21,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
           body: SafeArea(
             child: CustomAppbar (
               title: "",
-              sideBarOpacity: 0,
+              sideBarVisible: false,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

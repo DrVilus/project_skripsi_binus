@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsPage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
+import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:touchable/touchable.dart';
 
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.title, this.sideBarOpacity = 1.0, required this.children}) : super(key: key);
+  const CustomAppbar({Key? key, this.title, this.sideBarVisible = true, required this.children}) : super(key: key);
 
   final String? title;
-  final double sideBarOpacity;
+  final bool sideBarVisible;
   final List<Widget> children;
 
   @override
@@ -18,9 +19,16 @@ class CustomAppbar extends StatefulWidget {
 
 class _CustomAppbarState extends State<CustomAppbar> {
   bool _isMenuButtonPressed = false;
+  bool _isSideBarPressed = false;
   void _toggleMenu() {
     setState(() {
       _isMenuButtonPressed = !_isMenuButtonPressed;
+    });
+  }
+
+  void _toggleSideBar(){
+    setState(() {
+      _isSideBarPressed = !_isSideBarPressed;
     });
   }
 
@@ -29,18 +37,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
     return Stack(
       children: [
         Positioned(
-            top: 0,
-            left: 0,
-            child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.1806853582554517).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-              painter: CustomClipperAppbar(),
-              child: SizedBox(
+          top: 0,
+          left: 0,
+          child: CustomPaint(
+            size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.1806853582554517).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+            painter: CustomPainterAppbar(),
+            child: SizedBox(
                 width: MediaQuery.of(context).size.width*0.8,
                 height: MediaQuery.of(context).size.height*0.1,
                 child: Padding(
                   padding:  EdgeInsets.only(
-                    top: 16,
-                    left: MediaQuery.of(context).size.width*0.2
+                      top: 16,
+                      left: MediaQuery.of(context).size.width*0.2
                   ),
                   child: Wrap(
                     alignment: WrapAlignment.center,
@@ -55,39 +63,127 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ],
                   ),
                 )
-              ),
             ),
+          ),
         ),
-        Positioned(
-            top: 0,
-            left: 0,
-          child: Opacity(
-            opacity: widget.sideBarOpacity,
-            child: CanvasTouchDetector(
-              builder: (context) => CustomPaint(
-                size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                painter: CustomPainterSidebar(context),
+        Visibility(
+            visible: widget.sideBarVisible,
+            child: AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              left: _isSideBarPressed ? -50 : 0,
+              child: CanvasTouchDetector(
+                builder: (context) => CustomPaint(
+                  size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                  painter: CustomPainterSidebar(context, () => _toggleSideBar()),
+                ),
               ),
             )
-          )
         ),
-        // Positioned(
-        //   top: MediaQuery.of(context).size.height/2,
-        //   child: Container(
-        //     child: IconButton(
-        //       icon: const Icon(Icons.arrow_forward_ios, color: Colors.white,size: 40,),
-        //       onPressed: () {
-        //         print("object");
-        //       },
-        //       tooltip: "bruh",
-        //     ),
-        //   )
-        // ),
         ...widget.children,
         Visibility(
+            visible: _isMenuButtonPressed,
+            child: Container(
+              color: const Color(0xFF000000).withOpacity(0.5),
+            )
+        ),
+        Visibility(
           visible: _isMenuButtonPressed,
-          child: Container(
-            color: const Color(0xFF000000).withOpacity(0.5),
+          child: Positioned(
+              top: 40,
+              child: CustomContainer(
+                width: 250,
+                height: 400,
+                padding: EdgeInsets.zero,
+                margin: EdgeInsets.zero,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Expanded(
+                                child: SizedBox(), flex: 1),
+                            Expanded(
+                                child: Center(
+                                  child: Text("Menu", style: TextStyles.interStyle1),
+                                ),
+                                flex: 2
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {},
+                          iconData: Icons.text_snippet,
+                          text: 'Build Guide',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {},
+                          iconData: Icons.file_download,
+                          text: 'Import Build',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {},
+                          iconData: Icons.file_upload,
+                          text: 'Export Build',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {},
+                          iconData: Icons.settings,
+                          text: 'Settings',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {},
+                          iconData: Icons.help_outline,
+                          text: 'Help',
+                          inkwellBorderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)
+                          ),
+                        )
+                    )
+                  ],
+                ),
+              )
           ),
         ),
         Positioned(
@@ -107,20 +203,59 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 fixedSize: const Size(150, 150),
                 shape: const CircleBorder(),
                 primary: Palette.widgetBackground1,
-                side: const BorderSide(width: 2.5, color: Colors.white)
-
+                side: const BorderSide(width: 2, color: Colors.white)
             ),
           ),
         ),
-
-
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.fastOutSlowIn,
+          left: _isSideBarPressed ? 0 : -(MediaQuery.of(context).size.width*0.95),
+          child: ChoosePartsWidget(toggleSideBar: () => _toggleSideBar())
+        )
 
       ],
     );
   }
 }
 
-class CustomClipperAppbar extends CustomPainter{
+class MenuButton extends StatelessWidget {
+  const MenuButton({Key? key, required this.onPressed, required this.iconData, required this.text, this.inkwellBorderRadius}) : super(key: key);
+  final Function onPressed;
+  final IconData iconData;
+  final String text;
+  final BorderRadius? inkwellBorderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: inkwellBorderRadius ?? const BorderRadius.all(Radius.zero),
+        onTap: () => onPressed(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: Icon(iconData,color: Colors.white),
+              ),
+              flex: 1),
+            Expanded(
+              child: Center(
+                child: Text(text, style: TextStyles.interStyle1),
+              ),
+              flex: 2
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class CustomPainterAppbar extends CustomPainter{
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -159,8 +294,9 @@ class CustomClipperAppbar extends CustomPainter{
 
 class CustomPainterSidebar extends CustomPainter{
 
-  final BuildContext context ;
-  CustomPainterSidebar(this.context); // context from CanvasTouchDetector
+  final BuildContext context;
+  final Function toggleSideBar;
+  CustomPainterSidebar(this.context, this.toggleSideBar); // context from CanvasTouchDetector
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -187,13 +323,14 @@ class CustomPainterSidebar extends CustomPainter{
     myCanvas.drawPath(path_0,paint_0_fill);
 
     myCanvas.drawPath(path_0, paint_0_fill, onTapDown: (tapDetail) {
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => const ChoosePartsWidget(),
-          transitionDuration: Duration.zero,
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   PageRouteBuilder(
+      //     pageBuilder: (context, animation1, animation2) => const ChoosePartsWidget(),
+      //     transitionDuration: Duration.zero,
+      //   ),
+      // );
+      toggleSideBar();
     });
 
     Path path_1 = Path();
@@ -206,7 +343,7 @@ class CustomPainterSidebar extends CustomPainter{
     canvas.drawPath(path_1,paint_1_stroke);
 
     Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
-    paint_1_fill.color = Color(0xff000000).withOpacity(1.0);
+    paint_1_fill.color = Palette.widgetBackground1.withOpacity(1.0);
     canvas.drawPath(path_1,paint_1_fill);
 
   }

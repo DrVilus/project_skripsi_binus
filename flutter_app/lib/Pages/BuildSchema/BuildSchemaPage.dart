@@ -17,7 +17,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
       body: SafeArea(
         child: CustomAppbar(
           title: "PC Build #1",
-          sideBarOpacity: 1,
+          sideBarVisible: true,
           children: [
             Container(),
           ],
