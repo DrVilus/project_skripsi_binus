@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
+import 'package:project_skripsi/Variables/GlobalVariables.dart';
 import 'package:touchable/touchable.dart';
 
+import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
@@ -80,12 +82,8 @@ class _CustomAppbarState extends State<CustomAppbar> {
             )
         ),
         ...widget.children,
-        Visibility(
-            visible: _isMenuButtonPressed,
-            child: Container(
-              color: const Color(0xFF000000).withOpacity(0.5),
-            )
-        ),
+        FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
+        FadeBlackBackground(toggleVariable: _isSideBarPressed),
         Visibility(
           visible: _isMenuButtonPressed,
           child: Positioned(
@@ -218,6 +216,8 @@ class _CustomAppbarState extends State<CustomAppbar> {
     );
   }
 }
+
+
 
 class MenuButton extends StatelessWidget {
   const MenuButton({Key? key, required this.onPressed, required this.iconData, required this.text, this.inkwellBorderRadius}) : super(key: key);

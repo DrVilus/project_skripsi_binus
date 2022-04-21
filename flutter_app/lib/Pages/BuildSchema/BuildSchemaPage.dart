@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_skripsi/Pages/BuildSchema/EstimatedPriceWidget.dart';
+import 'package:project_skripsi/UI/FadeBlackBackground.dart';
 
 import '../../UI/CustomAppbar.dart';
 
@@ -11,6 +13,12 @@ class BuildSchemaPage extends StatefulWidget {
 }
 
 class _BuildSchemaPageState extends State<BuildSchemaPage> {
+  bool _blackBackground = false;
+  void _toggleBlackBackground(){
+    setState(() {
+      _blackBackground = !_blackBackground;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +28,8 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
           sideBarVisible: true,
           children: [
             Container(),
+            FadeBlackBackground(toggleVariable: _blackBackground),
+            EstimatedPriceWidget(blackBackgroundCallback: () => _toggleBlackBackground())
           ],
         ),
       )

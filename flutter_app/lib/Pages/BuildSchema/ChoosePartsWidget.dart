@@ -46,7 +46,10 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                 color: Colors.white.withOpacity(0.5),
                 width: MediaQuery.of(context).size.width*0.82,
                 height: (MediaQuery.of(context).size.width*0.95*1.446629213483146).toDouble(),
-                child: Text("Fuck", style: TextStyles.interStyle1,),
+                child: ElevatedButton(
+                  onPressed: () { print("butt"); },
+                  child: Text("button"),
+                ),
               ),
             ),
             Positioned(
