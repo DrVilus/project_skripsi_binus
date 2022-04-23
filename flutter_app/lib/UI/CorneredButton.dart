@@ -13,7 +13,7 @@ class CorneredButton extends StatelessWidget {
       child: child,
       style: ElevatedButton.styleFrom(
         primary: Palette.widgetBackground1,
-        side: const BorderSide(width: 3.0, color: Colors.white),
+        side: const BorderSide(width: 2, color: Colors.white),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(30),

@@ -29,7 +29,7 @@ class CustomContainer extends StatelessWidget {
             width: width ?? MediaQuery.of(context).size.width * 0.8,
             height: height ?? MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 3),
+              border: Border.all(color: Colors.white, width: 2),
               color: Palette.widgetBackground1,
               borderRadius: borderRadius ?? const BorderRadius.only(
                 bottomRight: Radius.circular(10),

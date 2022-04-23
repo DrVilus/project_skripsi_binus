@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   graphql_flutter: ^5.0.0
   google_fonts: ^2.3.1
+  touchable: ^1.0.0
 
 dev_dependencies:
   flutter_test:
