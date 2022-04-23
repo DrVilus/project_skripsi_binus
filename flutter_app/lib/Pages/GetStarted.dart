@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/TitledContainer.dart';
@@ -13,7 +14,6 @@ class GetStartedPage extends StatefulWidget {
 }
 
 class _GetStartedPageState extends State<GetStartedPage> {
-
   @override
   Widget build(BuildContext context) {
     return
@@ -62,13 +62,27 @@ class _GetStartedPageState extends State<GetStartedPage> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: CorneredButton(
-                                        onPressed: (){},
-                                        child:  Container(
-                                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                                          child: Text("Get recommended build", style: TextStyles.interStyle1,),
-                                        ),
-                                      )
+                                    child: CorneredButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder:
+                                              (context, animation1, animation2) =>
+                                                const RecommendedFormPage(),
+                                                  transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding:
+                                          const EdgeInsets.only(top: 15, bottom: 15),
+                                          child: Text(
+                                            "Get recommended build",
+                                            style: TextStyles.interStyle1,
+                                          ),
+                                      ),
+                                    )
                                   )
                                 ],
                               ),
