@@ -74,6 +74,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
               duration: const Duration(milliseconds: 200),
               left: _isSideBarPressed ? -50 : 0,
               child: CanvasTouchDetector(
+                gesturesToOverride: const [GestureType.onTapDown],
                 builder: (context) => CustomPaint(
                   size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                   painter: CustomPainterSidebar(context, () => _toggleSideBar()),
