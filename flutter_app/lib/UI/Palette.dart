@@ -10,4 +10,5 @@ class Palette {
 
 class TextStyles {
   static var interStyle1 = GoogleFonts.inter(color: Colors.white);
+  static var interStyleBuildGuidePage = GoogleFonts.inter(color: Colors.white, fontSize: 25);
 }
