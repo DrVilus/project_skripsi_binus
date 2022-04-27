@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
@@ -123,7 +124,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const BuildGuidePage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
                           iconData: Icons.text_snippet,
                           text: 'Build Guide',
                         )
