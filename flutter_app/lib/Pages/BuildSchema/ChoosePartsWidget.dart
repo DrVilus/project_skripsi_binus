@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:project_skripsi/Models/PartsSelectModel.dart';
+import 'package:project_skripsi/UI/PartsSelectWidget.dart';
 
 import '../../UI/Palette.dart';
 
@@ -15,6 +17,18 @@ class ChoosePartsWidget extends StatefulWidget {
 }
 
 class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
+
+  List<PartsSelectModel> partSelectModelList = [
+    PartsSelectModel("Case", "assets/img/case.png"),
+    PartsSelectModel("Cooling", "assets/img/cooling.png"),
+    PartsSelectModel("Motherboard", "assets/img/motherboard.png"),
+    PartsSelectModel("GPU", "assets/img/gpu.png"),
+    PartsSelectModel("CPU", "assets/img/processor.png"),
+    PartsSelectModel("PSU", "assets/img/PSU.png"),
+    PartsSelectModel("RAM", "assets/img/ramicon.png"),
+    PartsSelectModel("Storage", "assets/img/ssd.png"),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,13 +57,33 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
             Positioned(
               top: 0,
               child: Container(
-                color: Colors.white.withOpacity(0.5),
                 width: MediaQuery.of(context).size.width*0.82,
                 height: (MediaQuery.of(context).size.width*0.95*1.446629213483146).toDouble(),
-                child: ElevatedButton(
-                  onPressed: () { print("butt"); },
-                  child: Text("button"),
-                ),
+                child: Scrollbar(
+                  child: CustomScrollView(
+                    slivers: <Widget>[
+                      SliverGrid(
+                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200.0,
+                          mainAxisSpacing: 10.0,
+                          crossAxisSpacing: 10.0,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                            return Container(
+                              alignment: Alignment.center,
+                              child: PartsSelectWidget(
+                                name: partSelectModelList[index].name,
+                                imgPath: partSelectModelList[index].assetPath,
+                              ),
+                            );
+                          },
+                          childCount: 8,
+                        ),
+                      ),
+                    ],
+                  )
+                )
               ),
             ),
             Positioned(
@@ -150,3 +184,4 @@ class ArrowPainter extends CustomPainter {
     return true;
   }
 }
+

@@ -5,6 +5,7 @@ class Palette {
   // background gradient
   static Color mainBackground = const Color(0xff353030);
   static Color widgetBackground1 = const Color(0xff1E1E1E);
+  static Color grey = const Color(0xffC4C4C4);
 
 }
 
