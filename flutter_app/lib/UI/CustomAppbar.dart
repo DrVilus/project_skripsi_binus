@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
+import 'package:project_skripsi/Pages/Help/HelpPage.dart';
+import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
 import 'package:touchable/touchable.dart';
@@ -171,7 +173,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const SettingsPage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
                           iconData: Icons.settings,
                           text: 'Settings',
                         )
@@ -183,7 +196,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const HelpPage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
                           iconData: Icons.help_outline,
                           text: 'Help',
                           inkwellBorderRadius: const BorderRadius.only(
