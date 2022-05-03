@@ -3,9 +3,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Models/PartsSelectModel.dart';
+import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/UI/PartsSelectWidget.dart';
 
 import '../../UI/Palette.dart';
+import '../../Variables/GlobalVariables.dart';
 
 //Bukan page, dijadikan widget dan di-toggle melalui CustomAppbar
 class ChoosePartsWidget extends StatefulWidget {
@@ -18,24 +20,35 @@ class ChoosePartsWidget extends StatefulWidget {
 
 class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
 
-  List<PartsSelectModel> partSelectModelList = [
-    PartsSelectModel("Case", "assets/img/case.png"),
-    PartsSelectModel("Cooling", "assets/img/cooling.png"),
-    PartsSelectModel("Motherboard", "assets/img/motherboard.png"),
-    PartsSelectModel("GPU", "assets/img/gpu.png"),
-    PartsSelectModel("CPU", "assets/img/processor.png"),
-    PartsSelectModel("PSU", "assets/img/PSU.png"),
-    PartsSelectModel("RAM", "assets/img/ramicon.png"),
-    PartsSelectModel("Storage", "assets/img/ssd.png"),
-  ];
+
+
+  bool _partModelListMenuEnabled = false;
+  void _togglePartModelListMenuEnabled(){
+    setState(() {
+      _partModelListMenuEnabled = !_partModelListMenuEnabled;
+    });
+  }
+  final selectedPartIndex = ValueNotifier(-1);
 
   @override
   Widget build(BuildContext context) {
+    if(_partModelListMenuEnabled){
+      return ValueListenableBuilder<int>(
+        valueListenable: selectedPartIndex,
+        builder: (context, value, child) {
+          return ChoosePartsModelWidget(
+              toggleSideBar:()=> _togglePartModelListMenuEnabled(),
+              number: selectedPartIndex
+          );
+        },
+      );
+    }
+
     return SafeArea(
         child: Stack(
           children: [
             CustomPaint(
-              size: Size(MediaQuery.of(context).size.width*0.95, (MediaQuery.of(context).size.width*0.95*1.446629213483146).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+              size: Size(MediaQuery.of(context).size.width*0.95, (MediaQuery.of(context).size.height*0.9).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
               painter: WidgetBackgroundPainter(),
             ),
             Positioned(
@@ -58,8 +71,9 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
               top: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width*0.82,
-                height: (MediaQuery.of(context).size.width*0.95*1.446629213483146).toDouble(),
+                height: (MediaQuery.of(context).size.height*0.9).toDouble(),
                 child: Scrollbar(
+
                   child: CustomScrollView(
                     slivers: <Widget>[
                       SliverGrid(
@@ -75,6 +89,10 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                               child: PartsSelectWidget(
                                 name: partSelectModelList[index].name,
                                 imgPath: partSelectModelList[index].assetPath,
+                                function: (){
+                                  selectedPartIndex.value = index;
+                                  _togglePartModelListMenuEnabled();
+                                },
                               ),
                             );
                           },

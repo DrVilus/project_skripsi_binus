@@ -70,6 +70,33 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
                 ),
               ),
             ),
+            Positioned(
+              bottom: 0,
+              child: Visibility(
+                visible: _isMenuPressed,
+                child: Container(
+                    margin: const EdgeInsets.all(20),
+                    width: MediaQuery.of(context).size.width*0.92,
+                    height: (MediaQuery.of(context).size.width*0.92*1.3103448275862069) - MediaQuery.of(context).size.height *0.16,
+                    child: Column(
+
+                      children: [
+                        Row(
+                          children: [
+                            Text("Estimated Price:", style: TextStyles.interStyleBuildGuidePage,),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
+                          ],
+                        )
+                      ],
+                    )
+                  //color: Colors.yellow.shade600,
+                ),
+              )
+            ),
 
           ],
         ),
