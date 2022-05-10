@@ -1,23 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
+import 'package:project_skripsi/Variables/CurrencyFormat.dart';
 
 import '../../UI/Palette.dart';
 import '../../Variables/GlobalVariables.dart';
+import '../../Variables/Queries.dart';
 
 class ChoosePartsModelWidget extends StatefulWidget {
   const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.number}) : super(key: key);
   final Function toggleSideBar;
-  final ValueListenable<int> number;
+  final ValueListenable<int> number; //index for selected part
 
   @override
   State<ChoosePartsModelWidget> createState() => _ChoosePartsModelWidgetState();
 }
 
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
+
+  int getLowestPrice(List queryResult, int index){
+    if(queryResult[index][getQueryPriceText(widget.number.value)].length == 0){
+      return 0;
+    }
+    return queryResult[index][getQueryPriceText(widget.number.value)][0]['price']!;
+  }
+
+  bool _partModelSelected = false;
+  String _selectedPartModelId = '';
+  void _togglePartModelSelected(){
+    setState(() {
+      _partModelSelected = !_partModelSelected;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("build");
+    if(_partModelSelected == true && _selectedPartModelId.isNotEmpty){
+      return PartsInfoWidget(id: _selectedPartModelId, partType: widget.number.value, toggleMenu: _togglePartModelSelected);
+    }
     return SafeArea(
         child: Stack(
           children: [
@@ -65,27 +87,93 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                   Container(
                       width: MediaQuery.of(context).size.width*0.82,
                       height: (MediaQuery.of(context).size.height*0.92).toDouble(),
-                      child: Scrollbar(
-                          child: CustomScrollView(
-                            slivers: <Widget>[
-                              SliverGrid(
-                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200.0,
-                                  mainAxisSpacing: 10.0,
-                                  crossAxisSpacing: 10.0,
-                                ),
-                                delegate: SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                        alignment: Alignment.center,
-                                        child: Container()
-                                    );
-                                  },
-                                  childCount: 8,
-                                ),
-                              ),
-                            ],
-                          )
+                      child: Query(
+                        options: QueryOptions(
+                          document: gql(partSelectModelList[widget.number.value].query), // this is the query string you just created
+                        ),
+                        // Just like in apollo refetch() could be used to manually trigger a refetch
+                        // while fetchMore() can be used for pagination purpose
+                        builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
+                          if (result.hasException) {
+                            return Text(result.exception.toString());
+                          }
+
+                          if (result.isLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          List? data = getQueryList(result, widget.number.value);
+
+                          if (data == null) {
+                            return const Text('No repositories');
+                          }
+                          return Scrollbar(
+                              child: CustomScrollView(
+                                slivers: <Widget>[
+                                  SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                            alignment: Alignment.center,
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                left: 40,
+                                                right: 10,
+                                                top: 10,
+                                                bottom: 10
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Flexible(child: Text(data[index]['name'], style: TextStyles.interStyle1,))
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    children: [
+                                                      SizedBox(
+                                                        child: Image.asset(partSelectModelList[widget.number.value].assetPath),
+                                                        width: 100,
+                                                        height: 100,
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          Text(CurrencyFormat.convertToIdr(getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
+                                                          ElevatedButton(
+                                                              onPressed: () {
+                                                                _selectedPartModelId = data[index]['id'];
+                                                                _togglePartModelSelected();
+                                                              },
+                                                              child: Text("Info", style: TextStyles.interStyle1)
+                                                          ),
+                                                          ElevatedButton(
+                                                              onPressed: () {
+                                                              },
+                                                              child: Text("Add", style: TextStyles.interStyle1)
+                                                          )
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 50,
+                                                        height: 50,
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              )
+                                            )
+                                        );
+                                      },
+                                      childCount: data.length,
+                                    ),
+                                  ),
+                                ],
+                              )
+                          );
+                        },
                       )
                   ),
                 ],
