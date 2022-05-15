@@ -6,7 +6,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 import '../../UI/Palette.dart';
-import '../../Variables/CurrencyFormat.dart';
+import '../../Functions/CurrencyFormat.dart';
 import '../../Variables/GlobalVariables.dart';
 import 'ChoosePartsModelWidget.dart';
 
@@ -120,7 +120,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width*0.82,
-                        height: (MediaQuery.of(context).size.height*0.92).toDouble(),
+                        height: (MediaQuery.of(context).size.height*0.8).toDouble(),
                         child: Query(
                           options: QueryOptions(
                             document: gql(partSelectModelList[widget.partType].queryById), // this is the query string you just created
@@ -137,12 +137,13 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
                             if (result.isLoading) {
                               return const Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
                               );
                             }
 
                             List? data = getQueryList(result, widget.partType);
-
 
                             if (data == null) {
                               return const Text('No repositories');
@@ -178,13 +179,45 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [Text("Description: ", style: TextStyles.sourceSans3,)],
                                   ),
-                                  createModelInformation(data)
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        child: createModelInformation(data),
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             );
                           },
                         )
                     ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: [Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [ElevatedButton(
+                              onPressed:() {
+                              },
+                              child: Text("Add", style: TextStyles.interStyle1),
+
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.green
+                              )
+                          )],
+                        ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [ElevatedButton(
+                                onPressed: () {
+                                },
+                                child: Text("Visit Store Page", style: TextStyles.interStyle1)
+                            ),],
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 )
             ),

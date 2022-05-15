@@ -6,8 +6,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../Models/PartsSelectModel.dart';
 import 'Queries.dart';
 
-String currentBuildName = "";
-
 List<PartsSelectModel> partSelectModelList = [
   PartsSelectModel("Case", "assets/img/case.png", 0, "", ""),
   PartsSelectModel("Cooling", "assets/img/cooling.png", 1, coolingQuery, coolingQueryById),

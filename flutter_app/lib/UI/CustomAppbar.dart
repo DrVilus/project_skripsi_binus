@@ -6,15 +6,16 @@ import 'package:project_skripsi/Pages/Help/HelpPage.dart';
 import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:project_skripsi/Variables/PCBuildVariables.dart';
 import 'package:touchable/touchable.dart';
 
 import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.title, this.sideBarVisible = true, required this.children}) : super(key: key);
+  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children}) : super(key: key);
 
-  final String? title;
+  final bool isTextFieldEnabled;
   final bool sideBarVisible;
   final List<Widget> children;
 
@@ -23,6 +24,7 @@ class CustomAppbar extends StatefulWidget {
 }
 
 class _CustomAppbarState extends State<CustomAppbar> {
+  final TextEditingController _controller = TextEditingController();
   bool _isMenuButtonPressed = false;
   bool _isSideBarPressed = false;
   void _toggleMenu() {
@@ -39,6 +41,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.text = currentBuildName;
     return Stack(
       children: [
         Positioned(
@@ -51,20 +54,25 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 width: MediaQuery.of(context).size.width*0.8,
                 height: MediaQuery.of(context).size.height*0.1,
                 child: Padding(
-                  padding:  EdgeInsets.only(
-                      top: 16,
-                      left: MediaQuery.of(context).size.width*0.2
+                  padding: const EdgeInsets.only(
+                    top: 16,
+                    left: 150,
+                    right: 40
                   ),
                   child: Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      Text(
-                        widget.title ?? "",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18),
-                        softWrap: true,
-                      ),
+                      if(widget.isTextFieldEnabled == true)
+                        TextField(
+                            controller: _controller,
+                            onChanged: (text){
+                              currentBuildName = text;
+                              print(text);
+                            },
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18)
+                        )
                     ],
                   ),
                 )

@@ -20,7 +20,6 @@ class _GetStartedPageState extends State<GetStartedPage> {
       Scaffold(
           body: SafeArea(
             child: CustomAppbar (
-              title: "",
               sideBarVisible: false,
               children: [
                 Row(

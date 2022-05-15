@@ -91,8 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) => executeAfterBuild());
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
-      ),
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
+      )
     );
   }
 }

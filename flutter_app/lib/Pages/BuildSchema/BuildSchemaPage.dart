@@ -24,7 +24,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
     return Scaffold(
       body: SafeArea(
         child: CustomAppbar(
-          title: "PC Build #1",
+          isTextFieldEnabled: true,
           sideBarVisible: true,
           children: [
             Container(),

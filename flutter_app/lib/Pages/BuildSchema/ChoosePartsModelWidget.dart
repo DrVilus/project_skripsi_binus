@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
-import 'package:project_skripsi/Variables/CurrencyFormat.dart';
+import 'package:project_skripsi/Functions/CurrencyFormat.dart';
 
 import '../../UI/Palette.dart';
 import '../../Variables/GlobalVariables.dart';
@@ -100,7 +100,9 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
                           if (result.isLoading) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
                             );
                           }
 
@@ -143,16 +145,19 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                         children: [
                                                           Text(CurrencyFormat.convertToIdr(getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
                                                           ElevatedButton(
-                                                              onPressed: () {
-                                                                _selectedPartModelId = data[index]['id'];
-                                                                _togglePartModelSelected();
-                                                              },
-                                                              child: Text("Info", style: TextStyles.interStyle1)
+                                                            onPressed: () {
+                                                              _selectedPartModelId = data[index]['id'];
+                                                              _togglePartModelSelected();
+                                                            },
+                                                            child: Text("Info", style: TextStyles.interStyle1)
                                                           ),
                                                           ElevatedButton(
-                                                              onPressed: () {
-                                                              },
-                                                              child: Text("Add", style: TextStyles.interStyle1)
+                                                            onPressed: () {
+                                                            },
+                                                            child: Text("Add", style: TextStyles.interStyle1),
+                                                            style: ElevatedButton.styleFrom(
+                                                              primary: Colors.green
+                                                            )
                                                           )
                                                         ],
                                                       ),
