@@ -2,17 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
 import 'package:project_skripsi/Functions/CurrencyFormat.dart';
+import 'package:provider/provider.dart';
 
 import '../../UI/Palette.dart';
 import '../../Variables/GlobalVariables.dart';
 import '../../Variables/Queries.dart';
 
 class ChoosePartsModelWidget extends StatefulWidget {
-  const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.number}) : super(key: key);
+  const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.partIndex}) : super(key: key);
   final Function toggleSideBar;
-  final ValueListenable<int> number; //index for selected part
+  final int partIndex;
 
   @override
   State<ChoosePartsModelWidget> createState() => _ChoosePartsModelWidgetState();
@@ -21,25 +23,14 @@ class ChoosePartsModelWidget extends StatefulWidget {
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
   int getLowestPrice(List queryResult, int index){
-    if(queryResult[index][getQueryPriceText(widget.number.value)].length == 0){
+    if(queryResult[index][getQueryPriceText(widget.partIndex)].length == 0){
       return 0;
     }
-    return queryResult[index][getQueryPriceText(widget.number.value)][0]['price']!;
-  }
-
-  bool _partModelSelected = false;
-  String _selectedPartModelId = '';
-  void _togglePartModelSelected(){
-    setState(() {
-      _partModelSelected = !_partModelSelected;
-    });
+    return queryResult[index][getQueryPriceText(widget.partIndex)][0]['price']!;
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_partModelSelected == true && _selectedPartModelId.isNotEmpty){
-      return PartsInfoWidget(id: _selectedPartModelId, partType: widget.number.value, toggleMenu: _togglePartModelSelected);
-    }
     return SafeArea(
         child: Stack(
           children: [
@@ -72,15 +63,17 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                     height: (MediaQuery.of(context).size.height*0.07).toDouble(),
                     child: Row(
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.chevron_left,color: Colors.white),
-                          tooltip: 'Back',
-                          iconSize: 30,
-                          onPressed: () {
-                            widget.toggleSideBar();
-                          },
+                        Consumer<BuildSchemaStateModel>(
+                          builder: (context, schemaState, child) => IconButton(
+                            icon: const Icon(Icons.chevron_left,color: Colors.white),
+                            tooltip: 'Back',
+                            iconSize: 30,
+                            onPressed: () {
+                              schemaState.changeSidebarState(schemaState.sidebarState - 1);
+                            },
+                          ),
                         ),
-                        Text(partSelectModelList[widget.number.value].name, style: TextStyles.sourceSans3,),
+                        Text(partSelectModelList[widget.partIndex].name, style: TextStyles.sourceSans3,),
                       ],
                     ),
                   ),
@@ -89,7 +82,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                       height: (MediaQuery.of(context).size.height*0.92).toDouble(),
                       child: Query(
                         options: QueryOptions(
-                          document: gql(partSelectModelList[widget.number.value].query), // this is the query string you just created
+                          document: gql(partSelectModelList[widget.partIndex].query), // this is the query string you just created
                         ),
                         // Just like in apollo refetch() could be used to manually trigger a refetch
                         // while fetchMore() can be used for pagination purpose
@@ -106,7 +99,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                             );
                           }
 
-                          List? data = getQueryList(result, widget.number.value);
+                          List? data = getQueryList(result, widget.partIndex);
 
                           if (data == null) {
                             return const Text('No repositories');
@@ -137,19 +130,23 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                     children: [
                                                       SizedBox(
-                                                        child: Image.asset(partSelectModelList[widget.number.value].assetPath),
+                                                        child: Image.asset(partSelectModelList[widget.partIndex].assetPath),
                                                         width: 100,
                                                         height: 100,
                                                       ),
                                                       Column(
                                                         children: [
                                                           Text(CurrencyFormat.convertToIdr(getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                              _selectedPartModelId = data[index]['id'];
-                                                              _togglePartModelSelected();
-                                                            },
-                                                            child: Text("Info", style: TextStyles.interStyle1)
+                                                          Consumer<BuildSchemaStateModel>(
+                                                            builder: (context, schemaState, child) => ElevatedButton(
+                                                                onPressed: () {
+                                                                  schemaState.changeSelectedPartModelId(data[index]['id']);
+                                                                  schemaState.changeSidebarState(2);
+                                                                  // _selectedPartModelId = data[index]['id'];
+                                                                  // _togglePartModelSelected();
+                                                                },
+                                                                child: Text("Info", style: TextStyles.interStyle1)
+                                                            ),
                                                           ),
                                                           ElevatedButton(
                                                             onPressed: () {

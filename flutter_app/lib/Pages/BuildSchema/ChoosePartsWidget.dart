@@ -3,8 +3,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Models/PartsSelectModel.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/UI/PartsSelectWidget.dart';
+import 'package:provider/provider.dart';
 
 import '../../UI/Palette.dart';
 import '../../Variables/GlobalVariables.dart';
@@ -20,30 +22,8 @@ class ChoosePartsWidget extends StatefulWidget {
 
 class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
 
-
-
-  bool _partModelListMenuEnabled = false;
-  void _togglePartModelListMenuEnabled(){
-    setState(() {
-      _partModelListMenuEnabled = !_partModelListMenuEnabled;
-    });
-  }
-  final selectedPartIndex = ValueNotifier(-1);
-
   @override
   Widget build(BuildContext context) {
-    if(_partModelListMenuEnabled){
-      return ValueListenableBuilder<int>(
-        valueListenable: selectedPartIndex,
-        builder: (context, value, child) {
-          return ChoosePartsModelWidget(
-              toggleSideBar:()=> _togglePartModelListMenuEnabled(),
-              number: selectedPartIndex
-          );
-        },
-      );
-    }
-
     return SafeArea(
         child: Stack(
           children: [
@@ -86,14 +66,16 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                               (BuildContext context, int index) {
                             return Container(
                               alignment: Alignment.center,
-                              child: PartsSelectWidget(
-                                name: partSelectModelList[index].name,
-                                imgPath: partSelectModelList[index].assetPath,
-                                function: (){
-                                  selectedPartIndex.value = index;
-                                  _togglePartModelListMenuEnabled();
-                                },
-                              ),
+                              child: Consumer<BuildSchemaStateModel>(
+                                builder: (context, schemaState, child) => PartsSelectWidget(
+                                  name: partSelectModelList[index].name,
+                                  imgPath: partSelectModelList[index].assetPath,
+                                  function: (){
+                                    schemaState.changeSelectedPartIndex(index);
+                                    schemaState.changeSidebarState(1);
+                                  },
+                                ),
+                              )
                             );
                           },
                           childCount: 8,

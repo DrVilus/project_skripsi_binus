@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:provider/provider.dart';
 
 import '../../UI/Palette.dart';
 import '../../Functions/CurrencyFormat.dart';
 import '../../Variables/GlobalVariables.dart';
+import 'BuildSchemaStateModel.dart';
 import 'ChoosePartsModelWidget.dart';
 
 class PartsInfoWidget extends StatefulWidget {
@@ -106,13 +108,15 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                       height: (MediaQuery.of(context).size.height*0.07).toDouble(),
                       child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.chevron_left,color: Colors.white),
-                            tooltip: 'Back',
-                            iconSize: 30,
-                            onPressed: () {
-                              widget.toggleMenu();
-                            },
+                          Consumer<BuildSchemaStateModel>(
+                            builder: (context, schemaState, child) => IconButton(
+                              icon: const Icon(Icons.chevron_left,color: Colors.white),
+                              tooltip: 'Back',
+                              iconSize: 30,
+                              onPressed: () {
+                                schemaState.changeSidebarState(schemaState.sidebarState - 1);
+                              },
+                            ),
                           ),
                           Text(partSelectModelList[widget.partType].name, style: TextStyles.sourceSans3,),
                         ],

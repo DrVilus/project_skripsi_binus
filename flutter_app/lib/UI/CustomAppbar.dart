@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
+import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
 import 'package:project_skripsi/Pages/Help/HelpPage.dart';
 import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
-import 'package:project_skripsi/Variables/PCBuildVariables.dart';
+import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
+import '../Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
@@ -24,7 +27,6 @@ class CustomAppbar extends StatefulWidget {
 }
 
 class _CustomAppbarState extends State<CustomAppbar> {
-  final TextEditingController _controller = TextEditingController();
   bool _isMenuButtonPressed = false;
   bool _isSideBarPressed = false;
   void _toggleMenu() {
@@ -39,9 +41,11 @@ class _CustomAppbarState extends State<CustomAppbar> {
     });
   }
 
+  final BuildSchemaStateModel _buildSchemaStateModel = BuildSchemaStateModel();
+
   @override
   Widget build(BuildContext context) {
-    _controller.text = currentBuildName;
+    ;
     return Stack(
       children: [
         Positioned(
@@ -63,15 +67,20 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     alignment: WrapAlignment.center,
                     children: [
                       if(widget.isTextFieldEnabled == true)
-                        TextField(
-                            controller: _controller,
-                            onChanged: (text){
-                              currentBuildName = text;
-                              print(text);
-                            },
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18)
+                        ChangeNotifierProvider.value(
+                          value: _buildSchemaStateModel,
+                          child: Consumer<BuildSchemaStateModel>(
+                            builder: (context, value, child) => TextField(
+                                controller: value.textEditingController,
+                                onChanged: (text){
+                                  value.changeBuildName(text);
+                                  value.textEditingController.selection = TextSelection.fromPosition(TextPosition(offset: value.textEditingController.text.length));
+                                },
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18)
+                            ),
+                          ),
                         )
                     ],
                   ),
@@ -250,13 +259,27 @@ class _CustomAppbarState extends State<CustomAppbar> {
             ),
           ),
         ),
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 700),
-          curve: Curves.fastOutSlowIn,
-          left: _isSideBarPressed ? 0 : -(MediaQuery.of(context).size.width*0.95),
-          child: ChoosePartsWidget(toggleSideBar: () => _toggleSideBar())
-        )
-
+        ChangeNotifierProvider.value(
+            value: _buildSchemaStateModel,
+            child: AnimatedPositioned(
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.fastOutSlowIn,
+                left: _isSideBarPressed ? 0 : -(MediaQuery.of(context).size.width*0.95),
+                child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, schemaState, child){
+                    if(schemaState.sidebarState == 1){
+                      return ChoosePartsModelWidget(toggleSideBar: () => _toggleSideBar(), partIndex: schemaState.selectedPartIndex);
+                    }
+                    else if(schemaState.sidebarState == 2){
+                      return PartsInfoWidget(id: schemaState.selectedPartModelId, partType: schemaState.selectedPartIndex, toggleMenu: () => _toggleSideBar());
+                    }
+                    else{
+                      return ChoosePartsWidget(toggleSideBar: () => _toggleSideBar());
+                    }
+                  },
+                )
+            )
+        ),
       ],
     );
   }

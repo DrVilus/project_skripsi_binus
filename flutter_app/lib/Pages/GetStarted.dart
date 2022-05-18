@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/Palette.dart';
