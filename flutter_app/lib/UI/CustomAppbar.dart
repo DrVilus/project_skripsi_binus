@@ -368,13 +368,6 @@ class CustomPainterSidebar extends CustomPainter{
     myCanvas.drawPath(path_0,paint_0_fill);
 
     myCanvas.drawPath(path_0, paint_0_fill, onTapDown: (tapDetail) {
-      // Navigator.push(
-      //   context,
-      //   PageRouteBuilder(
-      //     pageBuilder: (context, animation1, animation2) => const ChoosePartsWidget(),
-      //     transitionDuration: Duration.zero,
-      //   ),
-      // );
       toggleSideBar();
     });
 
