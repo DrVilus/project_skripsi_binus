@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
 import '../Pages/BuildSchema/BuildSchemaStateModel.dart';
+import '../Pages/ExportPage.dart';
+import '../Pages/ImportPage.dart';
 import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
@@ -166,7 +168,17 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation1, animation2) =>
+                                const ImportPage(),
+                                transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
                           iconData: Icons.file_download,
                           text: 'Import Build',
                         )
@@ -178,7 +190,17 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation1, animation2) =>
+                                const ExportPage(),
+                                transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
                           iconData: Icons.file_upload,
                           text: 'Export Build',
                         )

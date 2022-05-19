@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
 import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
+import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/TitledContainer.dart';
 import '../UI/CustomAppbar.dart';
@@ -19,9 +20,7 @@ class _ImportPageState extends State<ImportPage> {
     return
       Scaffold(
           body: SafeArea(
-            child: CustomAppbar (
-              title: "",
-              sideBarVisible: false,
+            child: CustomAppBarBack (
               children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

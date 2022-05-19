@@ -4,6 +4,7 @@ import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/TitledContainer.dart';
+import '../UI/CustomAppBarBack.dart';
 import '../UI/CustomAppbar.dart';
 
 class ExportPage extends StatefulWidget {
@@ -19,9 +20,7 @@ class _ExportPageState extends State<ExportPage> {
     return
       Scaffold(
           body: SafeArea(
-            child: CustomAppbar (
-              title: "",
-              sideBarVisible: false,
+            child: CustomAppBarBack (
               children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -38,8 +37,8 @@ class _ExportPageState extends State<ExportPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[  
-                            Padding(  
-                             padding: const EdgeInsets.all(0),
+                            const Padding(
+                             padding: EdgeInsets.all(0),
                               child: TextField( 
                                 textAlign: TextAlign.center,
                                 readOnly: true,
