@@ -1,6 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 
+=======
+import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
+import 'package:project_skripsi/Pages/Help/HelpPage.dart';
+import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
+import 'package:project_skripsi/UI/CustomContainer.dart';
+import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:project_skripsi/Pages/ImportPage.dart';
+import 'package:project_skripsi/Pages/ExportPage.dart';
+
+import 'package:touchable/touchable.dart';
+
+import 'FadeBlackBackground.dart';
+>>>>>>> Stashed changes
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
@@ -50,6 +65,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
               ),
             )
         ),
+<<<<<<< Updated upstream
         Positioned(
           child: Opacity(
             opacity: widget.sideBarOpacity,
@@ -58,6 +74,163 @@ class _CustomAppbarState extends State<CustomAppbar> {
               painter: CustomPainterSidebar(),
             ),
           )
+=======
+        ...widget.children,
+        FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
+        FadeBlackBackground(toggleVariable: _isSideBarPressed),
+        Visibility(
+          visible: _isMenuButtonPressed,
+          child: Positioned(
+              top: 40,
+              child: CustomContainer(
+                width: 250,
+                height: 400,
+                padding: EdgeInsets.zero,
+                margin: EdgeInsets.zero,
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Expanded(
+                                child: SizedBox(), flex: 1),
+                            Expanded(
+                                child: Center(
+                                  child: Text("Menu", style: TextStyles.interStyle1),
+                                ),
+                                flex: 2
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const BuildGuidePage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
+                          iconData: Icons.text_snippet,
+                          text: 'Build Guide',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder:
+                                              (context, animation1, animation2) =>
+                                                const ImportPage(),
+                                                  transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
+                          iconData: Icons.file_download,
+                          text: 'Import Build',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder:
+                                              (context, animation1, animation2) =>
+                                                const ExportPage(),
+                                                  transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
+                          iconData: Icons.file_upload,
+                          text: 'Export Build',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const SettingsPage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
+                          iconData: Icons.settings,
+                          text: 'Settings',
+                        )
+                    ),
+                    const Divider(
+                        height: 1,
+                        thickness: 2,
+                        color: Colors.white
+                    ),
+                    Expanded(
+                        child: MenuButton(
+                          onPressed: () {
+                            _toggleMenu();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                  (context, animation1, animation2) =>
+                                    const HelpPage(),
+                                      transitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
+                          iconData: Icons.help_outline,
+                          text: 'Help',
+                          inkwellBorderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20)
+                          ),
+                        )
+                    )
+                  ],
+                ),
+              )
+          ),
+>>>>>>> Stashed changes
         ),
         Positioned(
           top: -25,

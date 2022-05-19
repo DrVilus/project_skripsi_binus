@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:project_skripsi/Pages/BuildSchemaPage.dart';
+=======
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
+import 'package:project_skripsi/Pages/ImportPage.dart';
+>>>>>>> Stashed changes
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/TitledContainer.dart';
@@ -59,6 +65,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                                         child: Text("Start a new build", style: TextStyles.interStyle1,),
                                       ),
                                     )
+<<<<<<< Updated upstream
                                 )
                               ],
                             ),
@@ -82,6 +89,41 @@ class _GetStartedPageState extends State<GetStartedPage> {
                                     child: CorneredButton(
                                       onPressed: (){
                                       importDialog();
+=======
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: CorneredButton(
+                                        onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder:
+                                              (context, animation1, animation2) =>
+                                                const ImportPage(),
+                                                  transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
+                                        child: Container(
+                                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                                          child: Text("Import Build", style: TextStyles.interStyle1,),
+                                        ),
+                                      )
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+>>>>>>> Stashed changes
 
                                       },
                                       child: Container(
