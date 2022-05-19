@@ -1,80 +1,107 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
-
-=======
 import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
+import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
 import 'package:project_skripsi/Pages/Help/HelpPage.dart';
 import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
-import 'package:project_skripsi/Pages/ImportPage.dart';
-import 'package:project_skripsi/Pages/ExportPage.dart';
-
+import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
+import '../Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'FadeBlackBackground.dart';
->>>>>>> Stashed changes
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.title, this.sideBarOpacity = 1.0}) : super(key: key);
+  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children}) : super(key: key);
 
-  final String? title;
-  final double sideBarOpacity;
+  final bool isTextFieldEnabled;
+  final bool sideBarVisible;
+  final List<Widget> children;
 
   @override
   State<CustomAppbar> createState() => _CustomAppbarState();
 }
 
 class _CustomAppbarState extends State<CustomAppbar> {
+  bool _isMenuButtonPressed = false;
+  bool _isSideBarPressed = false;
+  void _toggleMenu() {
+    setState(() {
+      _isMenuButtonPressed = !_isMenuButtonPressed;
+    });
+  }
+
+  void _toggleSideBar(){
+    setState(() {
+      _isSideBarPressed = !_isSideBarPressed;
+    });
+  }
+
+  final BuildSchemaStateModel _buildSchemaStateModel = BuildSchemaStateModel();
+
   @override
   Widget build(BuildContext context) {
+    ;
     return Stack(
       children: [
         Positioned(
-            top: 0,
-            left: 0,
+          top: 0,
+          left: 0,
+          child: CustomPaint(
+            size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.1806853582554517).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+            painter: CustomPainterAppbar(),
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 80,
-              child: Stack(
-                children: [
-                  CustomPaint(
-                    size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*0.25).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                    painter: CustomClipperAppbar(),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width*0.25,
-                      child: Wrap(
-                      alignment: WrapAlignment.center,
-                      children: [
-                        Text(
-                          widget.title ?? "",
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18),
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                    ),
+                width: MediaQuery.of(context).size.width*0.8,
+                height: MediaQuery.of(context).size.height*0.1,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 16,
+                    left: 150,
+                    right: 40
                   ),
-                ],
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    children: [
+                      if(widget.isTextFieldEnabled == true)
+                        ChangeNotifierProvider.value(
+                          value: _buildSchemaStateModel,
+                          child: Consumer<BuildSchemaStateModel>(
+                            builder: (context, value, child) => TextField(
+                                controller: value.textEditingController,
+                                onChanged: (text){
+                                  value.changeBuildName(text);
+                                  value.textEditingController.selection = TextSelection.fromPosition(TextPosition(offset: value.textEditingController.text.length));
+                                },
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18)
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                )
+            ),
+          ),
+        ),
+        Visibility(
+            visible: widget.sideBarVisible,
+            child: AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              left: _isSideBarPressed ? -50 : 0,
+              child: CanvasTouchDetector(
+                gesturesToOverride: const [GestureType.onTapDown],
+                builder: (context) => CustomPaint(
+                  size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                  painter: CustomPainterSidebar(context, () => _toggleSideBar()),
+                ),
               ),
             )
         ),
-<<<<<<< Updated upstream
-        Positioned(
-          child: Opacity(
-            opacity: widget.sideBarOpacity,
-            child: CustomPaint(
-              size: Size(MediaQuery.of(context).size.width,(MediaQuery.of(context).size.width*1.22).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-              painter: CustomPainterSidebar(),
-            ),
-          )
-=======
         ...widget.children,
         FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
         FadeBlackBackground(toggleVariable: _isSideBarPressed),
@@ -139,17 +166,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder:
-                                              (context, animation1, animation2) =>
-                                                const ImportPage(),
-                                                  transitionDuration: Duration.zero,
-                                          ),
-                                        );
-                                      },
+                          onPressed: () {},
                           iconData: Icons.file_download,
                           text: 'Import Build',
                         )
@@ -161,17 +178,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     Expanded(
                         child: MenuButton(
-                          onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder:
-                                              (context, animation1, animation2) =>
-                                                const ExportPage(),
-                                                  transitionDuration: Duration.zero,
-                                          ),
-                                        );
-                                      },
+                          onPressed: () {},
                           iconData: Icons.file_upload,
                           text: 'Export Build',
                         )
@@ -230,7 +237,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 ),
               )
           ),
->>>>>>> Stashed changes
         ),
         Positioned(
           top: -25,
@@ -242,76 +248,108 @@ class _CustomAppbarState extends State<CustomAppbar> {
               size: 60,
               semanticLabel: 'Text to announce in accessibility modes',
             ),
-            onPressed: () {},
+            onPressed: () {
+              _toggleMenu();
+            },
             style: ElevatedButton.styleFrom(
                 fixedSize: const Size(150, 150),
                 shape: const CircleBorder(),
                 primary: Palette.widgetBackground1,
-                side: const BorderSide(width: 2.5, color: Colors.white)
-
+                side: const BorderSide(width: 2, color: Colors.white)
             ),
           ),
         ),
-
+        ChangeNotifierProvider.value(
+            value: _buildSchemaStateModel,
+            child: AnimatedPositioned(
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.fastOutSlowIn,
+                left: _isSideBarPressed ? 0 : -(MediaQuery.of(context).size.width*0.95),
+                child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, schemaState, child){
+                    if(schemaState.sidebarState == 1){
+                      return ChoosePartsModelWidget(toggleSideBar: () => _toggleSideBar(), partIndex: schemaState.selectedPartIndex);
+                    }
+                    else if(schemaState.sidebarState == 2){
+                      return PartsInfoWidget(id: schemaState.selectedPartModelId, partType: schemaState.selectedPartIndex, toggleMenu: () => _toggleSideBar());
+                    }
+                    else{
+                      return ChoosePartsWidget(toggleSideBar: () => _toggleSideBar());
+                    }
+                  },
+                )
+            )
+        ),
       ],
     );
   }
 }
 
-class CustomClipperAppbar extends CustomPainter{
+
+
+class MenuButton extends StatelessWidget {
+  const MenuButton({Key? key, required this.onPressed, required this.iconData, required this.text, this.inkwellBorderRadius}) : super(key: key);
+  final Function onPressed;
+  final IconData iconData;
+  final String text;
+  final BorderRadius? inkwellBorderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return  Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: inkwellBorderRadius ?? const BorderRadius.all(Radius.zero),
+        onTap: () => onPressed(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: Icon(iconData,color: Colors.white),
+              ),
+              flex: 1),
+            Expanded(
+              child: Center(
+                child: Text(text, style: TextStyles.interStyle1),
+              ),
+              flex: 2
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class CustomPainterAppbar extends CustomPainter{
 
   @override
   void paint(Canvas canvas, Size size) {
 
+    Path path_0 = Path();
+    path_0.moveTo(size.width*0.2710280,size.height*0.9827586);
+    path_0.lineTo(size.width*0.9154455,size.height*0.9827586);
+    path_0.cubicTo(size.width*0.9245327,size.height*0.9827586,size.width*0.9332492,size.height*0.9627776,size.width*0.9396760,size.height*0.9272103);
+    path_0.lineTo(size.width*0.9868474,size.height*0.6661379);
+    path_0.cubicTo(size.width*0.9932741,size.height*0.6305707,size.width*0.9968847,size.height*0.5823310,size.width*0.9968847,size.height*0.5320328);
+    path_0.lineTo(size.width*0.9968847,size.height*0.1896552);
+    path_0.cubicTo(size.width*0.9968847,size.height*0.08491155,size.width*0.9815421,0,size.width*0.9626168,0);
+    path_0.lineTo(size.width*0.03738318,0);
+    path_0.cubicTo(size.width*0.01845754,0,size.width*0.003115265,size.height*0.08491155,size.width*0.003115265,size.height*0.1896552);
+    path_0.lineTo(size.width*0.003115265,size.height*0.7931034);
+    path_0.cubicTo(size.width*0.003115265,size.height*0.8978466,size.width*0.01845754,size.height*0.9827586,size.width*0.03738318,size.height*0.9827586);
+    path_0.lineTo(size.width*0.2710280,size.height*0.9827586);
+    path_0.close();
 
+    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.006230530;
+    paint_0_stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint_0_stroke);
 
-    Paint paint0 = Paint()
-      ..color = const Color.fromARGB(255, 255, 255, 255)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 6;
-
-
-    Path path0 = Path();
-    path0.moveTo(0,0);
-    path0.lineTo(0,size.height*0.7500000);
-    path0.lineTo(size.width*0.7349500,size.height*0.7500000);
-    path0.quadraticBezierTo(size.width*0.7485125,size.height*0.7518000,size.width*0.7550625,size.height*0.7260000);
-    path0.quadraticBezierTo(size.width*0.7624500,size.height*0.7044000,size.width*0.7656000,size.height*0.6890000);
-    path0.lineTo(size.width*0.8054750,size.height*0.5262000);
-    path0.quadraticBezierTo(size.width*0.8090750,size.height*0.5101000,size.width*0.8103750,size.height*0.4909500);
-    path0.quadraticBezierTo(size.width*0.8124125,size.height*0.4754000,size.width*0.8121750,size.height*0.4498000);
-    path0.lineTo(size.width*0.8125000,size.height*0.0800000);
-    path0.quadraticBezierTo(size.width*0.8128000,size.height*0.0314500,size.width*0.8078125,size.height*0.0101000);
-    path0.quadraticBezierTo(size.width*0.8025125,size.height*-0.0021000,size.width*0.7862500,0);
-    path0.quadraticBezierTo(size.width*0.5896875,0,0,0);
-    path0.close();
-
-    canvas.drawPath(path0, paint0);
-
-
-    Paint paint1 = Paint()
-      ..color = Palette.widgetBackground1
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 6;
-
-
-    Path path1 = Path();
-    path1.moveTo(0,0);
-    path1.lineTo(0,size.height*0.7500000);
-    path1.lineTo(size.width*0.7349500,size.height*0.7500000);
-    path1.quadraticBezierTo(size.width*0.7485125,size.height*0.7518000,size.width*0.7550625,size.height*0.7260000);
-    path1.quadraticBezierTo(size.width*0.7624500,size.height*0.7044000,size.width*0.7656000,size.height*0.6890000);
-    path1.lineTo(size.width*0.8054750,size.height*0.5262000);
-    path1.quadraticBezierTo(size.width*0.8090750,size.height*0.5101000,size.width*0.8103750,size.height*0.4909500);
-    path1.quadraticBezierTo(size.width*0.8124125,size.height*0.4754000,size.width*0.8121750,size.height*0.4498000);
-    path1.lineTo(size.width*0.8125000,size.height*0.0800000);
-    path1.quadraticBezierTo(size.width*0.8128000,size.height*0.0314500,size.width*0.8078125,size.height*0.0101000);
-    path1.quadraticBezierTo(size.width*0.8025125,size.height*-0.0021000,size.width*0.7862500,0);
-    path1.quadraticBezierTo(size.width*0.5896875,0,0,0);
-    path1.close();
-
-    canvas.drawPath(path1, paint1);
-
+    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
+    paint_0_fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    canvas.drawPath(path_0,paint_0_fill);
 
   }
 
@@ -321,56 +359,53 @@ class CustomClipperAppbar extends CustomPainter{
   }
 
 }
+
 class CustomPainterSidebar extends CustomPainter{
+
+  final BuildContext context;
+  final Function toggleSideBar;
+  CustomPainterSidebar(this.context, this.toggleSideBar); // context from CanvasTouchDetector
 
   @override
   void paint(Canvas canvas, Size size) {
+    var myCanvas = TouchyCanvas(context,canvas);
 
+    Path path_0 = Path();
+    path_0.moveTo(size.width*0.9297721,size.height*0.1302206);
+    path_0.lineTo(size.width*0.4879116,size.height*0.06290526);
+    path_0.cubicTo(size.width*0.3438442,size.height*0.04095714,size.width*0.02325581,size.height*0.05194211,size.width*0.02325581,size.height*0.07882657);
+    path_0.lineTo(size.width*0.02325581,size.height*0.9233484);
+    path_0.cubicTo(size.width*0.02325581,size.height*0.9500025,size.width*0.3393512,size.height*0.9611429,size.width*0.4854674,size.height*0.9396366);
+    path_0.lineTo(size.width*0.9273279,size.height*0.8746040);
+    path_0.cubicTo(size.width*0.9594372,size.height*0.8698772,size.width*0.9767442,size.height*0.8641729,size.width*0.9767442,size.height*0.8583158);
+    path_0.lineTo(size.width*0.9767442,size.height*0.1461419);
+    path_0.cubicTo(size.width*0.9767442,size.height*0.1404388,size.width*0.9603326,size.height*0.1348762,size.width*0.9297721,size.height*0.1302206);
+    path_0.close();
 
+    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
+    paint_0_stroke.color=Colors.white.withOpacity(1.0);
+    myCanvas.drawPath(path_0,paint_0_stroke);
 
-    Paint paint0 = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 6;
+    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
+    paint_0_fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    myCanvas.drawPath(path_0,paint_0_fill);
 
+    myCanvas.drawPath(path_0, paint_0_fill, onTapDown: (tapDetail) {
+      toggleSideBar();
+    });
 
-    Path path0 = Path();
-    path0.moveTo(0,0);
-    path0.lineTo(0,size.height*0.8032787);
-    path0.quadraticBezierTo(size.width*-0.0015667,size.height*0.8243955,size.width*0.0091833,size.height*0.8284631);
-    path0.cubicTo(size.width*0.0195167,size.height*0.8332787,size.width*0.0350500,size.height*0.8327459,size.width*0.0457833,size.height*0.8282684);
-    path0.quadraticBezierTo(size.width*0.0545333,size.height*0.8247746,size.width*0.0766667,size.height*0.8094262);
-    path0.lineTo(size.width*0.1073000,size.height*0.7891393);
-    path0.quadraticBezierTo(size.width*0.1335333,size.height*0.7716496,size.width*0.1335500,size.height*0.7657787);
-    path0.quadraticBezierTo(size.width*0.1334833,size.height*0.7427561,size.width*0.1333333,size.height*0.7167623);
-    path0.lineTo(size.width*0.1333333,0);
-    path0.lineTo(0,0);
-    path0.close();
+    Path path_1 = Path();
+    path_1.moveTo(size.width*0.3488372,size.height*0.8095238);
+    path_1.lineTo(size.width*0.6511628,size.height*0.8408521);
+    path_1.lineTo(size.width*0.3488372,size.height*0.8721805);
 
-    canvas.drawPath(path0, paint0);
+    Paint paint_1_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
+    paint_1_stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_1,paint_1_stroke);
 
-
-    Paint paint1 = Paint()
-      ..color = Palette.widgetBackground1
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 6;
-
-
-    Path path1 = Path();
-    path1.moveTo(0,0);
-    path1.lineTo(0,size.height*0.8032787);
-    path1.quadraticBezierTo(size.width*-0.0015667,size.height*0.8243955,size.width*0.0091833,size.height*0.8284631);
-    path1.cubicTo(size.width*0.0195167,size.height*0.8332787,size.width*0.0350500,size.height*0.8327459,size.width*0.0457833,size.height*0.8282684);
-    path1.quadraticBezierTo(size.width*0.0545333,size.height*0.8247746,size.width*0.0766667,size.height*0.8094262);
-    path1.lineTo(size.width*0.1189000,size.height*0.7806557);
-    path1.quadraticBezierTo(size.width*0.1341500,size.height*0.7708709,size.width*0.1333333,size.height*0.7630943);
-    path1.quadraticBezierTo(size.width*0.1333333,size.height*0.7540471,size.width*0.1333333,size.height*0.7479508);
-    path1.lineTo(size.width*0.1333333,0);
-    path1.lineTo(0,0);
-    path1.close();
-
-    canvas.drawPath(path1, paint1);
-
+    Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
+    paint_1_fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    canvas.drawPath(path_1,paint_1_fill);
 
   }
 

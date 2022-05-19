@@ -23,9 +23,9 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
+**/.dart_tool/
+**/.flutter-plugins
+flutter_app/.flutter-plugins-dependencie
 **/generated_plugin_registrant.dart
 .packages
 .pub-cache/
