@@ -52,37 +52,43 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
               child: Container(
                 width: MediaQuery.of(context).size.width*0.82,
                 height: (MediaQuery.of(context).size.height*0.9).toDouble(),
-                child: Scrollbar(
-
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverGrid(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200.0,
-                          mainAxisSpacing: 10.0,
-                          crossAxisSpacing: 10.0,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                            return Container(
-                              alignment: Alignment.center,
-                              child: Consumer<BuildSchemaStateModel>(
-                                builder: (context, schemaState, child) => PartsSelectWidget(
-                                  name: partSelectModelList[index].name,
-                                  imgPath: partSelectModelList[index].assetPath,
-                                  function: (){
-                                    schemaState.changeSelectedPartEnum(convertIndexToEnum(index));
-                                    schemaState.changeSidebarState(1);
-                                  },
-                                ),
-                              )
-                            );
-                          },
-                          childCount: 8,
-                        ),
-                      ),
-                    ],
-                  )
+                child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, value, child) => Scrollbar(
+                      child: CustomScrollView(
+                        slivers: <Widget>[
+                          SliverGrid(
+                            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200.0,
+                              mainAxisSpacing: 10.0,
+                              crossAxisSpacing: 10.0,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                return Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: value.checkPartChosen(convertIndexToEnum(index)).isNotEmpty
+                                            ? Colors.grey.withAlpha(100) : null
+                                    ),
+                                    child: Consumer<BuildSchemaStateModel>(
+                                      builder: (context, schemaState, child) => PartsSelectWidget(
+                                        name: partSelectModelList[index].name,
+                                        imgPath: partSelectModelList[index].assetPath,
+                                        function: (){
+                                          schemaState.changeSelectedPartEnum(convertIndexToEnum(index));
+                                          schemaState.changeSidebarState(1);
+                                        },
+                                      ),
+                                    )
+                                );
+                              },
+                              childCount: 8,
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
                 )
               ),
             ),

@@ -14,6 +14,13 @@ class BuildSchemaStateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _currentSidebarToggle = false;
+  bool get sidebarToggle => _currentSidebarToggle;
+  void changeSidebarToggle(){
+    _currentSidebarToggle = !_currentSidebarToggle;
+    notifyListeners();
+  }
+
   //refer to partSelectModelList in global variables
   PartEnum _currentSelectedPartEnum = PartEnum.others;
   PartEnum get selectedPartEnum => _currentSelectedPartEnum;
@@ -99,6 +106,7 @@ class BuildSchemaStateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ///Change Part by checking its query content and enum
   void changePart(List query, PartEnum partEnum){
     switch(partEnum){
       case PartEnum.cooling: {
@@ -136,4 +144,65 @@ class BuildSchemaStateModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  ///Return as ID of the selected part
+  String checkPartChosen(PartEnum partEnum){
+    switch(partEnum){
+      case PartEnum.cooling: {
+        if(selectedCooler.isNotEmpty){
+          return selectedCooler[0]['id'];
+        }
+        return '';
+      }
+      case PartEnum.motherboard: {
+        if(selectedMotherboard.isNotEmpty){
+          return selectedMotherboard[0]['id'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.gpu: {
+        if(selectedGPU.isNotEmpty){
+          return selectedGPU[0]['id'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.cpu: {
+        if(selectedCPU.isNotEmpty){
+          return selectedCPU[0]['id'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.psu: {
+        if(selectedPSU.isNotEmpty){
+          return selectedPSU[0]['id'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.ram: {
+        if(selectedRAM.isNotEmpty){
+          return selectedRAM[0]['id'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.storage: {
+        if(selectedStorage.isNotEmpty){
+          return selectedStorage[0]['id'];
+        }else {
+          return '';
+        }
+      }
+
+      default: {
+        return '';
+      }
+    }
+    notifyListeners();
+  }
+
+
 }

@@ -18,12 +18,11 @@ import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children, required this.buildSchemaStateModel}) : super(key: key);
+  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children}) : super(key: key);
 
   final bool isTextFieldEnabled;
   final bool sideBarVisible;
   final List<Widget> children;
-  final BuildSchemaStateModel buildSchemaStateModel;
 
   @override
   State<CustomAppbar> createState() => _CustomAppbarState();
@@ -31,16 +30,9 @@ class CustomAppbar extends StatefulWidget {
 
 class _CustomAppbarState extends State<CustomAppbar> {
   bool _isMenuButtonPressed = false;
-  bool _isSideBarPressed = false;
   void _toggleMenu() {
     setState(() {
       _isMenuButtonPressed = !_isMenuButtonPressed;
-    });
-  }
-
-  void _toggleSideBar(){
-    setState(() {
-      _isSideBarPressed = !_isSideBarPressed;
     });
   }
 
@@ -68,21 +60,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     alignment: WrapAlignment.center,
                     children: [
                       if(widget.isTextFieldEnabled == true)
-                        ChangeNotifierProvider.value(
-                          value: widget.buildSchemaStateModel,
-                          child: Consumer<BuildSchemaStateModel>(
-                            builder: (context, value, child) => TextField(
-                                controller: value.textEditingController,
-                                onChanged: (text){
-                                  value.changeBuildName(text);
-                                  value.textEditingController.selection = TextSelection.fromPosition(TextPosition(offset: value.textEditingController.text.length));
-                                },
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18)
-                            ),
+                        Consumer<BuildSchemaStateModel>(
+                          builder: (context, value, child) => TextField(
+                              controller: value.textEditingController,
+                              onChanged: (text){
+                                value.changeBuildName(text);
+                                value.textEditingController.selection = TextSelection.fromPosition(TextPosition(offset: value.textEditingController.text.length));
+                              },
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18)
                           ),
-                        )
+                        ),
                     ],
                   ),
                 )
@@ -91,21 +80,25 @@ class _CustomAppbarState extends State<CustomAppbar> {
         ),
         Visibility(
             visible: widget.sideBarVisible,
-            child: AnimatedPositioned(
-              duration: const Duration(milliseconds: 200),
-              left: _isSideBarPressed ? -50 : 0,
-              child: CanvasTouchDetector(
-                gesturesToOverride: const [GestureType.onTapDown],
-                builder: (context) => CustomPaint(
-                  size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  painter: CustomPainterSidebar(context, () => _toggleSideBar()),
+            child: Consumer<BuildSchemaStateModel>(
+              builder: (context, value, child) => AnimatedPositioned(
+                duration: const Duration(milliseconds: 200),
+                left: value.sidebarToggle ? -50 : 0,
+                child: CanvasTouchDetector(
+                  gesturesToOverride: const [GestureType.onTapDown],
+                  builder: (context) => CustomPaint(
+                    size: Size(50,(50*9.279069767441861).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                    painter: CustomPainterSidebar(context, () => value.changeSidebarToggle()),
+                  ),
                 ),
               ),
             )
         ),
         ...widget.children,
         FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
-        FadeBlackBackground(toggleVariable: _isSideBarPressed),
+        Consumer<BuildSchemaStateModel>(
+          builder: (context, value, child) => FadeBlackBackground(toggleVariable: value.sidebarToggle),
+        ),
         Visibility(
           visible: _isMenuButtonPressed,
           child: Positioned(
@@ -280,26 +273,25 @@ class _CustomAppbarState extends State<CustomAppbar> {
             ),
           ),
         ),
-        ChangeNotifierProvider.value(
-            value: widget.buildSchemaStateModel,
-            child: AnimatedPositioned(
-                duration: const Duration(milliseconds: 700),
-                curve: Curves.fastOutSlowIn,
-                left: _isSideBarPressed ? 0 : -(MediaQuery.of(context).size.width*0.95),
-                child: Consumer<BuildSchemaStateModel>(
-                  builder: (context, schemaState, child){
-                    if(schemaState.sidebarState == 1){
-                      return ChoosePartsModelWidget(toggleSideBar: () => _toggleSideBar(), partEnum: schemaState.selectedPartEnum);
-                    }
-                    else if(schemaState.sidebarState == 2){
-                      return PartsInfoWidget(id: schemaState.selectedPartModelId, partEnum: schemaState.selectedPartEnum, toggleMenu: () => _toggleSideBar());
-                    }
-                    else{
-                      return ChoosePartsWidget(toggleSideBar: () => _toggleSideBar());
-                    }
-                  },
-                )
-            )
+        Consumer<BuildSchemaStateModel>(
+          builder: (context, schemaState, child){
+            return AnimatedPositioned(
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.fastOutSlowIn,
+              left: schemaState.sidebarToggle ? 0 : -(MediaQuery.of(context).size.width*0.95),
+              child: ((){
+                if(schemaState.sidebarState == 1){
+                  return ChoosePartsModelWidget(toggleSideBar: () => schemaState.changeSidebarToggle(), partEnum: schemaState.selectedPartEnum);
+                }
+                else if(schemaState.sidebarState == 2){
+                  return PartsInfoWidget(id: schemaState.selectedPartModelId, partEnum: schemaState.selectedPartEnum, toggleMenu: () => schemaState.changeSidebarToggle());
+                }
+                else{
+                  return ChoosePartsWidget(toggleSideBar: () => schemaState.changeSidebarToggle());
+                }
+              }())
+            );
+          }
         ),
       ],
     );

@@ -20,7 +20,6 @@ class ChoosePartsModelWidget extends StatefulWidget {
 
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
-
   int _getLowestPrice(List queryResult, int index){
     if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
@@ -28,7 +27,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
     return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
   }
 
-  void _addPart(String id) async{
+  Future<List> _addPart(String id) async{
     final QueryOptions options = QueryOptions(
       document: gql(partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first.queryById),
       variables: {
@@ -43,6 +42,9 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
         print(result.exception.toString());
       }
     }
+
+    return getQueryList(result, widget.partEnum);
+
 }
 
   @override
@@ -97,109 +99,121 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width*0.82,
                       height: (MediaQuery.of(context).size.height*0.92).toDouble(),
-                      child: Query(
-                        options: QueryOptions(
-                          document: gql(selectedPartModel.query), // this is the query string you just created
-                        ),
-                        // Just like in apollo refetch() could be used to manually trigger a refetch
-                        // while fetchMore() can be used for pagination purpose
-                        builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
-                          if (result.hasException) {
-                            return Text(result.exception.toString());
-                          }
+                      child: Consumer<BuildSchemaStateModel>(
+                          builder: (context, schemaState, child) => Query(
+                            options: QueryOptions(
+                              document: gql(selectedPartModel.query), // this is the query string you just created
+                            ),
+                            // Just like in apollo refetch() could be used to manually trigger a refetch
+                            // while fetchMore() can be used for pagination purpose
+                            builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
+                              if (result.hasException) {
+                                return Text(result.exception.toString());
+                              }
 
-                          if (result.isLoading) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            );
-                          }
-
-                          List? data = getQueryList(result, widget.partEnum);
-
-                          if (data == null) {
-                            return const Text('No repositories');
-                          }
-                          return Scrollbar(
-                              child: CustomScrollView(
-                                slivers: <Widget>[
-                                  SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                          (BuildContext context, int index) {
-                                        return Container(
-                                            alignment: Alignment.center,
-                                            child: Container(
-                                              margin: const EdgeInsets.only(
-                                                left: 40,
-                                                right: 10,
-                                                top: 10,
-                                                bottom: 10
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Flexible(child: Text(data[index]['name'], style: TextStyles.interStyle1,))
-                                                    ],
-                                                  ),
-                                                  Consumer<BuildSchemaStateModel>(
-                                                      builder: (context, schemaState, child) => Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                        children: [
-                                                          SizedBox(
-                                                            child: Image.asset(selectedPartModel.assetPath),
-                                                            width: 100,
-                                                            height: 100,
-                                                          ),
-                                                          Column(
-                                                            children: [
-                                                              Text(CurrencyFormat.convertToIdr(_getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
-
-                                                              ElevatedButton(
-                                                                  onPressed: () {
-                                                                    schemaState.changeSelectedPartModelId(data[index]['id']);
-                                                                    schemaState.changeSidebarState(2);
-                                                                    // _selectedPartModelId = data[index]['id'];
-                                                                    // _togglePartModelSelected();
-                                                                  },
-                                                                  child: Text("Info", style: TextStyles.interStyle1)
-                                                              ),
-                                                              ElevatedButton(
-                                                                  onPressed: () async {
-                                                                    _addPart(data[index]['id']);
-                                                                    schemaState.changePart(data, widget.partEnum);
-                                                                    widget.toggleSideBar();
-                                                                    ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[index]['name']));
-                                                                  },
-                                                                  child: Text("Add", style: TextStyles.interStyle1),
-                                                                  style: ElevatedButton.styleFrom(
-                                                                      primary: Colors.green
-                                                                  )
-                                                              )
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 50,
-                                                            height: 50,
-                                                          )
-                                                        ],
-                                                      )
-                                                  ),
-
-                                                ],
-                                              )
-                                            )
-                                        );
-                                      },
-                                      childCount: data.length,
-                                    ),
+                              if (result.isLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
                                   ),
-                                ],
-                              )
-                          );
-                        },
-                      )
+                                );
+                              }
+
+                              List? data = getQueryList(result, widget.partEnum);
+
+                              if (data.isEmpty) {
+                                return const Text('No data found');
+                              }
+                              
+                              if(schemaState.checkPartChosen(widget.partEnum).isNotEmpty){
+                                var selectedData = data.where((element) => element['id'] == schemaState.checkPartChosen(widget.partEnum)).first;
+                                data.remove(selectedData);
+                                data.insert(0, selectedData);
+                              }
+
+                              return Scrollbar(
+                                  child: CustomScrollView(
+                                    slivers: <Widget>[
+                                      SliverList(
+                                        delegate: SliverChildBuilderDelegate(
+                                              (BuildContext context, int index) {
+                                            return Container(
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: schemaState.checkPartChosen(widget.partEnum).isNotEmpty && index == 0
+                                                      ? Colors.grey.withAlpha(100) : null
+                                                ),
+                                                child: Container(
+                                                    margin: const EdgeInsets.only(
+                                                        left: 40,
+                                                        right: 10,
+                                                        top: 10,
+                                                        bottom: 10
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Flexible(child: Text(data[index]['name'], style: TextStyles.interStyle1,))
+                                                          ],
+                                                        ),
+
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                          children: [
+                                                            SizedBox(
+                                                              child: Image.asset(selectedPartModel.assetPath),
+                                                              width: 100,
+                                                              height: 100,
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                Text(CurrencyFormat.convertToIdr(_getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
+
+                                                                ElevatedButton(
+                                                                    onPressed: () {
+                                                                      schemaState.changeSelectedPartModelId(data[index]['id']);
+                                                                      schemaState.changeSidebarState(2);
+                                                                      // _selectedPartModelId = data[index]['id'];
+                                                                      // _togglePartModelSelected();
+                                                                    },
+                                                                    child: Text("Info", style: TextStyles.interStyle1)
+                                                                ),
+                                                                ElevatedButton(
+                                                                    onPressed: () async {
+                                                                      schemaState.changePart(await _addPart(data[index]['id']), widget.partEnum);
+                                                                      widget.toggleSideBar();
+                                                                      ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[index]['name']));
+                                                                    },
+                                                                    child: Text("Add", style: TextStyles.interStyle1),
+                                                                    style: ElevatedButton.styleFrom(
+                                                                        primary: Colors.green
+                                                                    )
+                                                                )
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 50,
+                                                              height: 50,
+                                                            )
+                                                          ],
+                                                        )
+
+                                                      ],
+                                                    )
+                                                )
+                                            );
+                                          },
+                                          childCount: data.length,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              );
+                            },
+                          ),
+                      ),
                   ),
                 ],
               )
