@@ -73,9 +73,11 @@ class BuildSchemaStateModel extends ChangeNotifier {
   }
 
   //psu
-  List selectedPSU = [];
+  final List _currentSelectedPSU = [];
+  List get selectedPSU => _currentSelectedPSU;
   void changeSelectedPSU(List query){
-    selectedPSU = query;
+    _currentSelectedPSU.clear();
+    _currentSelectedPSU.add(query[0]);
     notifyListeners();
   }
 

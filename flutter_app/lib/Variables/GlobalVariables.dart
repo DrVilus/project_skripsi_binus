@@ -45,7 +45,7 @@ PartEnum convertIndexToEnum(int index){
       return PartEnum.cpu;
     }
     case 5: {
-      return PartEnum.cooling;
+      return PartEnum.psu;
     }
     case 6: {
       return PartEnum.ram;
