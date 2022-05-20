@@ -3,18 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
 import 'package:project_skripsi/Functions/CurrencyFormat.dart';
 import 'package:provider/provider.dart';
-
 import '../../UI/Palette.dart';
 import '../../Variables/GlobalVariables.dart';
-import '../../Variables/Queries.dart';
+import '../../Variables/GraphQLClient.dart';
 
 class ChoosePartsModelWidget extends StatefulWidget {
-  const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.partIndex}) : super(key: key);
+  const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.partEnum}) : super(key: key);
   final Function toggleSideBar;
-  final int partIndex;
+  final PartEnum partEnum;
 
   @override
   State<ChoosePartsModelWidget> createState() => _ChoosePartsModelWidgetState();
@@ -22,15 +20,34 @@ class ChoosePartsModelWidget extends StatefulWidget {
 
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
-  int getLowestPrice(List queryResult, int index){
-    if(queryResult[index][getQueryPriceText(widget.partIndex)].length == 0){
+
+  int _getLowestPrice(List queryResult, int index){
+    if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }
-    return queryResult[index][getQueryPriceText(widget.partIndex)][0]['price']!;
+    return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
   }
+
+  void _addPart(String id) async{
+    final QueryOptions options = QueryOptions(
+      document: gql(partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first.queryById),
+      variables: {
+        'id': id,
+      },
+    );
+
+    final QueryResult result = await client.query(options);
+
+    if (result.hasException) {
+      if (kDebugMode) {
+        print(result.exception.toString());
+      }
+    }
+}
 
   @override
   Widget build(BuildContext context) {
+    var selectedPartModel = partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
     return SafeArea(
         child: Stack(
           children: [
@@ -73,16 +90,16 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                             },
                           ),
                         ),
-                        Text(partSelectModelList[widget.partIndex].name, style: TextStyles.sourceSans3,),
+                        Text(selectedPartModel.name, style: TextStyles.sourceSans3,),
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                       width: MediaQuery.of(context).size.width*0.82,
                       height: (MediaQuery.of(context).size.height*0.92).toDouble(),
                       child: Query(
                         options: QueryOptions(
-                          document: gql(partSelectModelList[widget.partIndex].query), // this is the query string you just created
+                          document: gql(selectedPartModel.query), // this is the query string you just created
                         ),
                         // Just like in apollo refetch() could be used to manually trigger a refetch
                         // while fetchMore() can be used for pagination purpose
@@ -99,7 +116,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                             );
                           }
 
-                          List? data = getQueryList(result, widget.partIndex);
+                          List? data = getQueryList(result, widget.partEnum);
 
                           if (data == null) {
                             return const Text('No repositories');
@@ -126,44 +143,50 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                       Flexible(child: Text(data[index]['name'], style: TextStyles.interStyle1,))
                                                     ],
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                    children: [
-                                                      SizedBox(
-                                                        child: Image.asset(partSelectModelList[widget.partIndex].assetPath),
-                                                        width: 100,
-                                                        height: 100,
-                                                      ),
-                                                      Column(
+                                                  Consumer<BuildSchemaStateModel>(
+                                                      builder: (context, schemaState, child) => Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                         children: [
-                                                          Text(CurrencyFormat.convertToIdr(getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
-                                                          Consumer<BuildSchemaStateModel>(
-                                                            builder: (context, schemaState, child) => ElevatedButton(
-                                                                onPressed: () {
-                                                                  schemaState.changeSelectedPartModelId(data[index]['id']);
-                                                                  schemaState.changeSidebarState(2);
-                                                                  // _selectedPartModelId = data[index]['id'];
-                                                                  // _togglePartModelSelected();
-                                                                },
-                                                                child: Text("Info", style: TextStyles.interStyle1)
-                                                            ),
+                                                          SizedBox(
+                                                            child: Image.asset(selectedPartModel.assetPath),
+                                                            width: 100,
+                                                            height: 100,
                                                           ),
-                                                          ElevatedButton(
-                                                            onPressed: () {
-                                                            },
-                                                            child: Text("Add", style: TextStyles.interStyle1),
-                                                            style: ElevatedButton.styleFrom(
-                                                              primary: Colors.green
-                                                            )
+                                                          Column(
+                                                            children: [
+                                                              Text(CurrencyFormat.convertToIdr(_getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
+
+                                                              ElevatedButton(
+                                                                  onPressed: () {
+                                                                    schemaState.changeSelectedPartModelId(data[index]['id']);
+                                                                    schemaState.changeSidebarState(2);
+                                                                    // _selectedPartModelId = data[index]['id'];
+                                                                    // _togglePartModelSelected();
+                                                                  },
+                                                                  child: Text("Info", style: TextStyles.interStyle1)
+                                                              ),
+                                                              ElevatedButton(
+                                                                  onPressed: () async {
+                                                                    _addPart(data[index]['id']);
+                                                                    schemaState.changePart(data, widget.partEnum);
+                                                                    widget.toggleSideBar();
+                                                                    ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[index]['name']));
+                                                                  },
+                                                                  child: Text("Add", style: TextStyles.interStyle1),
+                                                                  style: ElevatedButton.styleFrom(
+                                                                      primary: Colors.green
+                                                                  )
+                                                              )
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 50,
+                                                            height: 50,
                                                           )
                                                         ],
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 50,
-                                                        height: 50,
                                                       )
-                                                    ],
-                                                  )
+                                                  ),
+
                                                 ],
                                               )
                                             )

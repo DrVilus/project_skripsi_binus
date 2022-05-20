@@ -13,9 +13,9 @@ import 'BuildSchemaStateModel.dart';
 import 'ChoosePartsModelWidget.dart';
 
 class PartsInfoWidget extends StatefulWidget {
-  const PartsInfoWidget({Key? key, required this.id, required this.partType, required this.toggleMenu}) : super(key: key);
+  const PartsInfoWidget({Key? key, required this.id, required this.partEnum, required this.toggleMenu}) : super(key: key);
   final String id;
-  final int partType;
+  final PartEnum partEnum;
   final Function toggleMenu;
 
   @override
@@ -25,10 +25,10 @@ class PartsInfoWidget extends StatefulWidget {
 class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
   int getLowestPrice(List queryResult, int index){
-    if(queryResult[index][getQueryPriceText(widget.partType)].length == 0){
+    if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }
-    return queryResult[index][getQueryPriceText(widget.partType)][0]['price']!;
+    return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
   }
 
   Widget createModelInformation(List query){
@@ -76,6 +76,8 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var selectedPartModel = partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
+
     return SafeArea(
         child: Stack(
           children: [
@@ -118,46 +120,46 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                               },
                             ),
                           ),
-                          Text(partSelectModelList[widget.partType].name, style: TextStyles.sourceSans3,),
+                          Text(selectedPartModel.name, style: TextStyles.sourceSans3,),
                         ],
                       ),
                     ),
-                    Container(
-                        width: MediaQuery.of(context).size.width*0.82,
-                        height: (MediaQuery.of(context).size.height*0.8).toDouble(),
-                        child: Query(
-                          options: QueryOptions(
-                            document: gql(partSelectModelList[widget.partType].queryById), // this is the query string you just created
-                            variables: {
-                              'id': widget.id,
-                            },
-                          ),
-                          // Just like in apollo refetch() could be used to manually trigger a refetch
-                          // while fetchMore() can be used for pagination purpose
-                          builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
-                            if (result.hasException) {
-                              return Text(result.exception.toString());
-                            }
+                    Query(
+                      options: QueryOptions(
+                        document: gql(selectedPartModel.queryById), // this is the query string you just created
+                        variables: {
+                          'id': widget.id,
+                        },
+                      ),
+                      // Just like in apollo refetch() could be used to manually trigger a refetch
+                      // while fetchMore() can be used for pagination purpose
+                      builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
+                        if (result.hasException) {
+                          return Text(result.exception.toString());
+                        }
 
-                            if (result.isLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              );
-                            }
+                        if (result.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          );
+                        }
 
-                            List? data = getQueryList(result, widget.partType);
+                        List? data = getQueryList(result, widget.partEnum);
 
-                            if (data == null) {
-                              return const Text('No repositories');
-                            }
-                            return Container(
+                        if (data == null) {
+                          return const Text('No repositories');
+                        }
+                        return Container(
+                            width: MediaQuery.of(context).size.width*0.82,
+                            height: (MediaQuery.of(context).size.height*0.9).toDouble(),
+                            child:Container(
                               margin: const EdgeInsets.only(
-                                top: 20,
-                                left: 50,
-                                right: 50,
-                                bottom: 10
+                                  top: 20,
+                                  left: 50,
+                                  right: 50,
+                                  bottom: 10
                               ),
                               child: Column(
                                 children: [
@@ -170,7 +172,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        child: Image.asset(partSelectModelList[widget.partType].assetPath),
+                                        child: Image.asset(selectedPartModel.assetPath),
                                         width: 200,
                                         height: 200,
                                       )],
@@ -189,42 +191,49 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                         child: createModelInformation(data),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Column(
+                                      children: [Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [Consumer<BuildSchemaStateModel>(
+                                          builder: (context, value, child) => ElevatedButton(
+                                              onPressed:() {
+                                                value.changePart(data, widget.partEnum);
+                                                widget.toggleMenu();
+                                                ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[0]['name']));
+                                                print(data);
+                                              },
+                                              child: Text("Add", style: TextStyles.interStyle1),
+
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.green
+                                              )
+                                          ),
+                                        )],
+                                      ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [ElevatedButton(
+                                              onPressed: () {
+                                              },
+                                              child: Text("Visit Store Page", style: TextStyles.interStyle1)
+                                          ),],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                            );
-                          },
-                        )
+                            )
+                        );
+                      },
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                        children: [Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [ElevatedButton(
-                              onPressed:() {
-                              },
-                              child: Text("Add", style: TextStyles.interStyle1),
-
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.green
-                              )
-                          )],
-                        ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [ElevatedButton(
-                                onPressed: () {
-                                },
-                                child: Text("Visit Store Page", style: TextStyles.interStyle1)
-                            ),],
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 )
             ),
+
             Positioned(
               right: 0,
               top: 10,

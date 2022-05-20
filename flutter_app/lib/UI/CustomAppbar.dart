@@ -18,11 +18,12 @@ import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children}) : super(key: key);
+  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children, required this.buildSchemaStateModel}) : super(key: key);
 
   final bool isTextFieldEnabled;
   final bool sideBarVisible;
   final List<Widget> children;
+  final BuildSchemaStateModel buildSchemaStateModel;
 
   @override
   State<CustomAppbar> createState() => _CustomAppbarState();
@@ -42,8 +43,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
       _isSideBarPressed = !_isSideBarPressed;
     });
   }
-
-  final BuildSchemaStateModel _buildSchemaStateModel = BuildSchemaStateModel();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     children: [
                       if(widget.isTextFieldEnabled == true)
                         ChangeNotifierProvider.value(
-                          value: _buildSchemaStateModel,
+                          value: widget.buildSchemaStateModel,
                           child: Consumer<BuildSchemaStateModel>(
                             builder: (context, value, child) => TextField(
                                 controller: value.textEditingController,
@@ -282,7 +281,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
           ),
         ),
         ChangeNotifierProvider.value(
-            value: _buildSchemaStateModel,
+            value: widget.buildSchemaStateModel,
             child: AnimatedPositioned(
                 duration: const Duration(milliseconds: 700),
                 curve: Curves.fastOutSlowIn,
@@ -290,10 +289,10 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 child: Consumer<BuildSchemaStateModel>(
                   builder: (context, schemaState, child){
                     if(schemaState.sidebarState == 1){
-                      return ChoosePartsModelWidget(toggleSideBar: () => _toggleSideBar(), partIndex: schemaState.selectedPartIndex);
+                      return ChoosePartsModelWidget(toggleSideBar: () => _toggleSideBar(), partEnum: schemaState.selectedPartEnum);
                     }
                     else if(schemaState.sidebarState == 2){
-                      return PartsInfoWidget(id: schemaState.selectedPartModelId, partType: schemaState.selectedPartIndex, toggleMenu: () => _toggleSideBar());
+                      return PartsInfoWidget(id: schemaState.selectedPartModelId, partEnum: schemaState.selectedPartEnum, toggleMenu: () => _toggleSideBar());
                     }
                     else{
                       return ChoosePartsWidget(toggleSideBar: () => _toggleSideBar());

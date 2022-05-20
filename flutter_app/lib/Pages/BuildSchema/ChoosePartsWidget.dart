@@ -71,7 +71,7 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                                   name: partSelectModelList[index].name,
                                   imgPath: partSelectModelList[index].assetPath,
                                   function: (){
-                                    schemaState.changeSelectedPartIndex(index);
+                                    schemaState.changeSelectedPartEnum(convertIndexToEnum(index));
                                     schemaState.changeSidebarState(1);
                                   },
                                 ),

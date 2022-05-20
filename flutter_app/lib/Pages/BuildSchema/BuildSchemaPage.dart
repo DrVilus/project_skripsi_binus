@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Pages/BuildSchema/EstimatedPriceWidget.dart';
 import 'package:project_skripsi/UI/FadeBlackBackground.dart';
+import 'package:project_skripsi/Variables/GlobalVariables.dart';
 import 'package:provider/provider.dart';
 import '../../UI/CustomAppbar.dart';
 
@@ -21,6 +22,12 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
     });
   }
 
+  void _goToPartInfoPage(BuildSchemaStateModel stateModel, PartEnum partEnum, String id){
+    stateModel.changeSelectedPartEnum(partEnum);
+    stateModel.changeSelectedPartModelId(id);
+    stateModel.changeSidebarState(2);
+  }
+
   final BuildSchemaStateModel _buildSchemaStateModel = BuildSchemaStateModel();
   final ColorFilter disabledColor = ColorFilter.mode(Colors.grey.shade800, BlendMode.modulate);
   final ColorFilter enabledColor = const ColorFilter.mode(Colors.white, BlendMode.modulate);
@@ -32,8 +39,47 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
         child: CustomAppbar(
           isTextFieldEnabled: true,
           sideBarVisible: true,
+          buildSchemaStateModel: _buildSchemaStateModel,
           children: [
             Container(),
+            Positioned(
+                top: MediaQuery.of(context).size.height*0.39,
+                left: MediaQuery.of(context).size.width*0.56,
+                child: ChangeNotifierProvider.value(
+                    value: _buildSchemaStateModel,
+                    child: Consumer<BuildSchemaStateModel>(
+                        builder: (context, value, child) => GestureDetector(
+                          onTap: () {
+                            _goToPartInfoPage(value, PartEnum.psu, value.selectedPSU[0]['id']);
+                          }, // Image tapped
+                          child: Image.asset(
+                            'assets/img/psu2.png',
+                            fit: BoxFit.fill, // Fixes border issues
+                            width: MediaQuery.of(context).size.width*0.25,
+                            height: MediaQuery.of(context).size.width*0.25*0.5,
+                          ),
+                        )
+                    )
+                )
+            ),
+            Positioned(
+                top: MediaQuery.of(context).size.height*0.39,
+                left: MediaQuery.of(context).size.width*0.26,
+                child: ChangeNotifierProvider.value(
+                    value: _buildSchemaStateModel,
+                    child: Consumer<BuildSchemaStateModel>(
+                        builder: (context, value, child) => GestureDetector(
+                          onTap: () {print('cooling');}, // Image tapped
+                          child: Image.asset(
+                            'assets/img/cooling2.png',
+                            fit: BoxFit.fill, // Fixes border issues
+                            width: MediaQuery.of(context).size.width*0.25,
+                            height: MediaQuery.of(context).size.width*0.25*0.5,
+                          ),
+                        )
+                    )
+                )
+            ),
             Positioned(
                 top: MediaQuery.of(context).size.height*0.5,
                 left: MediaQuery.of(context).size.width*0.1,
@@ -128,42 +174,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                     )
                 )
             ),
-            Positioned(
-                top: MediaQuery.of(context).size.height*0.3,
-                left: MediaQuery.of(context).size.width*0.56,
-                child: ChangeNotifierProvider.value(
-                    value: _buildSchemaStateModel,
-                    child: Consumer<BuildSchemaStateModel>(
-                        builder: (context, value, child) => GestureDetector(
-                          onTap: () {print('psu');}, // Image tapped
-                          child: Image.asset(
-                            'assets/img/psu2.png',
-                            fit: BoxFit.fill, // Fixes border issues
-                            width: MediaQuery.of(context).size.width*0.25,
-                            height: MediaQuery.of(context).size.width*0.25*0.5,
-                          ),
-                        )
-                    )
-                )
-            ),
-            Positioned(
-                top: MediaQuery.of(context).size.height*0.3,
-                left: MediaQuery.of(context).size.width*0.26,
-                child: ChangeNotifierProvider.value(
-                    value: _buildSchemaStateModel,
-                    child: Consumer<BuildSchemaStateModel>(
-                        builder: (context, value, child) => GestureDetector(
-                          onTap: () {print('cooling');}, // Image tapped
-                          child: Image.asset(
-                            'assets/img/cooling2.png',
-                            fit: BoxFit.fill, // Fixes border issues
-                            width: MediaQuery.of(context).size.width*0.25,
-                            height: MediaQuery.of(context).size.width*0.25*0.5,
-                          ),
-                        )
-                    )
-                )
-            ),
+
 
             FadeBlackBackground(toggleVariable: _blackBackground),
             EstimatedPriceWidget(blackBackgroundCallback: () => _toggleBlackBackground())

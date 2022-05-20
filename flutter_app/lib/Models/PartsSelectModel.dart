@@ -1,14 +1,16 @@
+import 'package:project_skripsi/Variables/GlobalVariables.dart';
+
 class PartsSelectModel {
   String name = '';
   String assetPath = '';
-  int index = 0;
+  PartEnum partEnumVariable = PartEnum.others;
   String query = """""";
   String queryById = """""";
 
-  PartsSelectModel(String nameInput, String assetPathInput, int indexInput, String queryInput, String queryByIdInput){
+  PartsSelectModel(String nameInput, String assetPathInput, PartEnum partEnumInput, String queryInput, String queryByIdInput){
     name = nameInput;
     assetPath = assetPathInput;
-    index = indexInput;
+    partEnumVariable = partEnumInput;
     query = queryInput;
     queryById = queryByIdInput;
   }

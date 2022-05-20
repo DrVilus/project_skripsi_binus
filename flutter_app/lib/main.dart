@@ -1,34 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:project_skripsi/Pages/GetStarted.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'Variables/GraphQLClient.dart';
 
 void main() async {
   await initHiveForFlutter();
 
-  final HttpLink httpLink = HttpLink(
-    'https://hasura-skripsi-binus.herokuapp.com/v1/graphql'
-  );
-
-  final AuthLink authLink = AuthLink(
-    headerKey: 'x-hasura-admin-secret',
-    getToken: () async => 'mythesis',
-    // OR
-    // getToken: () => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
-  );
-
-  final Link link = authLink.concat(httpLink);
-
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(
-      link: link,
-      // The default store is the InMemoryStore, which does NOT persist to disk
-      cache: GraphQLCache(store: HiveStore()),
-    ),
-  );
-
-  runApp(MyApp(client: client));
+  runApp(MyApp(client: valueNotifierClient));
 }
 
 class MyApp extends StatelessWidget {
