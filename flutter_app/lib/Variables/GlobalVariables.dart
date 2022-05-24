@@ -119,9 +119,3 @@ String getQueryPriceText(PartEnum enumInput){
     }
   }
 }
-
-SnackBar snackBar(String text){
-  return SnackBar(
-    content: Text(text),
-  );
-}

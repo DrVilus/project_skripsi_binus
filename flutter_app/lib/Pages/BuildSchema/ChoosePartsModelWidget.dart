@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:project_skripsi/Functions/CompatibilityCheckFunctions.dart';
+import 'package:project_skripsi/Functions/GenericUIFunctions.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Functions/CurrencyFormat.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +23,7 @@ class ChoosePartsModelWidget extends StatefulWidget {
 }
 
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
+  int _compatibleIndexLength = 10000;
 
   int _getLowestPrice(List queryResult, int index){
     if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
@@ -69,7 +74,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
               right: 10,
               top: MediaQuery.of(context).size.height*0.3,
               child: CustomPaint(
-                size: Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                size: const Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                 painter: ArrowPainter(),
               ),
             ),
@@ -124,12 +129,71 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                               if (data.isEmpty) {
                                 return const Text('No data found');
                               }
-                              
+
+                              //////////////////////////////////////////////////////////////////////////////////////
+                              //Sorting Stuffs
+                              //when choosing cpu
+                              if(widget.partEnum == PartEnum.cpu){
+                                if(schemaState.selectedMotherboard.isNotEmpty){
+                                  var incompatibleData = data.where((element) => element['socket_name'] != schemaState.selectedMotherboard[0]['cpu_socket']).toList();
+                                  data.removeWhere((element) => element['socket_name'] != schemaState.selectedMotherboard[0]['cpu_socket']);
+                                  _compatibleIndexLength = data.length;
+                                  data.insertAll(data.length, incompatibleData);
+                                }
+                              }
+
+                              //when choosing motherboard
+                              if(widget.partEnum == PartEnum.motherboard){
+                                if(schemaState.selectedCPU.isNotEmpty){
+                                  var incompatibleData = data.where((element) => element['cpu_socket'] != schemaState.selectedCPU[0]['socket_name']).toList();
+                                  data.removeWhere((element) => element['cpu_socket'] != schemaState.selectedCPU[0]['socket_name']);
+                                  _compatibleIndexLength = data.length;
+                                  data.insertAll(data.length, incompatibleData);
+                                }
+                              }
+
+                              //when choosing gpu
+                              if(widget.partEnum == PartEnum.gpu){
+                                var tempDataList = [];
+                                if(schemaState.selectedMotherboard.isNotEmpty){
+                                  Map<String,dynamic> serializedJson = jsonDecode(schemaState.selectedMotherboard[0]['pcie_slots_json']);
+                                  var deletedData = data.where((element) =>
+                                  (CompatibilityCheckFunctions().handlePcieCompatibilityWithJson(element['interface_bus'], serializedJson) == false)
+                                  ).toList();
+                                  data.removeWhere((element) => CompatibilityCheckFunctions().handlePcieCompatibilityWithJson(element['interface_bus'], serializedJson) == false);
+                                  tempDataList.addAll(deletedData);
+                                }
+
+                                int selectedPsuWattage = 9999;
+                                if(schemaState.selectedPSU.isNotEmpty){
+                                  selectedPsuWattage = schemaState.selectedPSU[0]['power_W'];
+                                  var deletedData = data.where((element) => (element['recommended_wattage'] > selectedPsuWattage )).toList();
+                                  data.removeWhere((element) => (element['recommended_wattage'] > selectedPsuWattage ));
+                                  tempDataList.addAll(deletedData);
+                                }
+
+                                if(tempDataList.isNotEmpty){
+                                  _compatibleIndexLength = data.length;
+                                  data.insertAll(data.length, tempDataList);
+                                }
+                              }
+
+                              //when choosing PSU
+                              if(widget.partEnum == PartEnum.psu){
+                                if(schemaState.selectedGPU.isNotEmpty){
+                                  var deletedData = data.where((element) => (element['power_W'] < schemaState.selectedGPU[0]['recommended_wattage'] )).toList();
+                                  data.removeWhere((element) => (element['power_W'] < schemaState.selectedGPU[0]['recommended_wattage'] ));
+                                  _compatibleIndexLength = data.length;
+                                  data.insertAll(data.length, deletedData);
+                                }
+                              }
+
                               if(schemaState.checkPartChosen(widget.partEnum).isNotEmpty){
                                 var selectedData = data.where((element) => element['id'] == schemaState.checkPartChosen(widget.partEnum)).first;
                                 data.remove(selectedData);
                                 data.insert(0, selectedData);
                               }
+                              ////////////////////////////////////////////////////////////////////////////////////////
 
                               return Scrollbar(
                                   child: CustomScrollView(
@@ -141,8 +205,11 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(20),
-                                                  color: schemaState.checkPartChosen(widget.partEnum).isNotEmpty && index == 0
-                                                      ? Colors.grey.withAlpha(100) : null
+                                                  color: (schemaState.checkPartChosen(widget.partEnum).isNotEmpty && index == 0)
+                                                      ? Colors.grey.withAlpha(100) 
+                                                      : (index < _compatibleIndexLength )
+                                                      ? null 
+                                                      : Colors.red.withAlpha(100)
                                                 ),
                                                 child: Container(
                                                     margin: const EdgeInsets.only(
@@ -170,7 +237,6 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                             Column(
                                                               children: [
                                                                 Text(CurrencyFormat.convertToIdr(_getLowestPrice(data,index), 2).toString(), style: TextStyles.interStyle1),
-
                                                                 ElevatedButton(
                                                                     onPressed: () {
                                                                       schemaState.changeSelectedPartModelId(data[index]['id']);
@@ -180,15 +246,31 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                                     },
                                                                     child: Text("Info", style: TextStyles.interStyle1)
                                                                 ),
+
+                                                                (schemaState.checkPartChosen(widget.partEnum).isEmpty || index != 0) ?
                                                                 ElevatedButton(
                                                                     onPressed: () async {
-                                                                      schemaState.changePart(await _addPart(data[index]['id']), widget.partEnum);
-                                                                      widget.toggleSideBar();
-                                                                      ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[index]['name']));
+                                                                      var result = schemaState.changePart(await _addPart(data[index]['id']), widget.partEnum);
+                                                                      if(result.isEmpty){
+                                                                        widget.toggleSideBar();
+                                                                        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[index]['name']));
+                                                                      }else{
+                                                                        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+                                                                      }
                                                                     },
                                                                     child: Text("Add", style: TextStyles.interStyle1),
                                                                     style: ElevatedButton.styleFrom(
                                                                         primary: Colors.green
+                                                                    )
+                                                                ) : ElevatedButton(
+                                                                    onPressed:() {
+                                                                      schemaState.removePart(widget.partEnum);
+                                                                      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Removed " + data[index]['name']));
+                                                                    },
+                                                                    child: Text("Remove", style: TextStyles.interStyle1),
+
+                                                                    style: ElevatedButton.styleFrom(
+                                                                        primary: Colors.red
                                                                     )
                                                                 )
                                                               ],
@@ -232,7 +314,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                   //color: Colors.yellow.shade600,
                 ),
               ),
-            )
+            ),
           ],
         )
     );

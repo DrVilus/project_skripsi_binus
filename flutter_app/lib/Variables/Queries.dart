@@ -111,6 +111,8 @@ query gpuQueryById(\$id: uuid!) {
     release_date
     gpu_prices(order_by: {price: asc, shop: asc, shop_link: asc}) {
       price
+      shop
+      shop_link
     }
   }
 }
@@ -151,6 +153,8 @@ query motherboardQueryById(\$id: uuid!) {
     release_year
     motherboard_prices(limit: 1, order_by: {price: asc}) {
       price
+      shop_link
+      shop
     }
     pcie_slots_json
     sata3_slot_count

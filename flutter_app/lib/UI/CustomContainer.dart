@@ -26,8 +26,8 @@ class CustomContainer extends StatelessWidget {
             child: child,
             margin: margin ?? const EdgeInsets.only(top: 20),
             padding: padding ?? const EdgeInsets.only(left: 10, right: 10),
-            width: width ?? MediaQuery.of(context).size.width * 0.8,
-            height: height ?? MediaQuery.of(context).size.height * 0.3,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white, width: 2),
               color: Palette.widgetBackground1,

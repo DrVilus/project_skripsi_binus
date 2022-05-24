@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../Functions/GenericUIFunctions.dart';
 import '../../UI/Palette.dart';
 import '../../Functions/CurrencyFormat.dart';
 import '../../Variables/GlobalVariables.dart';
@@ -72,6 +74,11 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
     text = text.replaceAll(RegExp('_'), ' ');
     text = text.replaceAll(RegExp('json'), '');
     return toBeginningOfSentenceCase(text)!;
+  }
+
+  void _launchUrl(String input) async {
+    Uri _url = Uri.parse(input);
+    if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 
   @override
@@ -198,25 +205,43 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                       children: [Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [Consumer<BuildSchemaStateModel>(
-                                          builder: (context, value, child) => ElevatedButton(
+                                          builder: (context, value, child) => (value.checkPartChosen(widget.partEnum).isEmpty) ?
+                                          ElevatedButton(
                                               onPressed:() {
-                                                value.changePart(data, widget.partEnum);
-                                                widget.toggleMenu();
-                                                ScaffoldMessenger.of(context).showSnackBar(snackBar("Added " + data[0]['name']));
-                                                print(data);
+                                                var result = value.changePart(data, widget.partEnum);
+                                                if(result.isEmpty){
+                                                  ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[0]['name']));
+                                                  widget.toggleMenu();
+                                                }else{
+                                                  ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+                                                }
+
                                               },
                                               child: Text("Add", style: TextStyles.interStyle1),
 
                                               style: ElevatedButton.styleFrom(
                                                   primary: Colors.green
+                                              )) :
+                                          ElevatedButton(
+                                              onPressed:() {
+                                                value.removePart(widget.partEnum);
+                                                ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Removed " + data[0]['name']));
+                                              },
+                                              child: Text("Remove", style: TextStyles.interStyle1),
+
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.red
                                               )
-                                          ),
+                                          )
+                                          ,
                                         )],
                                       ),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [ElevatedButton(
                                               onPressed: () {
+                                                //print(data[0][getQueryPriceText(widget.partEnum)][0]['shop_link']!);
+                                                _launchUrl(data[0][getQueryPriceText(widget.partEnum)][0]['shop_link']!);
                                               },
                                               child: Text("Visit Store Page", style: TextStyles.interStyle1)
                                           ),],

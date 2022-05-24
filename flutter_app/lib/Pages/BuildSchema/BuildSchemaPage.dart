@@ -28,6 +28,11 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
     stateModel.changeSidebarState(2);
   }
 
+  void _goToPartModelListPage(BuildSchemaStateModel stateModel, PartEnum partEnum){
+    stateModel.changeSelectedPartEnum(partEnum);
+    stateModel.changeSidebarState(1);
+  }
+
   final ColorFilter disabledColor = ColorFilter.mode(Colors.grey.shade800, BlendMode.modulate);
   final ColorFilter enabledColor = const ColorFilter.mode(Colors.white, BlendMode.modulate);
 
@@ -51,6 +56,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedPSU.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.psu, value.selectedPSU[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.psu);
                           }
                         }, // Image tapped
                         child: ColorFiltered(
@@ -74,6 +82,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedCooler.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.cooling, value.selectedCooler[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.cooling);
                           }
                         }, // Image tapped
                         child: ColorFiltered(
@@ -97,6 +108,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                             if(value.selectedMotherboard.isNotEmpty){
                               value.changeSidebarToggle();
                               _goToPartInfoPage(value, PartEnum.motherboard, value.selectedMotherboard[0]['id']);
+                            }else{
+                              value.changeSidebarToggle();
+                              _goToPartModelListPage(value, PartEnum.motherboard);
                             }
                           }, // Image tapped
                           child: ColorFiltered(
@@ -120,6 +134,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedGPU.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.gpu, value.selectedGPU[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.gpu);
                           }
                         }, // Image tapped
                         child: ColorFiltered(
@@ -143,6 +160,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedRAM.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.ram, value.selectedRAM[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.ram);
                           }
                         }, // Image tapped
                         child: ColorFiltered(
@@ -166,6 +186,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedStorage.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.storage, value.selectedStorage[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.storage);
                           }
                         }, // Image tapped
                         child: ColorFiltered(
@@ -189,6 +212,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           if(value.selectedCPU.isNotEmpty){
                             value.changeSidebarToggle();
                             _goToPartInfoPage(value, PartEnum.cpu, value.selectedCPU[0]['id']);
+                          }else{
+                            value.changeSidebarToggle();
+                            _goToPartModelListPage(value, PartEnum.cpu);
                           }
                         }, // Image tapped
                         child: ColorFiltered(

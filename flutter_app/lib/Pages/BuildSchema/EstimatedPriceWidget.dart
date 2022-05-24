@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_skripsi/Functions/CurrencyFormat.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/UI/FadeBlackBackground.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:provider/provider.dart';
 
 import '../../UI/Palette.dart';
 
@@ -19,6 +22,39 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
     setState(() {
       _isMenuPressed = !_isMenuPressed;
     });
+  }
+
+  Widget _getPerformanceBenchmark(BuildSchemaStateModel schemaStateModel){
+    List<Widget> list = [];
+    if(schemaStateModel.selectedCPU.isNotEmpty){
+      list.add(Row(children: [
+        Text("Cores / Threads" + schemaStateModel.selectedCPU[0]['Cores'], style: TextStyles.sourceSans3)
+      ]));
+      list.add(Row(children: [
+        Text("Clock Speed:" + schemaStateModel.selectedCPU[0]['Clock'], style: TextStyles.sourceSans3)
+      ]));
+    }
+    if(schemaStateModel.selectedStorage.isNotEmpty){
+      list.add(Row(children: [
+        Text("Storage size" + schemaStateModel.selectedStorage[0]['size'], style: TextStyles.sourceSans3)
+      ]));
+    }
+    if(schemaStateModel.selectedPSU.isNotEmpty){
+      list.add(Row(children: [
+        Text("Wattage" + schemaStateModel.selectedPSU[0]['power_W'], style: TextStyles.sourceSans3)
+      ]));
+    }
+    if(schemaStateModel.selectedRAM.isNotEmpty){
+      list.add(Row(children: [
+        Text("Ram: " + schemaStateModel.selectedRAM[0]['size_gb'] + " GB " + schemaStateModel.selectedRAM[0]['ram_slot'], style: TextStyles.sourceSans3)
+      ]));
+    }
+    if(schemaStateModel.selectedMotherboard.isNotEmpty){
+      list.add(Row(children: [
+        Text("Form Factor: " + schemaStateModel.selectedMotherboard[0]['form_factor'], style: TextStyles.sourceSans3)
+      ]));
+    }
+    return(Column(children: list,));
   }
 
   @override
@@ -63,7 +99,7 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
                   _toggleMenu();
                   widget.blackBackgroundCallback();
                 },
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width*0.92,
                   height: MediaQuery.of(context).size.height *0.16,
                   //color: Colors.yellow.shade600,
@@ -74,27 +110,30 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
               bottom: 0,
               child: Visibility(
                 visible: _isMenuPressed,
-                child: Container(
-                    margin: const EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width*0.92,
-                    height: (MediaQuery.of(context).size.width*0.92*1.3103448275862069) - MediaQuery.of(context).size.height *0.16,
-                    child: Column(
+                child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, value, child) => Container(
+                      margin: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width*0.92,
+                      height: (MediaQuery.of(context).size.width*0.92*1.3103448275862069) - MediaQuery.of(context).size.height *0.16,
+                      child: Column(
 
-                      children: [
-                        Row(
-                          children: [
-                            Text("Estimated Price:", style: TextStyles.interStyleBuildGuidePage,),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
-                          ],
-                        )
-                      ],
-                    )
-                  //color: Colors.yellow.shade600,
-                ),
+                        children: [
+                          Row(
+                            children: [
+                              Text("Estimated Price: "+ CurrencyFormat.convertToIdr(value.calculatePrice(), 0), style: TextStyles.interStyleBuildGuidePage,),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
+                              _getPerformanceBenchmark(value)
+                            ],
+                          )
+                        ],
+                      )
+                    //color: Colors.yellow.shade600,
+                  ),
+                )
               )
             ),
 

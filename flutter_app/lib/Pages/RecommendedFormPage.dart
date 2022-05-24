@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
+import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:project_skripsi/UI/GradientRectSliderTrackShape.dart';
 import 'package:project_skripsi/UI/Palette.dart';
@@ -21,67 +22,67 @@ class RecommendedFormPage extends StatefulWidget {
 class _RecommendedFormPageState extends State<RecommendedFormPage> {
   String tempValue = "";
   TextEditingController userInput = TextEditingController();
-  int CaseSlider = 50;
-  int MBSlider = 50;
-  int CPUSlider = 50;
-  int PSUSlider = 50;
-  int RAMSlider = 50;
-  int CoolingSlider = 50;
-  int GPUSlider = 50;
-  int StorageSlider = 50;
-
-  callbackCase(newValue) {
-    setState(() {
-      CaseSlider = newValue;
-    });
-  }
-
-  callbackMB(newValue) {
-    setState(() {
-      MBSlider = newValue;
-    });
-  }
-
-  callbackCPU(newValue) {
-    setState(() {
-      CPUSlider = newValue;
-    });
-  }
-
-  callbackPSU(newValue) {
-    setState(() {
-      PSUSlider = newValue;
-    });
-  }
-
-  callbackRAM(newValue) {
-    setState(() {
-      RAMSlider = newValue;
-    });
-  }
-
-  callbackCooling(newValue) {
-    setState(() {
-      CoolingSlider = newValue;
-    });
-  }
-
-  callbackGPU(newValue) {
-    setState(() {
-      GPUSlider = newValue;
-    });
-  }
-
-  callbackStorage(newValue) {
-    setState(() {
-      StorageSlider = newValue;
-    });
-  }
+  // int CaseSlider = 50;
+  // int MBSlider = 50;
+  // int CPUSlider = 50;
+  // int PSUSlider = 50;
+  // int RAMSlider = 50;
+  // int CoolingSlider = 50;
+  // int GPUSlider = 50;
+  // int StorageSlider = 50;
+  //
+  // callbackCase(newValue) {
+  //   setState(() {
+  //     CaseSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackMB(newValue) {
+  //   setState(() {
+  //     MBSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackCPU(newValue) {
+  //   setState(() {
+  //     CPUSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackPSU(newValue) {
+  //   setState(() {
+  //     PSUSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackRAM(newValue) {
+  //   setState(() {
+  //     RAMSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackCooling(newValue) {
+  //   setState(() {
+  //     CoolingSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackGPU(newValue) {
+  //   setState(() {
+  //     GPUSlider = newValue;
+  //   });
+  // }
+  //
+  // callbackStorage(newValue) {
+  //   setState(() {
+  //     StorageSlider = newValue;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: CustomAppBarBack(
         children: [
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,8 +93,6 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomContainer(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.9,
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(20),
                         topRight: Radius.circular(20),
@@ -103,7 +102,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                       margin: const EdgeInsets.only(top: 20, bottom: 10),
                       child: Container(
                         margin:
-                            const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
+                        const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +122,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   height: 25,
                                   margin: const EdgeInsets.only(left: 25),
                                   decoration:
-                                      const BoxDecoration(color: Colors.white),
+                                  const BoxDecoration(color: Colors.white),
                                   child: ButtonTheme(
                                     alignedDropdown: true,
                                     child: DropdownButtonHideUnderline(
@@ -160,7 +159,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   width: 150,
                                   height: 25,
                                   decoration:
-                                      const BoxDecoration(color: Colors.white),
+                                  const BoxDecoration(color: Colors.white),
                                   child: TextFormField(
                                     maxLength: 14,
                                     controller: userInput,
@@ -185,56 +184,56 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                             const SizedBox(
                               height: 5,
                             ),
-                            RecommendPageSlider(
-                                callback: callbackCase,
-                                sliderName: "Case: ",
-                                sliderValue: CaseSlider),
-                            RecommendPageSlider(
-                                callback: callbackMB,
-                                sliderName: "Motherboard: ",
-                                sliderValue: MBSlider),
-                            RecommendPageSlider(
-                                callback: callbackCPU,
-                                sliderName: "CPU: ",
-                                sliderValue: CPUSlider),
-                            RecommendPageSlider(
-                                callback: callbackRAM,
-                                sliderName: "RAM: ",
-                                sliderValue: RAMSlider),
-                            RecommendPageSlider(
-                                callback: callbackCooling,
-                                sliderName: "Cooling: ",
-                                sliderValue: CoolingSlider),
-                            RecommendPageSlider(
-                                callback: callbackGPU,
-                                sliderName: "GPU: ",
-                                sliderValue: GPUSlider),
-                            RecommendPageSlider(
-                                callback: callbackPSU,
-                                sliderName: "PSU: ",
-                                sliderValue: PSUSlider),
-                            RecommendPageSlider(
-                                callback: callbackStorage,
-                                sliderName: "Storage: ",
-                                sliderValue: StorageSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackCase,
+                            //     sliderName: "Case: ",
+                            //     sliderValue: CaseSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackMB,
+                            //     sliderName: "Motherboard: ",
+                            //     sliderValue: MBSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackCPU,
+                            //     sliderName: "CPU: ",
+                            //     sliderValue: CPUSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackRAM,
+                            //     sliderName: "RAM: ",
+                            //     sliderValue: RAMSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackCooling,
+                            //     sliderName: "Cooling: ",
+                            //     sliderValue: CoolingSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackGPU,
+                            //     sliderName: "GPU: ",
+                            //     sliderValue: GPUSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackPSU,
+                            //     sliderName: "PSU: ",
+                            //     sliderValue: PSUSlider),
+                            // RecommendPageSlider(
+                            //     callback: callbackStorage,
+                            //     sliderName: "Storage: ",
+                            //     sliderValue: StorageSlider),
                             const SizedBox(
                               height: 20,
                             ),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CorneredButton(
-                                    onPressed: () {},
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                      child: Text(
-                                        "Continue",
-                                        style: TextStyles.interStyle1,
-                                      ),
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CorneredButton(
+                                  onPressed: () {},
+                                  child: Container(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                    child: Text(
+                                      "Continue",
+                                      style: TextStyles.interStyle1,
                                     ),
-                                  )
-                                ],
+                                  ),
+                                )
+                              ],
                             ),
                           ],
                         ),

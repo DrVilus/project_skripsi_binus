@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
+
+import '../../Functions/CompatibilityCheckFunctions.dart';
 
 class BuildSchemaStateModel extends ChangeNotifier {
 
@@ -46,95 +49,207 @@ class BuildSchemaStateModel extends ChangeNotifier {
   //mb
   final List _currentSelectedMotherboard = [];
   List get selectedMotherboard => _currentSelectedMotherboard;
-  void changeSelectedMotherboard(List query){
+  String changeSelectedMotherboard(List query){
+    if(selectedCPU.isNotEmpty){
+      if(selectedCPU[0]['socket_name'] != query[0]['cpu_socket']){
+        return ('Incompatible cpu socket. cpu has ' + selectedCPU[0]['socket_name'] + ' while motherboard has ' + query[0]['cpu_socket']);
+      }
+    }
     _currentSelectedMotherboard.clear();
     _currentSelectedMotherboard.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedMotherboard(){
+    _currentSelectedMotherboard.clear();
     notifyListeners();
   }
 
   //cpu
   final List _currentSelectedCPU = [];
   List get selectedCPU => _currentSelectedCPU;
-  void changeSelectedCPU(List query){
+  String changeSelectedCPU(List query){
+    if(selectedMotherboard.isNotEmpty){
+      if(query[0]['socket_name'] != selectedMotherboard[0]['cpu_socket']){
+        return ('Incompatible cpu socket. Cpu has ' + query[0]['socket_name'] + ' while motherboard has ' + selectedMotherboard[0]['cpu_socket']);
+      }
+    }
     _currentSelectedCPU.clear();
     _currentSelectedCPU.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedCPU(){
+    _currentSelectedCPU.clear();
     notifyListeners();
   }
 
   //gpu
   final List _currentSelectedGPU = [];
   List get selectedGPU => _currentSelectedGPU;
-  void changeSelectedGPU(List query){
+  String changeSelectedGPU(List query){
+    if(_currentSelectedMotherboard.isNotEmpty){
+      Map<String,dynamic> serializedJson = jsonDecode(_currentSelectedMotherboard[0]['pcie_slots_json']);
+      if(CompatibilityCheckFunctions().handlePcieCompatibilityWithJson(query[0]['interface_bus'], serializedJson) == false){
+        return ('Incompatible PCIE Slot. Gpu needs a ' + query[0]['interface_bus'] + ' slot');
+      }
+    }
+    if(_currentSelectedPSU.isNotEmpty){
+      if(query[0]['recommended_wattage'] > _currentSelectedPSU[0]['power_W']){
+        return('Not enough Power, needs at least ' + query[0]['recommended_wattage'].toString() + 'W for the selected hardware.');
+      }
+    }
     _currentSelectedGPU.clear();
     _currentSelectedGPU.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedGPU(){
+    _currentSelectedGPU.clear();
     notifyListeners();
   }
 
   //ram
   final List _currentSelectedRAM = [];
   List get selectedRAM => _currentSelectedRAM;
-  void changeSelectedRAM(List query){
+  String changeSelectedRAM(List query){
     _currentSelectedRAM.clear();
     _currentSelectedRAM.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedRAM(){
+    _currentSelectedRAM.clear();
     notifyListeners();
   }
 
   //psu
   final List _currentSelectedPSU = [];
   List get selectedPSU => _currentSelectedPSU;
-  void changeSelectedPSU(List query){
+  String changeSelectedPSU(List query){
+    if(_currentSelectedGPU.isNotEmpty){
+      if(_currentSelectedGPU[0]['recommended_wattage'] > query[0]['power_W']){
+        return('Not enough Power, needs at least ' + _currentSelectedGPU[0]['recommended_wattage'].toString() + 'W for the selected hardware.');
+      }
+    }
     _currentSelectedPSU.clear();
     _currentSelectedPSU.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedPSU(){
+    _currentSelectedPSU.clear();
     notifyListeners();
   }
 
   //cooler
   final List _currentSelectedCooler = [];
   List get selectedCooler => _currentSelectedCooler;
-  void changeSelectedCooler(List query){
+  String changeSelectedCooler(List query){
     _currentSelectedCooler.clear();
     _currentSelectedCooler.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedCooler(){
+    _currentSelectedCooler.clear();
     notifyListeners();
   }
 
   //storage
   final List _currentSelectedStorage = [];
   List get selectedStorage => _currentSelectedStorage;
-  void changeSelectedStorage(List query){
+  String changeSelectedStorage(List query){
     _currentSelectedStorage.clear();
     _currentSelectedStorage.add(query[0]);
     notifyListeners();
+    return '';
   }
 
-  ///Change Part by checking its query content and enum
-  void changePart(List query, PartEnum partEnum){
+  void clearSelectedStorage(){
+    _currentSelectedStorage.clear();
+    notifyListeners();
+  }
+
+  ///Change Part by checking its query content and enum, return empty string if success. Returns an error if fails.
+  String changePart(List query, PartEnum partEnum){
     switch(partEnum){
       case PartEnum.cooling: {
-        changeSelectedCooler(query);
+        return changeSelectedCooler(query);
+      }
+      case PartEnum.motherboard: {
+        return changeSelectedMotherboard(query);
+      }
+      case PartEnum.gpu: {
+        return changeSelectedGPU(query);
+      }
+      case PartEnum.cpu: {
+        return changeSelectedCPU(query);
+      }
+      case PartEnum.psu: {
+        return changeSelectedPSU(query);
+      }
+      case PartEnum.ram: {
+        return changeSelectedRAM(query);
+      }
+      case PartEnum.storage: {
+        return changeSelectedStorage(query);
+      }
+      default: {
+        return 'error default';
+      }
+    }
+    notifyListeners();
+  }
+
+  void removePart(PartEnum partEnum){
+    switch(partEnum){
+      case PartEnum.cooling: {
+        if(selectedCooler.isNotEmpty){
+          clearSelectedCooler();
+        }
         break;
       }
       case PartEnum.motherboard: {
-        changeSelectedMotherboard(query);
+        if(selectedMotherboard.isNotEmpty){
+          clearSelectedMotherboard();
+        }
         break;
       }
       case PartEnum.gpu: {
-        changeSelectedGPU(query);
+        if(selectedGPU.isNotEmpty){
+          clearSelectedGPU();
+        }
         break;
       }
       case PartEnum.cpu: {
-        changeSelectedCPU(query);
+        if(selectedCPU.isNotEmpty){
+          clearSelectedCPU();
+        }
         break;
       }
       case PartEnum.psu: {
-        changeSelectedPSU(query);
+        if(selectedPSU.isNotEmpty){
+          clearSelectedPSU();
+        }
         break;
       }
       case PartEnum.ram: {
-        changeSelectedRAM(query);
+        if(selectedRAM.isNotEmpty){
+          clearSelectedRAM();
+        }
         break;
       }
       case PartEnum.storage: {
-        changeSelectedStorage(query);
+        if(selectedStorage.isNotEmpty){
+          clearSelectedStorage();
+        }
         break;
       }
 
@@ -142,7 +257,6 @@ class BuildSchemaStateModel extends ChangeNotifier {
         break;
       }
     }
-    notifyListeners();
   }
 
   ///Return as ID of the selected part
@@ -201,8 +315,33 @@ class BuildSchemaStateModel extends ChangeNotifier {
         return '';
       }
     }
-    notifyListeners();
   }
 
+  double calculatePrice(){
+    double initPrice = 0;
+    if(selectedCooler.isNotEmpty){
+      initPrice += selectedCooler[0]['cooling_prices'][0]['price'];
+    }
+    if(selectedGPU.isNotEmpty){
+      initPrice += selectedGPU[0]['gpu_prices'][0]['price'];
+    }
+    if(selectedCPU.isNotEmpty){
+      initPrice += selectedCPU[0]['cpu_prices'][0]['price'];
+    }
+    if(selectedMotherboard.isNotEmpty){
+      initPrice += selectedMotherboard[0]['motherboard_prices'][0]['price'];
+    }
+    if(selectedPSU.isNotEmpty){
+      initPrice += selectedPSU[0]['power_supply_prices'][0]['price'];
+    }
+    if(selectedRAM.isNotEmpty){
+      initPrice += selectedRAM[0]['ram_prices'][0]['price'];
+    }
+    if(selectedStorage.isNotEmpty){
+      initPrice += selectedStorage[0]['storage_prices'][0]['price'];
+    }
+
+    return initPrice;
+  }
 
 }
