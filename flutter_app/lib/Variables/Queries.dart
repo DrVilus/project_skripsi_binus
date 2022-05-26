@@ -262,3 +262,36 @@ query storageQueryById(\$id:uuid!) {
 }
 
 """;
+
+String caseQuery = """
+query caseQuery {
+  case {
+    case_prices(limit: 1, order_by: {price: asc}) {
+      price
+    }
+    form_factor_json
+    height
+    length
+    width
+    id
+    name
+  }
+}
+""";
+
+String caseQueryById = """
+query caseQueryById(\$id: uuid!) {
+  case(where: {id: {_eq: \$id}}) {
+    case_prices(order_by: {price: asc}) {
+      price
+    }
+    form_factor_json
+    height
+    length
+    width
+    id
+    name
+  }
+}
+
+""";

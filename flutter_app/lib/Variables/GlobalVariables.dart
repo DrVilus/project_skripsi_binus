@@ -8,7 +8,7 @@ import '../Models/PartsSelectModel.dart';
 import 'Queries.dart';
 
 List<PartsSelectModel> partSelectModelList = [
-  PartsSelectModel("Case", "assets/img/case.png", PartEnum.pcCase, "", ""),
+  PartsSelectModel("Case", "assets/img/case.png", PartEnum.pcCase, caseQuery, caseQueryById),
   PartsSelectModel("Cooling", "assets/img/cooling.png", PartEnum.cooling, coolingQuery, coolingQueryById),
   PartsSelectModel("Motherboard", "assets/img/motherboard.png", PartEnum.motherboard, motherboardQuery, motherboardQueryById),
   PartsSelectModel("GPU", "assets/img/gpu.png", PartEnum.gpu, gpuQuery, gpuQueryById),
@@ -32,6 +32,9 @@ enum PartEnum{
 
 PartEnum convertIndexToEnum(int index){
   switch(index){
+    case 0:{
+      return PartEnum.pcCase;
+    }
     case 1: {
       return PartEnum.cooling;
     }
@@ -62,6 +65,9 @@ PartEnum convertIndexToEnum(int index){
 
 List getQueryList(QueryResult queryResult, PartEnum enumInput){
   switch(enumInput){
+    case PartEnum.pcCase: {
+      return queryResult.data?['case'];
+    }
     case PartEnum.cooling: {
       return queryResult.data?['cooling'];
     }
@@ -92,6 +98,9 @@ List getQueryList(QueryResult queryResult, PartEnum enumInput){
 
 String getQueryPriceText(PartEnum enumInput){
   switch(enumInput){
+    case PartEnum.pcCase: {
+      return 'case_prices';
+    }
     case PartEnum.cooling: {
       return 'cooling_prices';
     }

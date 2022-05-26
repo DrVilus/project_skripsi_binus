@@ -28,25 +28,25 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
     List<Widget> list = [];
     if(schemaStateModel.selectedCPU.isNotEmpty){
       list.add(Row(children: [
-        Text("Cores / Threads" + schemaStateModel.selectedCPU[0]['Cores'], style: TextStyles.sourceSans3)
+        Text("Cores / Threads: " + schemaStateModel.selectedCPU[0]['Cores'], style: TextStyles.sourceSans3)
       ]));
       list.add(Row(children: [
-        Text("Clock Speed:" + schemaStateModel.selectedCPU[0]['Clock'], style: TextStyles.sourceSans3)
+        Text("Clock Speed: " + schemaStateModel.selectedCPU[0]['Clock'], style: TextStyles.sourceSans3)
       ]));
     }
     if(schemaStateModel.selectedStorage.isNotEmpty){
       list.add(Row(children: [
-        Text("Storage size" + schemaStateModel.selectedStorage[0]['size'], style: TextStyles.sourceSans3)
+        Text("Storage size: " + schemaStateModel.selectedStorage[0]['size'], style: TextStyles.sourceSans3)
       ]));
     }
     if(schemaStateModel.selectedPSU.isNotEmpty){
       list.add(Row(children: [
-        Text("Wattage" + schemaStateModel.selectedPSU[0]['power_W'], style: TextStyles.sourceSans3)
+        Text("Wattage: " + schemaStateModel.selectedPSU[0]['power_W'].toString(), style: TextStyles.sourceSans3)
       ]));
     }
     if(schemaStateModel.selectedRAM.isNotEmpty){
       list.add(Row(children: [
-        Text("Ram: " + schemaStateModel.selectedRAM[0]['size_gb'] + " GB " + schemaStateModel.selectedRAM[0]['ram_slot'], style: TextStyles.sourceSans3)
+        Text("Ram: " + schemaStateModel.selectedRAM[0]['size_gb'].toString() + " GB " + schemaStateModel.selectedRAM[0]['ram_slot'], style: TextStyles.sourceSans3)
       ]));
     }
     if(schemaStateModel.selectedMotherboard.isNotEmpty){
@@ -126,9 +126,9 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
                           Row(
                             children: [
                               Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
-                              _getPerformanceBenchmark(value)
                             ],
-                          )
+                          ),
+                          _getPerformanceBenchmark(value)
                         ],
                       )
                     //color: Colors.yellow.shade600,

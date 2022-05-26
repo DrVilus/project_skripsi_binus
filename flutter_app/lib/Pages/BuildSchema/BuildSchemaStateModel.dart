@@ -177,9 +177,27 @@ class BuildSchemaStateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //case
+  final List _currentSelectedCase = [];
+  List get selectedCase => _currentSelectedCase;
+  String changeSelectedCase(List query){
+    _currentSelectedCase.clear();
+    _currentSelectedCase.add(query[0]);
+    notifyListeners();
+    return '';
+  }
+
+  void clearSelectedCase(){
+    _currentSelectedCase.clear();
+    notifyListeners();
+  }
+
   ///Change Part by checking its query content and enum, return empty string if success. Returns an error if fails.
   String changePart(List query, PartEnum partEnum){
     switch(partEnum){
+      case PartEnum.pcCase: {
+        return changeSelectedCase(query);
+      }
       case PartEnum.cooling: {
         return changeSelectedCooler(query);
       }
@@ -210,6 +228,12 @@ class BuildSchemaStateModel extends ChangeNotifier {
 
   void removePart(PartEnum partEnum){
     switch(partEnum){
+      case PartEnum.pcCase: {
+        if(selectedCase.isNotEmpty){
+          clearSelectedCase();
+        }
+        break;
+      }
       case PartEnum.cooling: {
         if(selectedCooler.isNotEmpty){
           clearSelectedCooler();
@@ -262,6 +286,12 @@ class BuildSchemaStateModel extends ChangeNotifier {
   ///Return as ID of the selected part
   String checkPartChosen(PartEnum partEnum){
     switch(partEnum){
+      case PartEnum.pcCase: {
+        if(selectedCase.isNotEmpty){
+          return selectedCase[0]['id'];
+        }
+        return '';
+      }
       case PartEnum.cooling: {
         if(selectedCooler.isNotEmpty){
           return selectedCooler[0]['id'];
