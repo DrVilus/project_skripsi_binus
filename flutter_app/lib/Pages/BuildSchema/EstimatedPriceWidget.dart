@@ -46,7 +46,8 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
     }
     if(schemaStateModel.selectedRAM.isNotEmpty){
       list.add(Row(children: [
-        Text("Ram: " + schemaStateModel.selectedRAM[0]['size_gb'].toString() + " GB " + schemaStateModel.selectedRAM[0]['ram_slot'], style: TextStyles.sourceSans3)
+        Text("Ram: " + (schemaStateModel.selectedRAM[0]['size_gb'] * schemaStateModel.currentSelectedRAMCount).toString() + " GB " + schemaStateModel.selectedRAM[0]['ram_slot'] + " ( " + schemaStateModel.selectedRAM[0]['size_gb'].toString() + " GB x " + schemaStateModel.currentSelectedRAMCount.toString() + " ) ",
+            style: TextStyles.sourceSans3)
       ]));
     }
     if(schemaStateModel.selectedMotherboard.isNotEmpty){

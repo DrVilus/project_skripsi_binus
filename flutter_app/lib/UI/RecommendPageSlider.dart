@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/UI/GradientRectSliderTrackShape.dart';
-import 'Palette.dart';
 
 class RecommendPageSlider extends StatefulWidget {
   final Function(int) callback;
@@ -33,7 +32,7 @@ class _RecommendPageSliderState extends State<RecommendPageSlider> {
             children: [
               Text(
                 widget.sliderName ?? "",
-                style: TextStyle(color: Colors.white, fontSize: 13),
+                style: const TextStyle(color: Colors.white, fontSize: 13),
                 softWrap: true,
               ),
               const Spacer(),

@@ -1,20 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/Pages/BuildSchema/EstimatedPriceWidget.dart';
 import 'package:project_skripsi/UI/FadeBlackBackground.dart';
 import 'package:project_skripsi/Variables/GlobalVariables.dart';
 import 'package:provider/provider.dart';
+import '../../Models/RecommendationModels.dart';
 import '../../UI/CustomAppbar.dart';
 
 class BuildSchemaPage extends StatefulWidget {
-  const BuildSchemaPage({Key? key}) : super(key: key);
+  const BuildSchemaPage({Key? key, this.fullPcPartModelList}) : super(key: key);
+
+  final FullPcPartModel? fullPcPartModelList;
 
   @override
   State<BuildSchemaPage> createState() => _BuildSchemaPageState();
+
 }
 
 class _BuildSchemaPageState extends State<BuildSchemaPage> {
+  BuildSchemaStateModel buildSchemaStateModel = BuildSchemaStateModel();
   bool _blackBackground = false;
   void _toggleBlackBackground(){
     setState(() {
@@ -37,11 +41,30 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
   final ColorFilter enabledColor = const ColorFilter.mode(Colors.white, BlendMode.modulate);
 
   @override
+  void initState() {
+    super.initState();
+    if(widget.fullPcPartModelList != null){
+      buildSchemaStateModel.changeSelectedCPU([widget.fullPcPartModelList!.cpuMotherboardPair.cpuData]);
+      buildSchemaStateModel.changeSelectedMotherboard([widget.fullPcPartModelList!.cpuMotherboardPair.motherboardData]);
+      if(widget.fullPcPartModelList!.gpuPsuPair.gpuData != null){
+        buildSchemaStateModel.changeSelectedGPU([widget.fullPcPartModelList!.gpuPsuPair.gpuData]);
+      }
+      buildSchemaStateModel.changeSelectedPSU([widget.fullPcPartModelList!.gpuPsuPair.psuData]);
+      buildSchemaStateModel.changeSelectedRAM([widget.fullPcPartModelList!.ramData]);
+      buildSchemaStateModel.changeSelectedRAMCount(widget.fullPcPartModelList!.ramCount);
+      buildSchemaStateModel.changeSelectedStorage([widget.fullPcPartModelList!.storageData]);
+      buildSchemaStateModel.changeSelectedCooler([widget.fullPcPartModelList!.coolerData]);
+      buildSchemaStateModel.changeSelectedCase([widget.fullPcPartModelList!.caseData]);
+
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ChangeNotifierProvider(
-          create: (context) => BuildSchemaStateModel(),
+        child: ChangeNotifierProvider.value(
+          value:buildSchemaStateModel,
           child: CustomAppbar(
             isTextFieldEnabled: true,
             sideBarVisible: true,

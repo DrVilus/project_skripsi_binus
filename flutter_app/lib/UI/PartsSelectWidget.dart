@@ -13,7 +13,7 @@ class PartsSelectWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => function(),
       child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Expanded(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -32,7 +31,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
     return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
   }
 
-  Future<List> _addPart(String id) async{
+  Future<List> _getPartData(String id) async{
     final QueryOptions options = QueryOptions(
       document: gql(partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first.queryById),
       variables: {
@@ -50,7 +49,17 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
     return getQueryList(result, widget.partEnum);
 
-}
+  }
+
+  void _addPart(BuildSchemaStateModel schemaState, List data, int index) async {
+    var result = schemaState.changePart(await _getPartData(data[index]['id']), widget.partEnum);
+    if(result.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[0]['name']));
+      widget.toggleSideBar();
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +91,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
               top: 0,
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width*0.82,
                     height: (MediaQuery.of(context).size.height*0.07).toDouble(),
                     child: Row(
@@ -112,6 +121,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                             // Just like in apollo refetch() could be used to manually trigger a refetch
                             // while fetchMore() can be used for pagination purpose
                             builder: (QueryResult result, { VoidCallback? refetch, FetchMore? fetchMore }) {
+                              _compatibleIndexLength = 1000000;
                               if (result.hasException) {
                                 return Text(result.exception.toString());
                               }
@@ -125,7 +135,6 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                               }
 
                               List? data = getQueryList(result, widget.partEnum);
-
                               if (data.isEmpty) {
                                 return const Text('No data found');
                               }
@@ -194,7 +203,6 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                 data.insert(0, selectedData);
                               }
                               ////////////////////////////////////////////////////////////////////////////////////////
-
                               return Scrollbar(
                                   child: CustomScrollView(
                                     slivers: <Widget>[
@@ -222,7 +230,12 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                       children: [
                                                         Row(
                                                           children: [
-                                                            Flexible(child: Text(data[index]['name'], style: TextStyles.interStyle1,))
+                                                            Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
+                                                            (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty && index == 0) ?
+                                                            Flexible(child: Text(data[index]['name'] + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
+                                                                :
+                                                            Flexible(child: Text(data[index]['name'], style: TextStyles.sourceSans3,)),
+                                                            ),
                                                           ],
                                                         ),
 
@@ -250,12 +263,14 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                                 (schemaState.checkPartChosen(widget.partEnum).isEmpty || index != 0) ?
                                                                 ElevatedButton(
                                                                     onPressed: () async {
-                                                                      var result = schemaState.changePart(await _addPart(data[index]['id']), widget.partEnum);
-                                                                      if(result.isEmpty){
-                                                                        widget.toggleSideBar();
-                                                                        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[index]['name']));
+                                                                      //For multi count part input check
+                                                                      if(widget.partEnum == PartEnum.ram){
+                                                                        GenericUIFunctions.countInputModalBottomSheetRam(context,(input) async {
+                                                                          _addPart(schemaState, data, index);
+                                                                          schemaState.currentSelectedRAMCount = input;
+                                                                        });
                                                                       }else{
-                                                                        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+                                                                        _addPart(schemaState, data, index);
                                                                       }
                                                                     },
                                                                     child: Text("Add", style: TextStyles.interStyle1),
@@ -308,7 +323,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                 onTap: () {
                   widget.toggleSideBar();
                 },
-                child: Container(
+                child: SizedBox(
                   width: 50,
                   height: MediaQuery.of(context).size.height *0.7,
                   //color: Colors.yellow.shade600,
@@ -343,13 +358,13 @@ class WidgetBackgroundPainter extends CustomPainter {
     path_0.cubicTo(size.width*0.8817640,size.height*0.001564945,size.width*0.8958736,size.height*0.004974272,size.width*0.9059635,size.height*0.01098174);
     path_0.close();
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005617978;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005617978;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Color(0xff1E1E1E).withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = const Color(0xff1E1E1E).withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 
@@ -363,9 +378,9 @@ class LinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawLine(Offset(size.width*0.5000000,size.height*1.300935e-10),Offset(size.width*0.4999925,size.height),paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawLine(Offset(size.width*0.5000000,size.height*1.300935e-10),Offset(size.width*0.4999925,size.height),paint0Stroke);
 
   }
 
@@ -384,13 +399,13 @@ class ArrowPainter extends CustomPainter {
     path_0.lineTo(2,13.5);
     path_0.lineTo(15,1);
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.1250000;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.1250000;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 

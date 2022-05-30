@@ -1,7 +1,6 @@
 
 library flutter_app.global_variables;
 
-import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../Models/PartsSelectModel.dart';
@@ -66,32 +65,59 @@ PartEnum convertIndexToEnum(int index){
 List getQueryList(QueryResult queryResult, PartEnum enumInput){
   switch(enumInput){
     case PartEnum.pcCase: {
-      return queryResult.data?['case'];
+      if(queryResult.data!['case'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['case'];
     }
+
     case PartEnum.cooling: {
-      return queryResult.data?['cooling'];
+      if(queryResult.data!['cooling'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['cooling'];
     }
+
     case PartEnum.motherboard: {
-      return queryResult.data?['motherboard'];
+      if(queryResult.data!['motherboard'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['motherboard'];
     }
+
     case PartEnum.gpu: {
-      return queryResult.data?['gpu'];
+      if(queryResult.data!['gpu'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['gpu'];
     }
     case PartEnum.cpu: {
-      return queryResult.data?['cpu'];
+      if(queryResult.data!['cpu'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['cpu'];
     }
     case PartEnum.psu: {
-      return queryResult.data?['power_supply'];
+      if(queryResult.data!['power_supply'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['power_supply'];
     }
     case PartEnum.ram: {
-      return queryResult.data?['ram'];
+      if(queryResult.data!['ram'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['ram'];
     }
     case PartEnum.storage: {
-      return queryResult.data?['storage'];
+      if(queryResult.data!['storage'] == null){
+        return List.empty();
+      }
+      return queryResult.data!['storage'];
     }
 
     default: {
-      return [];
+      return List.empty();
     }
   }
 }

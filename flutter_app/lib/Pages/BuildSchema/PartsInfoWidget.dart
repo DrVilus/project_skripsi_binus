@@ -61,7 +61,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
         list.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(reformatStringInfo(k) + ": $v", style: TextStyles.sourceSans3,)
+            Flexible(child: Text(reformatStringInfo(k) + ": $v", style: TextStyles.sourceSans3,))
           ],
         ));
       }
@@ -79,6 +79,29 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
   void _launchUrl(String input) async {
     Uri _url = Uri.parse(input);
     if (!await launchUrl(_url)) throw 'Could not launch $_url';
+  }
+
+  void _addPart(BuildSchemaStateModel value, List data) async{
+    if(widget.partEnum == PartEnum.ram){
+      GenericUIFunctions.countInputModalBottomSheetRam(context,(input){
+        var result = value.changePart(data, widget.partEnum);
+        if(result.isEmpty){
+          ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[0]['name']));
+          value.currentSelectedRAMCount = input;
+          widget.toggleMenu();
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+        }
+      });
+    }else{
+      var result = value.changePart(data, widget.partEnum);
+      if(result.isEmpty){
+        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[0]['name']));
+        widget.toggleMenu();
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
+      }
+    }
   }
 
   @override
@@ -155,10 +178,10 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
                         List? data = getQueryList(result, widget.partEnum);
 
-                        if (data == null) {
+                        if (data.isEmpty) {
                           return const Text('No repositories');
                         }
-                        return Container(
+                        return SizedBox(
                             width: MediaQuery.of(context).size.width*0.82,
                             height: (MediaQuery.of(context).size.height*0.9).toDouble(),
                             child:Container(
@@ -171,8 +194,14 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                               child: Column(
                                 children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Flexible(child: Text(data[0]['name'], style: TextStyles.sourceSans3,))
+                                      Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
+                                        (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty) ?
+                                          Flexible(child: Text(data[0]['name'] + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
+                                            :
+                                          Flexible(child: Text(data[0]['name'], style: TextStyles.sourceSans3,)),
+                                      ),
                                     ],
                                   ),
                                   Row(
@@ -208,14 +237,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                           builder: (context, value, child) => (value.checkPartChosen(widget.partEnum).isEmpty) ?
                                           ElevatedButton(
                                               onPressed:() {
-                                                var result = value.changePart(data, widget.partEnum);
-                                                if(result.isEmpty){
-                                                  ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Added " + data[0]['name']));
-                                                  widget.toggleMenu();
-                                                }else{
-                                                  ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar(result));
-                                                }
-
+                                                _addPart(value, data);
                                               },
                                               child: Text("Add", style: TextStyles.interStyle1),
 
@@ -267,7 +289,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                 onTap: () {
                   widget.toggleMenu();
                 },
-                child: Container(
+                child: SizedBox(
                   width: 50,
                   height: MediaQuery.of(context).size.height *0.7,
                   //color: Colors.yellow.shade600,

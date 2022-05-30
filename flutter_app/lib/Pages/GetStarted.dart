@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Pages/RecommendedFormPage.dart';
+import 'package:project_skripsi/Pages/RecommendationPage/RecommendedFormPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/Palette.dart';
@@ -51,7 +51,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                                             Navigator.push(
                                               context,
                                               PageRouteBuilder(
-                                                pageBuilder: (context, animation1, animation2) => const BuildSchemaPage(),
+                                                pageBuilder: (context, animation1, animation2) => BuildSchemaPage(),
                                                 transitionDuration: Duration.zero,
                                               ),
                                             );

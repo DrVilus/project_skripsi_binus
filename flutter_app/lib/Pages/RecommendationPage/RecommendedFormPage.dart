@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_skripsi/Pages/RecommendationPage/RecommendedLoadingPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
@@ -10,7 +11,8 @@ import 'package:project_skripsi/UI/GradientRectSliderTrackShape.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/RecommendPageSlider.dart';
 
-import '../UI/CustomAppbar.dart';
+import '../../Functions/GenericUIFunctions.dart';
+import '../../UI/CustomAppbar.dart';
 
 class RecommendedFormPage extends StatefulWidget {
   const RecommendedFormPage({Key? key}) : super(key: key);
@@ -20,64 +22,8 @@ class RecommendedFormPage extends StatefulWidget {
 }
 
 class _RecommendedFormPageState extends State<RecommendedFormPage> {
-  String tempValue = "";
+  String tempValue = "1";
   TextEditingController userInput = TextEditingController();
-  // int CaseSlider = 50;
-  // int MBSlider = 50;
-  // int CPUSlider = 50;
-  // int PSUSlider = 50;
-  // int RAMSlider = 50;
-  // int CoolingSlider = 50;
-  // int GPUSlider = 50;
-  // int StorageSlider = 50;
-  //
-  // callbackCase(newValue) {
-  //   setState(() {
-  //     CaseSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackMB(newValue) {
-  //   setState(() {
-  //     MBSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackCPU(newValue) {
-  //   setState(() {
-  //     CPUSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackPSU(newValue) {
-  //   setState(() {
-  //     PSUSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackRAM(newValue) {
-  //   setState(() {
-  //     RAMSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackCooling(newValue) {
-  //   setState(() {
-  //     CoolingSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackGPU(newValue) {
-  //   setState(() {
-  //     GPUSlider = newValue;
-  //   });
-  // }
-  //
-  // callbackStorage(newValue) {
-  //   setState(() {
-  //     StorageSlider = newValue;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +35,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomContainer(
@@ -184,38 +130,6 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                             const SizedBox(
                               height: 5,
                             ),
-                            // RecommendPageSlider(
-                            //     callback: callbackCase,
-                            //     sliderName: "Case: ",
-                            //     sliderValue: CaseSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackMB,
-                            //     sliderName: "Motherboard: ",
-                            //     sliderValue: MBSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackCPU,
-                            //     sliderName: "CPU: ",
-                            //     sliderValue: CPUSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackRAM,
-                            //     sliderName: "RAM: ",
-                            //     sliderValue: RAMSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackCooling,
-                            //     sliderName: "Cooling: ",
-                            //     sliderValue: CoolingSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackGPU,
-                            //     sliderName: "GPU: ",
-                            //     sliderValue: GPUSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackPSU,
-                            //     sliderName: "PSU: ",
-                            //     sliderValue: PSUSlider),
-                            // RecommendPageSlider(
-                            //     callback: callbackStorage,
-                            //     sliderName: "Storage: ",
-                            //     sliderValue: StorageSlider),
                             const SizedBox(
                               height: 20,
                             ),
@@ -223,7 +137,29 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 CorneredButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if(userInput.text.isEmpty){
+                                      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Budget field is empty"));
+                                      return;
+                                    }
+                                    if(int.parse(userInput.text) < 5000000){
+                                      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Minimum budget value is 5,000,000"));
+                                      return;
+                                    }
+                                    if(userInput.text.isNotEmpty){
+                                      Navigator.pushReplacement(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation1, animation2) =>
+                                              RecommendedLoadingPage(
+                                                budget: double.parse(userInput.text),
+                                                targetMarketCode: tempValue,
+                                              ),
+                                          transitionDuration: Duration.zero,
+                                        ),
+                                      );
+                                    }
+                                  },
                                   child: Container(
                                     padding:
                                     const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -250,12 +186,9 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
 
 List<DropdownMenuItem<String>> get dropdownItems {
   List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(child: const Text("Select One"), value: ""),
-    const DropdownMenuItem(child: const Text("Bury"), value: "Cast Aside"),
-    const DropdownMenuItem(child: const Text("The"), value: "There is"),
-    const DropdownMenuItem(child: const Text("Light"), value: "No"),
-    const DropdownMenuItem(child: const Text("Deep"), value: "Coming"),
-    const DropdownMenuItem(child: const Text("Within"), value: "Home"),
+    const DropdownMenuItem(child: Text("Office"), value: "1"),
+    const DropdownMenuItem(child: Text("Gaming"), value: "2"),
+    const DropdownMenuItem(child: Text("Workstation"), value: "3"),
   ];
   return menuItems;
 }

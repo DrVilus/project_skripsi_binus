@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
@@ -38,7 +36,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
 
   @override
   Widget build(BuildContext context) {
-    ;
     return Stack(
       children: [
         Positioned(
@@ -356,13 +353,13 @@ class CustomPainterAppbar extends CustomPainter{
     path_0.lineTo(size.width*0.2710280,size.height*0.9827586);
     path_0.close();
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.006230530;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.006230530;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 
@@ -395,15 +392,15 @@ class CustomPainterSidebar extends CustomPainter{
     path_0.cubicTo(size.width*0.9767442,size.height*0.1404388,size.width*0.9603326,size.height*0.1348762,size.width*0.9297721,size.height*0.1302206);
     path_0.close();
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    myCanvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    myCanvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1.withOpacity(1.0);
-    myCanvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    myCanvas.drawPath(path_0,paint0Fill);
 
-    myCanvas.drawPath(path_0, paint_0_fill, onTapDown: (tapDetail) {
+    myCanvas.drawPath(path_0, paint0Fill, onTapDown: (tapDetail) {
       toggleSideBar();
     });
 
@@ -412,13 +409,13 @@ class CustomPainterSidebar extends CustomPainter{
     path_1.lineTo(size.width*0.6511628,size.height*0.8408521);
     path_1.lineTo(size.width*0.3488372,size.height*0.8721805);
 
-    Paint paint_1_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
-    paint_1_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_1,paint_1_stroke);
+    Paint paint1Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.04651163;
+    paint1Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_1,paint1Stroke);
 
-    Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
-    paint_1_fill.color = Palette.widgetBackground1.withOpacity(1.0);
-    canvas.drawPath(path_1,paint_1_fill);
+    Paint paint1Fill = Paint()..style=PaintingStyle.fill;
+    paint1Fill.color = Palette.widgetBackground1.withOpacity(1.0);
+    canvas.drawPath(path_1,paint1Fill);
 
   }
 

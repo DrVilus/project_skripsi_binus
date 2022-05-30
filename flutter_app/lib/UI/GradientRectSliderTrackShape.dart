@@ -36,7 +36,7 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
       return;
     }
 
-    LinearGradient gradient = LinearGradient(colors: <Color>[
+    LinearGradient gradient = const LinearGradient(colors: <Color>[
       Colors.red,
       Colors.orange,
       Colors.green,

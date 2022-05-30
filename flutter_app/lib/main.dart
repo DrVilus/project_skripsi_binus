@@ -50,6 +50,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => executeAfterBuild());
+  }
+
   void executeAfterBuild() async {
     Future.delayed(const Duration(milliseconds: 2000), () {
       if (mounted) {
@@ -66,8 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Placeholder main to put loading during first launch
-    WidgetsBinding.instance!.addPostFrameCallback((_) => executeAfterBuild());
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(

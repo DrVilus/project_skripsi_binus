@@ -115,6 +115,7 @@ class BuildSchemaStateModel extends ChangeNotifier {
   //ram
   final List _currentSelectedRAM = [];
   List get selectedRAM => _currentSelectedRAM;
+  int currentSelectedRAMCount = 0;
   String changeSelectedRAM(List query){
     _currentSelectedRAM.clear();
     _currentSelectedRAM.add(query[0]);
@@ -124,6 +125,11 @@ class BuildSchemaStateModel extends ChangeNotifier {
 
   void clearSelectedRAM(){
     _currentSelectedRAM.clear();
+    notifyListeners();
+  }
+
+  void changeSelectedRAMCount(int ramCountInput){
+    currentSelectedRAMCount = ramCountInput;
     notifyListeners();
   }
 
@@ -348,6 +354,7 @@ class BuildSchemaStateModel extends ChangeNotifier {
   }
 
   double calculatePrice(){
+    print(currentSelectedRAMCount );
     double initPrice = 0;
     if(selectedCooler.isNotEmpty){
       initPrice += selectedCooler[0]['cooling_prices'][0]['price'];
@@ -365,10 +372,13 @@ class BuildSchemaStateModel extends ChangeNotifier {
       initPrice += selectedPSU[0]['power_supply_prices'][0]['price'];
     }
     if(selectedRAM.isNotEmpty){
-      initPrice += selectedRAM[0]['ram_prices'][0]['price'];
+      initPrice += selectedRAM[0]['ram_prices'][0]['price'] * currentSelectedRAMCount;
     }
     if(selectedStorage.isNotEmpty){
       initPrice += selectedStorage[0]['storage_prices'][0]['price'];
+    }
+    if(selectedCase.isNotEmpty){
+      initPrice += selectedCase[0]['case_prices'][0]['price'];
     }
 
     return initPrice;
