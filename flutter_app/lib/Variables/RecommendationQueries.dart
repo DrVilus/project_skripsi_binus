@@ -1,24 +1,24 @@
 
 class RecommendationQueries{
   static String cpuQueryByPrice="""
-    query cpuQueryByPrice(\$_lt: numeric!) {
-      cpu(where: {_and: {release_date: {_gte: "2018-01-01"}, cpu_prices: {price: {_gte: "1", _lte: \$_lt}}}}, order_by: {cpu_prices_aggregate: {sum: {price: asc}}}) {
-        id
-        name
-        manufacturer
-        process
-        socket_name
-        tdp_watt
-        l3_cache
-        Clock
-        Cores
-        cpu_prices(limit: 1, order_by: {price: asc}) {
-          price
-          shop
-          shop_link
-        }
-      }
+    query cpuQueryByPrice(\$_lt: numeric!, \$_in: [Int!]) {
+  cpu(where: {_and: {release_date: {_gte: "2018-01-01"}, cpu_prices: {price: {_gte: "1", _lte: \$_lt}}, target_market_number: {_in: \$_in}}}, order_by: {cpu_prices_aggregate: {sum: {price: asc}}}) {
+    id
+    name
+    manufacturer
+    process
+    socket_name
+    tdp_watt
+    l3_cache
+    Clock
+    Cores
+    cpu_prices(limit: 1, order_by: {price: asc}) {
+      price
+      shop
+      shop_link
     }
+  }
+}
   """;
 
   static String motherboardQueryBySocket = """
@@ -80,4 +80,19 @@ class RecommendationQueries{
   }
   """;
 
+  static String storageQueryBySize = """
+  query storageQuery(\$_in: [String!] = "") {
+    storage(where: {_and: {size: {_in: \$_in}, storage_type: {_eq: "M2 NVME SSD"}}}) {
+      id
+      name
+      interface_bus
+      quality_index
+      size
+      storage_type
+      storage_prices(limit: 1, order_by: {price: asc}) {
+        price
+      }
+    }
+  }
+  """;
 }

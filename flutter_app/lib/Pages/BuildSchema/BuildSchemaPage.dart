@@ -71,60 +71,8 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
             children: [
               Container(),
               Positioned(
-                  top: MediaQuery.of(context).size.height*0.39,
-                  left: MediaQuery.of(context).size.width*0.56,
-                  child: Consumer<BuildSchemaStateModel>(
-                      builder: (context, value, child) => GestureDetector(
-                        onTap: () {
-                          if(value.selectedPSU.isNotEmpty){
-                            value.changeSidebarToggle();
-                            _goToPartInfoPage(value, PartEnum.psu, value.selectedPSU[0]['id']);
-                          }else{
-                            value.changeSidebarToggle();
-                            _goToPartModelListPage(value, PartEnum.psu);
-                          }
-                        }, // Image tapped
-                        child: ColorFiltered(
-                          colorFilter: value.selectedPSU.isNotEmpty ? enabledColor : disabledColor,
-                          child: Image.asset(
-                            'assets/img/psu2.png',
-                            fit: BoxFit.fill, // Fixes border issues
-                            width: MediaQuery.of(context).size.width*0.25,
-                            height: MediaQuery.of(context).size.width*0.25*0.5,
-                          ),
-                        )
-                      )
-                  )
-              ),
-              Positioned(
-                  top: MediaQuery.of(context).size.height*0.39,
-                  left: MediaQuery.of(context).size.width*0.26,
-                  child: Consumer<BuildSchemaStateModel>(
-                      builder: (context, value, child) => GestureDetector(
-                        onTap: () {
-                          if(value.selectedCooler.isNotEmpty){
-                            value.changeSidebarToggle();
-                            _goToPartInfoPage(value, PartEnum.cooling, value.selectedCooler[0]['id']);
-                          }else{
-                            value.changeSidebarToggle();
-                            _goToPartModelListPage(value, PartEnum.cooling);
-                          }
-                        }, // Image tapped
-                        child: ColorFiltered(
-                          colorFilter: value.selectedCooler.isNotEmpty ? enabledColor : disabledColor,
-                          child: Image.asset(
-                            'assets/img/cooling2.png',
-                            fit: BoxFit.fill, // Fixes border issues
-                            width: MediaQuery.of(context).size.width*0.25,
-                            height: MediaQuery.of(context).size.width*0.25*0.5,
-                          ),
-                        )
-                      )
-                  )
-              ),
-              Positioned(
                   top: MediaQuery.of(context).size.height*0.5,
-                  left: MediaQuery.of(context).size.width*0.1,
+                  left: MediaQuery.of(context).size.width*0.15,
                   child: Consumer<BuildSchemaStateModel>(
                       builder: (context, value, child) => GestureDetector(
                           onTap: () {
@@ -149,8 +97,60 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                   )
               ),
               Positioned(
+                  top: MediaQuery.of(context).size.height*0.45,
+                  left: MediaQuery.of(context).size.width*0.4,
+                  child: Consumer<BuildSchemaStateModel>(
+                      builder: (context, value, child) => GestureDetector(
+                          onTap: () {
+                            if(value.selectedPSU.isNotEmpty){
+                              value.changeSidebarToggle();
+                              _goToPartInfoPage(value, PartEnum.psu, value.selectedPSU[0]['id']);
+                            }else{
+                              value.changeSidebarToggle();
+                              _goToPartModelListPage(value, PartEnum.psu);
+                            }
+                          }, // Image tapped
+                          child: ColorFiltered(
+                            colorFilter: value.selectedPSU.isNotEmpty ? enabledColor : disabledColor,
+                            child: Image.asset(
+                              'assets/img/psu2.png',
+                              fit: BoxFit.fill, // Fixes border issues
+                              width: MediaQuery.of(context).size.width*0.25,
+                              height: MediaQuery.of(context).size.width*0.25*0.5,
+                            ),
+                          )
+                      )
+                  )
+              ),
+              Positioned(
+                  top: MediaQuery.of(context).size.height*0.45,
+                  left: MediaQuery.of(context).size.width*0.2,
+                  child: Consumer<BuildSchemaStateModel>(
+                      builder: (context, value, child) => GestureDetector(
+                          onTap: () {
+                            if(value.selectedCooler.isNotEmpty){
+                              value.changeSidebarToggle();
+                              _goToPartInfoPage(value, PartEnum.cooling, value.selectedCooler[0]['id']);
+                            }else{
+                              value.changeSidebarToggle();
+                              _goToPartModelListPage(value, PartEnum.cooling);
+                            }
+                          }, // Image tapped
+                          child: ColorFiltered(
+                            colorFilter: value.selectedCooler.isNotEmpty ? enabledColor : disabledColor,
+                            child: Image.asset(
+                              'assets/img/cooling2.png',
+                              fit: BoxFit.fill, // Fixes border issues
+                              width: MediaQuery.of(context).size.width*0.25,
+                              height: MediaQuery.of(context).size.width*0.25*0.5,
+                            ),
+                          )
+                      )
+                  )
+              ),
+              Positioned(
                   top: MediaQuery.of(context).size.height*0.54,
-                  left: MediaQuery.of(context).size.width*0.23,
+                  left: MediaQuery.of(context).size.width*0.25,
                   child: Consumer<BuildSchemaStateModel>(
                       builder: (context, value, child) => GestureDetector(
                         onTap: () {
@@ -176,7 +176,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
               ),
               Positioned(
                   top: MediaQuery.of(context).size.height*0.46,
-                  left: MediaQuery.of(context).size.width*0.75,
+                  left: MediaQuery.of(context).size.width*0.78,
                   child: Consumer<BuildSchemaStateModel>(
                       builder: (context, value, child) => GestureDetector(
                         onTap: () {
@@ -202,7 +202,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
               ),
               Positioned(
                   top: MediaQuery.of(context).size.height*0.57,
-                  left: MediaQuery.of(context).size.width*0.63,
+                  left: MediaQuery.of(context).size.width*0.65,
                   child: Consumer<BuildSchemaStateModel>(
                       builder: (context, value, child) => GestureDetector(
                         onTap: () {
@@ -228,7 +228,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
               ),
               Positioned(
                   top: MediaQuery.of(context).size.height*0.52,
-                  left: MediaQuery.of(context).size.width*0.56,
+                  left: MediaQuery.of(context).size.width*0.58,
                   child: Consumer<BuildSchemaStateModel>(
                       builder: (context, value, child) => GestureDetector(
                         onTap: () {

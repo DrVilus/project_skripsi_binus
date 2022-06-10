@@ -3,7 +3,7 @@ import '../Variables/GlobalVariables.dart';
 class CpuMotherboardPair{
   late Map<String, dynamic> cpuData;
   late Map<String, dynamic> motherboardData;
-  double price = 0;
+  num price = 0;
 
   CpuMotherboardPair(Map<String, dynamic> cpuInput, Map<String, dynamic> motherboardInput){
     cpuData = cpuInput;
@@ -15,7 +15,7 @@ class CpuMotherboardPair{
 class GpuPsuPair{
   late Map<String, dynamic>? gpuData;
   late Map<String, dynamic> psuData;
-  double price = 0;
+  num price = 0;
 
   GpuPsuPair(Map<String, dynamic>? gpuInput, Map<String, dynamic> psuInput){
     if(gpuInput == null){
@@ -38,7 +38,7 @@ class FullPcPartModel{
   late int ramCount;
   late Map<String, dynamic> coolerData;
   late Map<String, dynamic> caseData;
-  double price = 0;
+  num price = 0;
 
   FullPcPartModel(
       CpuMotherboardPair cpuMotherboardPairInput,

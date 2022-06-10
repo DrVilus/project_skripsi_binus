@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
+import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/Variables/Queries.dart';
 import 'package:project_skripsi/Variables/RecommendationQueries.dart';
@@ -22,7 +23,6 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
   String _loadingMessage = "";
   bool _isError = false;
   List<FullPcPartModel> fullPcPartModelList = [];
-  bool _isDone = false;
 
   @override
   void initState() {
@@ -91,6 +91,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
     setState(() {
       _loadingMessage = "Obtaining Storage Data";
     });
+
     var storageList = await _getStorageGraphQL();
 
     setState(() {
@@ -137,11 +138,17 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         }
       }
     }).then((value) {
+      if(fullPcPartModelList.isEmpty){
+        setState(() {
+          _isError = true;
+          _loadingMessage = "Unable to find pc components for this budget, please increase the amount.";
+        });
+        return;
+      }
       fullPcPartModelList.sort((b,a) => a.price.compareTo(b.price));
       setState(() {
         _loadingMessage = "Done";
       });
-      print(fullPcPartModelList.length);
 
       Navigator.pushReplacement(
         context,
@@ -156,10 +163,19 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
   }
 
   Future<List> _getCpuGraphQL() async {
+    var targetMarketRange = [1];
+    if(widget.targetMarketCode == "2"){
+      targetMarketRange = [2,3];
+    }else if(widget.targetMarketCode == "3"){
+      targetMarketRange = [3,4];
+    }else if(widget.targetMarketCode == "4"){
+      targetMarketRange = [4];
+    }
     final QueryOptions options = QueryOptions(
       document: gql(RecommendationQueries.cpuQueryByPrice),
       variables: {
         '_lt': widget.budget/2,
+        '_in':targetMarketRange
       },
     );
     final QueryResult result = await client.query(options);
@@ -234,8 +250,15 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
   }
 
   Future<List> _getStorageGraphQL() async {
+    var sizeRange = ["512 GB"];
+    if(widget.targetMarketCode != "1"){
+      sizeRange = ["512 GB", "1 TB", "2 TB"];
+    }
     final QueryOptions options = QueryOptions(
-      document: gql(storageQuery),
+      document: gql(RecommendationQueries.storageQueryBySize),
+      variables: {
+        '_in': sizeRange,
+      },
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -275,27 +298,33 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if(_isError == false)
-              const CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            if(_isError)
-              Container(),
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(_loadingMessage, style: TextStyles.sourceSans3),
-                ],
-              ),
+      body: CustomAppBarBack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if(_isError == false)
+                  const CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                if(_isError)
+                  Container(),
+                Container(
+                  margin: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(_loadingMessage, style: TextStyles.sourceSans3),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          )
+        ],
       )
     );
   }

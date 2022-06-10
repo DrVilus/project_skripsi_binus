@@ -24,7 +24,7 @@ class ChoosePartsModelWidget extends StatefulWidget {
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
   int _compatibleIndexLength = 10000;
 
-  int _getLowestPrice(List queryResult, int index){
+  num _getLowestPrice(List queryResult, int index){
     if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }

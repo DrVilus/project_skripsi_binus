@@ -26,7 +26,7 @@ class PartsInfoWidget extends StatefulWidget {
 
 class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
-  int getLowestPrice(List queryResult, int index){
+  num getLowestPrice(List queryResult, int index){
     if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }
@@ -215,7 +215,15 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [Text("Price: " + CurrencyFormat.convertToIdr(getLowestPrice(data,0), 2).toString(), style: TextStyles.sourceSans3,)],
+                                    children: [
+                                      Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
+                                      (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty) ?
+                                          Flexible(child: Text("Price: " + CurrencyFormat.convertToIdr(getLowestPrice(data,0), 2).toString() + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
+                                          :
+                                          Flexible(child:Text("Price: " + CurrencyFormat.convertToIdr(getLowestPrice(data,0), 2).toString(), style: TextStyles.sourceSans3,)),
+                                      ),
+
+                                    ],
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
