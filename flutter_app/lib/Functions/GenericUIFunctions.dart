@@ -10,21 +10,21 @@ class GenericUIFunctions{
 
   static void countInputModalBottomSheetRam(BuildContext context, Function(int input) onSubmitFunction){
     TextEditingController textEditingController = TextEditingController(text: "1");
-    showModalBottomSheet<void>(
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          color: Colors.white,
-          margin: const EdgeInsets.only(left: 100, right: 100),
-          child: Center(
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal:25 ,vertical: 25),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 const Text('Input Count:'),
-               TextField(
-                 controller: textEditingController,
+                TextField(
+                  controller: textEditingController,
                   decoration: const InputDecoration(labelText: "Enter your number"),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -44,10 +44,13 @@ class GenericUIFunctions{
                       ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Ram count is between 1 and 4"));
                     }
                   },
-                )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                ),
               ],
             ),
-          ),
         );
       },
     );
