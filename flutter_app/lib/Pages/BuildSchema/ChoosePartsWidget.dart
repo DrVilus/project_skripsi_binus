@@ -43,13 +43,13 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
               right: 10,
               top: MediaQuery.of(context).size.height*0.3,
               child: CustomPaint(
-                size: Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                size: const Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                 painter: ArrowPainter(),
               ),
             ),
             Positioned(
               top: 0,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width*0.82,
                 height: (MediaQuery.of(context).size.height*0.9).toDouble(),
                 child: Consumer<BuildSchemaStateModel>(
@@ -100,9 +100,9 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                 onTap: () {
                   widget.toggleSideBar();
                 },
-                child: Container(
+                child: SizedBox(
                   width: 50,
-                  height: MediaQuery.of(context).size.height *0.7,
+                  height: MediaQuery.of(context).size.height *0.9,
                   //color: Colors.yellow.shade600,
                 ),
               ),

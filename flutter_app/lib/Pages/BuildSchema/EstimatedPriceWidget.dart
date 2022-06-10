@@ -9,20 +9,12 @@ import 'package:provider/provider.dart';
 import '../../UI/Palette.dart';
 
 class EstimatedPriceWidget extends StatefulWidget {
-  const EstimatedPriceWidget({Key? key, required this.blackBackgroundCallback}) : super(key: key);
-  final Function blackBackgroundCallback;
+  const EstimatedPriceWidget({Key? key}) : super(key: key);
   @override
   State<EstimatedPriceWidget> createState() => _EstimatedPriceWidgetState();
 }
 
 class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
-  bool _isMenuPressed = false;
-
-  void _toggleMenu() {
-    setState(() {
-      _isMenuPressed = !_isMenuPressed;
-    });
-  }
 
   Widget _getPerformanceBenchmark(BuildSchemaStateModel schemaStateModel){
     List<Widget> list = [];
@@ -60,87 +52,94 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedPositioned(
-        bottom: _isMenuPressed ? 0 : -MediaQuery.of(context).size.width*0.72*1.3103448275862069,
-        right: 0,
-        curve: Curves.fastOutSlowIn,
-        child: Stack(
-          children: [
-            FadeBlackBackground(toggleVariable: _isMenuPressed),
-            CustomPaint(
-              size: Size(MediaQuery.of(context).size.width*0.92, (MediaQuery.of(context).size.width*0.92*1.3103448275862069).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-              painter: WidgetPainter(),
-            ),
-            Visibility(//Point up
-              visible: !_isMenuPressed,
-              child: Positioned(
-                bottom: (MediaQuery.of(context).size.width*0.86*1.3103448275862069).toDouble(),
-                right: MediaQuery.of(context).size.width*0.4,
-                child: CustomPaint(
-                  size: const Size(27, 16), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  painter: ArrowUpPainter(),
+    return Consumer<BuildSchemaStateModel>(
+        builder: (context, value, child) => AnimatedPositioned(
+            bottom: value.estimatedPriceWidgetToggle ? 0 : -MediaQuery.of(context).size.width*0.72*1.3103448275862069,
+            right: 0,
+            curve: Curves.fastOutSlowIn,
+            child: Stack(
+              children: [
+                FadeBlackBackground(toggleVariable: value.estimatedPriceWidgetToggle),
+                CustomPaint(
+                  size: Size(MediaQuery.of(context).size.width*0.92, (MediaQuery.of(context).size.width*0.92*1.3103448275862069).toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                  painter: WidgetPainter(),
                 ),
-              )
-            ),
-            Visibility(//Point down
-              visible: _isMenuPressed,
-              child: Positioned(
-                bottom: (MediaQuery.of(context).size.width*0.86*1.3103448275862069).toDouble(),
-                right: MediaQuery.of(context).size.width*0.4,
-                child: CustomPaint(
-                  size: const Size(27, 16), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                  painter: ArrowDownPainter(),
+                Visibility(//Point up
+                    visible: !value.estimatedPriceWidgetToggle,
+                    child: Positioned(
+                      bottom: (MediaQuery.of(context).size.width*0.86*1.3103448275862069).toDouble(),
+                      right: MediaQuery.of(context).size.width*0.4,
+                      child: CustomPaint(
+                        size: const Size(27, 16), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                        painter: ArrowUpPainter(),
+                      ),
+                    )
                 ),
-              )
-            ),
-            Positioned(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  _toggleMenu();
-                  widget.blackBackgroundCallback();
-                },
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width*0.92,
-                  height: MediaQuery.of(context).size.height *0.16,
-                  //color: Colors.yellow.shade600,
+                Visibility(//Point down
+                    visible: value.estimatedPriceWidgetToggle,
+                    child: Positioned(
+                      bottom: (MediaQuery.of(context).size.width*0.86*1.3103448275862069).toDouble(),
+                      right: MediaQuery.of(context).size.width*0.4,
+                      child: CustomPaint(
+                        size: const Size(27, 16), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                        painter: ArrowDownPainter(),
+                      ),
+                    )
                 ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              child: Visibility(
-                visible: _isMenuPressed,
-                child: Consumer<BuildSchemaStateModel>(
-                  builder: (context, value, child) => Container(
-                      margin: const EdgeInsets.all(20),
+                Positioned(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      value.changeEstimatedPriceWidgetToggle();
+                    },
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width*0.92,
-                      height: (MediaQuery.of(context).size.width*0.92*1.3103448275862069) - MediaQuery.of(context).size.height *0.16,
-                      child: Column(
-
-                        children: [
-                          Row(
-                            children: [
-                              Text("Estimated Price: "+ CurrencyFormat.convertToIdr(value.calculatePrice(), 0), style: TextStyles.interStyleBuildGuidePage,),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
-                            ],
-                          ),
-                          _getPerformanceBenchmark(value)
-                        ],
-                      )
-                    //color: Colors.yellow.shade600,
+                      height: MediaQuery.of(context).size.height *0.16,
+//color: Colors.yellow.shade600,
+                    ),
                   ),
-                )
-              )
-            ),
+                ),
+                Positioned(
+                    bottom: 0,
+                    child: Visibility(
+                        visible: value.estimatedPriceWidgetToggle,
+                        child: Consumer<BuildSchemaStateModel>(
+                          builder: (context, value, child) => Container(
+                              margin: const EdgeInsets.all(20),
+                              width: MediaQuery.of(context).size.width*0.92,
+                              height: (MediaQuery.of(context).size.width*0.92*1.3103448275862069) - MediaQuery.of(context).size.height *0.16,
+                              child: Column(
 
-          ],
-        ),
-        duration: Duration(milliseconds: 500)
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("Estimated Price: ", style: TextStyles.interStyleBuildGuidePage,),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(CurrencyFormat.convertToIdr(value.calculatePrice(), 0), style: TextStyles.interStyleBuildGuidePage,),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
+                                    ],
+                                  ),
+                                  _getPerformanceBenchmark(value)
+                                ],
+                              )
+//color: Colors.yellow.shade600,
+                          ),
+                        )
+                    )
+                ),
+
+              ],
+            ),
+            duration: const Duration(milliseconds: 500)
+        )
     );
   }
 }

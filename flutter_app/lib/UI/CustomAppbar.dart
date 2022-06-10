@@ -92,9 +92,19 @@ class _CustomAppbarState extends State<CustomAppbar> {
             )
         ),
         ...widget.children,
-        FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
+        GestureDetector(
+          onTap: (){
+            _toggleMenu();
+          },
+          child: FadeBlackBackground(toggleVariable: _isMenuButtonPressed),
+        ),
         Consumer<BuildSchemaStateModel>(
-          builder: (context, value, child) => FadeBlackBackground(toggleVariable: value.sidebarToggle),
+          builder: (context, value, child) => GestureDetector(
+            onTap: (){
+              value.changeSidebarToggle();
+            },
+            child: FadeBlackBackground(toggleVariable: value.sidebarToggle),
+          )
         ),
         Visibility(
           visible: _isMenuButtonPressed,

@@ -24,6 +24,13 @@ class BuildSchemaStateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _currentEstimatedPriceWidgetToggle = false;
+  bool get estimatedPriceWidgetToggle => _currentEstimatedPriceWidgetToggle;
+  void changeEstimatedPriceWidgetToggle(){
+    _currentEstimatedPriceWidgetToggle = !_currentEstimatedPriceWidgetToggle;
+    notifyListeners();
+  }
+
   //refer to partSelectModelList in global variables
   PartEnum _currentSelectedPartEnum = PartEnum.others;
   PartEnum get selectedPartEnum => _currentSelectedPartEnum;

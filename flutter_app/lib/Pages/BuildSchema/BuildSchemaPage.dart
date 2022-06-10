@@ -19,12 +19,6 @@ class BuildSchemaPage extends StatefulWidget {
 
 class _BuildSchemaPageState extends State<BuildSchemaPage> {
   BuildSchemaStateModel buildSchemaStateModel = BuildSchemaStateModel();
-  bool _blackBackground = false;
-  void _toggleBlackBackground(){
-    setState(() {
-      _blackBackground = !_blackBackground;
-    });
-  }
 
   void _goToPartInfoPage(BuildSchemaStateModel stateModel, PartEnum partEnum, String id){
     stateModel.changeSelectedPartEnum(partEnum);
@@ -252,8 +246,16 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                       )
                   )
               ),
-              FadeBlackBackground(toggleVariable: _blackBackground),
-              EstimatedPriceWidget(blackBackgroundCallback: () => _toggleBlackBackground())
+
+              Consumer<BuildSchemaStateModel>(
+                builder: (context, value, child) => GestureDetector(
+                  onTap: (){
+                    value.changeEstimatedPriceWidgetToggle();
+                  },
+                  child: FadeBlackBackground(toggleVariable: value.estimatedPriceWidgetToggle),
+                ),
+              ),
+              const EstimatedPriceWidget()
             ],
           ),
         )
