@@ -12,9 +12,10 @@ import '../../Variables/GlobalVariables.dart';
 import '../../Variables/GraphQLClient.dart';
 
 class RecommendedLoadingPage extends StatefulWidget {
-  const RecommendedLoadingPage({Key? key, required this.targetMarketCode, required this.budget}) : super(key: key);
+  const RecommendedLoadingPage({Key? key, required this.targetMarketCode, required this.budget, required this.chipset}) : super(key: key);
   final String targetMarketCode;
   final double budget;
+  final String chipset;
   @override
   State<RecommendedLoadingPage> createState() => _RecommendedLoadingPageState();
 }
@@ -30,7 +31,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) => executeAfterBuild());
   }
 
-  void executeAfterBuild() async {
+  Future<void> executeAfterBuild() async {
     setState(() {
       _loadingMessage = "Obtaining CPU Data";
     });
@@ -128,7 +129,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
               for(var pcCase in caseList){
                 for(var gpuPsuPair in gpuPsuPairList){
                   FullPcPartModel newData = FullPcPartModel(cpuMotherboardPair, gpuPsuPair, pcCase, storage, ram, ramCount,cooler);
-                  if((newData.price <= widget.budget) && (widget.budget-500000 <= newData.price)){
+                  if((newData.price <= widget.budget) && (widget.budget-2000000 <= newData.price)){
                     fullPcPartModelList.add(newData);
                   }
                 }
@@ -175,7 +176,8 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
       document: gql(RecommendationQueries.cpuQueryByPrice),
       variables: {
         '_lt': widget.budget/2,
-        '_in':targetMarketRange
+        '_in':targetMarketRange,
+        '_manufacturer': widget.chipset
       },
     );
     final QueryResult result = await client.query(options);
@@ -284,7 +286,10 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
 
   Future<List> _getCaseGraphQL() async {
     final QueryOptions options = QueryOptions(
-      document: gql(caseQuery),
+      document: gql(RecommendationQueries.caseQueryAtx),
+      variables: const {
+        '_like': "%\"ATX\"%"
+      }
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {

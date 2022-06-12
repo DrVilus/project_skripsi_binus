@@ -23,6 +23,7 @@ class RecommendedFormPage extends StatefulWidget {
 
 class _RecommendedFormPageState extends State<RecommendedFormPage> {
   String tempValue = "1";
+  String chipsetValue = "Intel";
   TextEditingController userInput = TextEditingController();
 
   @override
@@ -80,6 +81,43 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                           onChanged: (String? value) {
                                             setState(() {
                                               tempValue = value!;
+                                            });
+                                          }),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Chipset: ",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                  softWrap: true,
+                                ),
+                                Container(
+                                  width: 150,
+                                  height: 25,
+                                  margin: const EdgeInsets.only(left: 60),
+                                  decoration:
+                                  const BoxDecoration(color: Colors.white),
+                                  child: ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                          isExpanded: true,
+                                          value: chipsetValue,
+                                          items: dropdownChipsetItems,
+                                          dropdownColor: Colors.white,
+                                          onChanged: (String? value) {
+                                            setState(() {
+                                              chipsetValue = value!;
                                             });
                                           }),
                                     ),
@@ -154,6 +192,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                               RecommendedLoadingPage(
                                                 budget: double.parse(userInput.text),
                                                 targetMarketCode: tempValue,
+                                                chipset: chipsetValue,
                                               ),
                                           transitionDuration: Duration.zero,
                                         ),
@@ -189,6 +228,14 @@ List<DropdownMenuItem<String>> get dropdownItems {
     const DropdownMenuItem(child: Text("Office"), value: "1"),
     const DropdownMenuItem(child: Text("Gaming"), value: "2"),
     const DropdownMenuItem(child: Text("Workstation"), value: "3"),
+  ];
+  return menuItems;
+}
+
+List<DropdownMenuItem<String>> get dropdownChipsetItems {
+  List<DropdownMenuItem<String>> menuItems = [
+    const DropdownMenuItem(child: Text("Intel"), value: "Intel"),
+    const DropdownMenuItem(child: Text("AMD"), value: "AMD"),
   ];
   return menuItems;
 }

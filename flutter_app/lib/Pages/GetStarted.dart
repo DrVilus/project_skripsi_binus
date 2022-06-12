@@ -8,7 +8,7 @@ import 'package:project_skripsi/UI/Palette.dart';
 import 'package:project_skripsi/UI/TitledContainer.dart';
 import 'package:provider/provider.dart';
 import '../UI/CustomAppbar.dart';
-import 'ImportPage.dart';
+import 'ImportExport/ImportPage.dart';
 
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({Key? key}) : super(key: key);

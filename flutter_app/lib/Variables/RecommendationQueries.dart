@@ -1,8 +1,8 @@
 
 class RecommendationQueries{
   static String cpuQueryByPrice="""
-    query cpuQueryByPrice(\$_lt: numeric!, \$_in: [Int!]) {
-  cpu(where: {_and: {release_date: {_gte: "2018-01-01"}, cpu_prices: {price: {_gte: "1", _lte: \$_lt}}, target_market_number: {_in: \$_in}}}, order_by: {cpu_prices_aggregate: {sum: {price: asc}}}) {
+    query cpuQueryByPrice(\$_lt: numeric!, \$_in: [Int!], \$_manufacturer: String = "") {
+  cpu(where: {_and: {release_date: {_gte: "2018-01-01"}, cpu_prices: {price: {_gte: "1", _lte: \$_lt}}, target_market_number: {_in: \$_in}}, manufacturer: {_eq: \$_manufacturer}}, order_by: {cpu_prices_aggregate: {sum: {price: asc}}}) {
     id
     name
     manufacturer
@@ -19,6 +19,7 @@ class RecommendationQueries{
     }
   }
 }
+
   """;
 
   static String motherboardQueryBySocket = """
@@ -94,5 +95,21 @@ class RecommendationQueries{
       }
     }
   }
+  """;
+
+  static String caseQueryAtx = """
+  query caseQuery(\$_like: String! = "") {
+  case(where: {form_factor_json: {_like: \$_like}}) {
+    case_prices(limit: 1, order_by: {price: asc}) {
+      price
+    }
+    form_factor_json
+    height
+    length
+    width
+    id
+    name
+  }
+}
   """;
 }

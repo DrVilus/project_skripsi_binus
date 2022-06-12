@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
 import '../Pages/BuildSchema/BuildSchemaStateModel.dart';
-import '../Pages/ExportPage.dart';
-import '../Pages/ImportPage.dart';
+import '../Pages/ImportExport/ExportPage.dart';
+import '../Pages/ImportExport/ImportPage.dart';
 import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
@@ -190,20 +190,24 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     ),
                     if(widget.isExportDisabled == false)
                       Expanded(
-                          child: MenuButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                  const ExportPage(),
-                                  transitionDuration: Duration.zero,
-                                ),
-                              );
-                            },
-                            iconData: Icons.file_upload,
-                            text: 'Export Build',
+                          child: Consumer<BuildSchemaStateModel>(
+                            builder: (context, value, child) => MenuButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                    ExportPage(
+                                      buildSchemaStateModel: value,
+                                    ),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                              iconData: Icons.file_upload,
+                              text: 'Export Build',
+                            )
                           )
                       ),
                     const Divider(
