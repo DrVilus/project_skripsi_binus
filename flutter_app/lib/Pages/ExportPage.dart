@@ -26,7 +26,7 @@ class _ExportPageState extends State<ExportPage> {
               children: [
                 TitledContainer(
                   withBottomRightBorder: true,
-                  title: "Import Build",
+                  title: "Export Build",
                   height: MediaQuery.of(context).size.height * 0.35,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

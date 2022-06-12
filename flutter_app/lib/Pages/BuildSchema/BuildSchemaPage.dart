@@ -60,6 +60,7 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
         child: ChangeNotifierProvider.value(
           value:buildSchemaStateModel,
           child: CustomAppbar(
+            isExportDisabled: false,
             isTextFieldEnabled: true,
             sideBarVisible: true,
             children: [

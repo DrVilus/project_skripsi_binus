@@ -16,10 +16,11 @@ import 'FadeBlackBackground.dart';
 import 'Palette.dart';
 
 class CustomAppbar extends StatefulWidget {
-  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children}) : super(key: key);
+  const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children, this.isExportDisabled = true}) : super(key: key);
 
   final bool isTextFieldEnabled;
   final bool sideBarVisible;
+  final bool isExportDisabled;
   final List<Widget> children;
 
   @override
@@ -112,7 +113,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
               top: 40,
               child: CustomContainer(
                 width: 250,
-                height: 400,
+                height: widget.isExportDisabled == false ? 350 : 300,
                 padding: EdgeInsets.zero,
                 margin: EdgeInsets.zero,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -187,23 +188,24 @@ class _CustomAppbarState extends State<CustomAppbar> {
                         thickness: 2,
                         color: Colors.white
                     ),
-                    Expanded(
-                        child: MenuButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation1, animation2) =>
-                                const ExportPage(),
-                                transitionDuration: Duration.zero,
-                              ),
-                            );
-                          },
-                          iconData: Icons.file_upload,
-                          text: 'Export Build',
-                        )
-                    ),
+                    if(widget.isExportDisabled == false)
+                      Expanded(
+                          child: MenuButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                  const ExportPage(),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
+                            },
+                            iconData: Icons.file_upload,
+                            text: 'Export Build',
+                          )
+                      ),
                     const Divider(
                         height: 1,
                         thickness: 2,
@@ -213,47 +215,57 @@ class _CustomAppbarState extends State<CustomAppbar> {
                         child: MenuButton(
                           onPressed: () {
                             _toggleMenu();
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                  (context, animation1, animation2) =>
-                                    const SettingsPage(),
-                                      transitionDuration: Duration.zero,
-                              ),
-                            );
+                            Navigator.of(context).popUntil((route) => route.isFirst);
                           },
                           iconData: Icons.settings,
-                          text: 'Settings',
+                          text: 'Back to menu',
                         )
                     ),
-                    const Divider(
-                        height: 1,
-                        thickness: 2,
-                        color: Colors.white
-                    ),
-                    Expanded(
-                        child: MenuButton(
-                          onPressed: () {
-                            _toggleMenu();
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                  (context, animation1, animation2) =>
-                                    const HelpPage(),
-                                      transitionDuration: Duration.zero,
-                              ),
-                            );
-                          },
-                          iconData: Icons.help_outline,
-                          text: 'Help',
-                          inkwellBorderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20)
-                          ),
-                        )
-                    )
+                    // Expanded(
+                    //     child: MenuButton(
+                    //       onPressed: () {
+                    //         _toggleMenu();
+                    //         Navigator.push(
+                    //           context,
+                    //           PageRouteBuilder(
+                    //             pageBuilder:
+                    //               (context, animation1, animation2) =>
+                    //                 const SettingsPage(),
+                    //                   transitionDuration: Duration.zero,
+                    //           ),
+                    //         );
+                    //       },
+                    //       iconData: Icons.settings,
+                    //       text: 'Settings',
+                    //     )
+                    // ),
+                    // const Divider(
+                    //     height: 1,
+                    //     thickness: 2,
+                    //     color: Colors.white
+                    // ),
+                    // Expanded(
+                    //     child: MenuButton(
+                    //       onPressed: () {
+                    //         _toggleMenu();
+                    //         Navigator.push(
+                    //           context,
+                    //           PageRouteBuilder(
+                    //             pageBuilder:
+                    //               (context, animation1, animation2) =>
+                    //                 const HelpPage(),
+                    //                   transitionDuration: Duration.zero,
+                    //           ),
+                    //         );
+                    //       },
+                    //       iconData: Icons.help_outline,
+                    //       text: 'Help',
+                    //       inkwellBorderRadius: const BorderRadius.only(
+                    //           bottomLeft: Radius.circular(20),
+                    //           bottomRight: Radius.circular(20)
+                    //       ),
+                    //     )
+                    // )
                   ],
                 ),
               )
