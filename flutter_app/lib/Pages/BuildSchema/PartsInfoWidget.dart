@@ -197,7 +197,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
-                                        (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty) ?
+                                        (widget.partEnum == PartEnum.ram && value.checkPartChosenId(PartEnum.ram).isNotEmpty) ?
                                           Flexible(child: Text(data[0]['name'] + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
                                             :
                                           Flexible(child: Text(data[0]['name'], style: TextStyles.sourceSans3,)),
@@ -217,7 +217,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
-                                      (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty) ?
+                                      (widget.partEnum == PartEnum.ram && value.checkPartChosenId(PartEnum.ram).isNotEmpty) ?
                                           Flexible(child: Text("Price: " + CurrencyFormat.convertToIdr(getLowestPrice(data,0), 2).toString() + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
                                           :
                                           Flexible(child:Text("Price: " + CurrencyFormat.convertToIdr(getLowestPrice(data,0), 2).toString(), style: TextStyles.sourceSans3,)),
@@ -242,7 +242,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                       children: [Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [Consumer<BuildSchemaStateModel>(
-                                          builder: (context, value, child) => (value.checkPartChosen(widget.partEnum).isEmpty) ?
+                                          builder: (context, value, child) => (value.checkPartChosenId(widget.partEnum).isEmpty) ?
                                           ElevatedButton(
                                               onPressed:() {
                                                 _addPart(value, data);

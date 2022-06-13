@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 
 class PartsSelectWidget extends StatelessWidget {
-  const PartsSelectWidget({Key? key, required this.imgPath, required this.name, required this.function}) : super(key: key);
+  const PartsSelectWidget({Key? key, required this.imgPath, required this.name, required this.function, required this.selectedPart}) : super(key: key);
   final String imgPath;
   final String name;
   final Function function;
+  final String selectedPart;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,17 @@ class PartsSelectWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
-
+              ),
+              if(selectedPart != "")Expanded(
+                flex: 2,
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                        child: Text(selectedPart ?? "", style: TextStyles.sourceSans3,)
+                    ),
+                  ],
+                ),
+              ),
             ],
           )
       ),

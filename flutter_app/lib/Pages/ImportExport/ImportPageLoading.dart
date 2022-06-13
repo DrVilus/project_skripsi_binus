@@ -74,7 +74,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     var ramOutput = await _getRamGraphQL(splitString[6]);
 
     var ramCount = int.parse(splitString[7]);
-    
+
     setState(() {
       _loadingMessage = "Obtaining Storage Data";
     });

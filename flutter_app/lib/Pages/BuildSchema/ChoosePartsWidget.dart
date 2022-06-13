@@ -68,11 +68,12 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: value.checkPartChosen(convertIndexToEnum(index)).isNotEmpty
+                                        color: value.checkPartChosenId(convertIndexToEnum(index)).isNotEmpty
                                             ? Colors.grey.withAlpha(100) : null
                                     ),
                                     child: Consumer<BuildSchemaStateModel>(
                                       builder: (context, schemaState, child) => PartsSelectWidget(
+                                        selectedPart: schemaState.checkPartChosenName(partSelectModelList[index].partEnumVariable),
                                         name: partSelectModelList[index].name,
                                         imgPath: partSelectModelList[index].assetPath,
                                         function: (){

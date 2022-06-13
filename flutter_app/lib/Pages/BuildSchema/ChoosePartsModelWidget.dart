@@ -197,8 +197,8 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                 }
                               }
 
-                              if(schemaState.checkPartChosen(widget.partEnum).isNotEmpty){
-                                var selectedData = data.where((element) => element['id'] == schemaState.checkPartChosen(widget.partEnum)).first;
+                              if(schemaState.checkPartChosenId(widget.partEnum).isNotEmpty){
+                                var selectedData = data.where((element) => element['id'] == schemaState.checkPartChosenId(widget.partEnum)).first;
                                 data.remove(selectedData);
                                 data.insert(0, selectedData);
                               }
@@ -213,7 +213,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(20),
-                                                  color: (schemaState.checkPartChosen(widget.partEnum).isNotEmpty && index == 0)
+                                                  color: (schemaState.checkPartChosenId(widget.partEnum).isNotEmpty && index == 0)
                                                       ? Colors.grey.withAlpha(100) 
                                                       : (index < _compatibleIndexLength )
                                                       ? null 
@@ -231,7 +231,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                         Row(
                                                           children: [
                                                             Consumer<BuildSchemaStateModel>(builder: (context, value, child) =>
-                                                            (widget.partEnum == PartEnum.ram && value.checkPartChosen(PartEnum.ram).isNotEmpty && index == 0) ?
+                                                            (widget.partEnum == PartEnum.ram && value.checkPartChosenId(PartEnum.ram).isNotEmpty && index == 0) ?
                                                             Flexible(child: Text(data[index]['name'] + " x" + value.currentSelectedRAMCount.toString(), style: TextStyles.sourceSans3,))
                                                                 :
                                                             Flexible(child: Text(data[index]['name'], style: TextStyles.sourceSans3,)),
@@ -260,7 +260,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                                     child: Text("Info", style: TextStyles.interStyle1)
                                                                 ),
 
-                                                                (schemaState.checkPartChosen(widget.partEnum).isEmpty || index != 0) ?
+                                                                (schemaState.checkPartChosenId(widget.partEnum).isEmpty || index != 0) ?
                                                                 ElevatedButton(
                                                                     onPressed: () async {
                                                                       //For multi count part input check

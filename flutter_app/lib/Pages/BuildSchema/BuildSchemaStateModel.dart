@@ -297,7 +297,7 @@ class BuildSchemaStateModel extends ChangeNotifier {
   }
 
   ///Return as ID of the selected part
-  String checkPartChosen(PartEnum partEnum){
+  String checkPartChosenId(PartEnum partEnum){
     switch(partEnum){
       case PartEnum.pcCase: {
         if(selectedCase.isNotEmpty){
@@ -360,8 +360,71 @@ class BuildSchemaStateModel extends ChangeNotifier {
     }
   }
 
+  ///Return as Name of the selected part
+  String checkPartChosenName(PartEnum partEnum){
+    switch(partEnum){
+      case PartEnum.pcCase: {
+        if(selectedCase.isNotEmpty){
+          return selectedCase[0]['name'];
+        }
+        return '';
+      }
+      case PartEnum.cooling: {
+        if(selectedCooler.isNotEmpty){
+          return selectedCooler[0]['name'];
+        }
+        return '';
+      }
+      case PartEnum.motherboard: {
+        if(selectedMotherboard.isNotEmpty){
+          return selectedMotherboard[0]['name'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.gpu: {
+        if(selectedGPU.isNotEmpty){
+          return selectedGPU[0]['name'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.cpu: {
+        if(selectedCPU.isNotEmpty){
+          return selectedCPU[0]['name'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.psu: {
+        if(selectedPSU.isNotEmpty){
+          return selectedPSU[0]['name'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.ram: {
+        if(selectedRAM.isNotEmpty){
+          return selectedRAM[0]['name'];
+        }else {
+          return '';
+        }
+      }
+      case PartEnum.storage: {
+        if(selectedStorage.isNotEmpty){
+          return selectedStorage[0]['name'];
+        }else {
+          return '';
+        }
+      }
+
+      default: {
+        return '';
+      }
+    }
+  }
+
   double calculatePrice(){
-    print(currentSelectedRAMCount );
     double initPrice = 0;
     if(selectedCooler.isNotEmpty){
       initPrice += selectedCooler[0]['cooling_prices'][0]['price'];
