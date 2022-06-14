@@ -1,31 +1,38 @@
 import '../Variables/GlobalVariables.dart';
 
 class CpuMotherboardPair{
-  late Map<String, dynamic> cpuData;
-  late Map<String, dynamic> motherboardData;
+  late Map<String, dynamic>? cpuData;
+  late Map<String, dynamic>? motherboardData;
   num price = 0;
 
-  CpuMotherboardPair(Map<String, dynamic> cpuInput, Map<String, dynamic> motherboardInput){
+  CpuMotherboardPair(Map<String, dynamic>? cpuInput, Map<String, dynamic>? motherboardInput){
     cpuData = cpuInput;
     motherboardData = motherboardInput;
-    price = cpuInput[getQueryPriceText(PartEnum.cpu)][0]['price'] + motherboardInput[getQueryPriceText(PartEnum.motherboard)][0]['price'];
+
+    if(cpuInput != null){
+      price += cpuInput[getQueryPriceText(PartEnum.cpu)][0]['price'];
+    }
+    if(motherboardInput != null){
+      price += motherboardInput[getQueryPriceText(PartEnum.motherboard)][0]['price'];
+    }
+
   }
 }
 
 class GpuPsuPair{
   late Map<String, dynamic>? gpuData;
-  late Map<String, dynamic> psuData;
+  late Map<String, dynamic>? psuData;
   num price = 0;
 
-  GpuPsuPair(Map<String, dynamic>? gpuInput, Map<String, dynamic> psuInput){
-    if(gpuInput == null){
-      gpuData = null;
-      psuData = psuInput;
-      price = psuInput[getQueryPriceText(PartEnum.psu)][0]['price'];
-    }else{
-      gpuData = gpuInput;
-      psuData = psuInput;
-      price = gpuInput[getQueryPriceText(PartEnum.gpu)][0]['price'] + psuInput[getQueryPriceText(PartEnum.psu)][0]['price'];
+  GpuPsuPair(Map<String, dynamic>? gpuInput, Map<String, dynamic>? psuInput){
+    gpuData = gpuInput;
+    psuData = psuInput;
+
+    if(psuInput != null){
+      price += psuInput[getQueryPriceText(PartEnum.psu)][0]['price'];
+    }
+    if(gpuInput != null){
+      price += gpuInput[getQueryPriceText(PartEnum.gpu)][0]['price'];
     }
   }
 }
@@ -33,21 +40,21 @@ class GpuPsuPair{
 class FullPcPartModel{
   late CpuMotherboardPair cpuMotherboardPair;
   late GpuPsuPair gpuPsuPair;
-  late Map<String, dynamic> storageData;
-  late Map<String, dynamic> ramData;
+  late Map<String, dynamic>? storageData;
+  late Map<String, dynamic>? ramData;
   late int ramCount;
-  late Map<String, dynamic> coolerData;
-  late Map<String, dynamic> caseData;
+  late Map<String, dynamic>? coolerData;
+  late Map<String, dynamic>? caseData;
   num price = 0;
 
   FullPcPartModel(
       CpuMotherboardPair cpuMotherboardPairInput,
       GpuPsuPair gpuPsuPairInput,
-      Map<String, dynamic> caseInput,
-      Map<String, dynamic> storageInput,
-      Map<String, dynamic> ramInput,
+      Map<String, dynamic>? caseInput,
+      Map<String, dynamic>? storageInput,
+      Map<String, dynamic>? ramInput,
       int ramCountInput,
-      Map<String, dynamic> coolerInput,
+      Map<String, dynamic>? coolerInput,
   ){
     cpuMotherboardPair = cpuMotherboardPairInput;
     caseData = caseInput;
@@ -57,10 +64,19 @@ class FullPcPartModel{
     ramCount = ramCountInput;
     coolerData = coolerInput;
     price = cpuMotherboardPairInput.price +
-        gpuPsuPairInput.price +
-        caseInput[getQueryPriceText(PartEnum.pcCase)][0]['price'] +
-        storageInput[getQueryPriceText(PartEnum.storage)][0]['price'] +
-        (ramInput[getQueryPriceText(PartEnum.ram)][0]['price'] * ramCountInput) +
-        coolerInput[getQueryPriceText(PartEnum.cooling)][0]['price'];
+        gpuPsuPairInput.price;
+
+    if(caseInput != null){
+      price += caseInput[getQueryPriceText(PartEnum.pcCase)][0]['price'];
+    }
+    if(storageInput != null){
+      price += storageInput[getQueryPriceText(PartEnum.storage)][0]['price'];
+    }
+    if(ramInput != null){
+      price += (ramInput[getQueryPriceText(PartEnum.ram)][0]['price'] * ramCountInput);
+    }
+    if(coolerInput != null){
+      price += coolerInput[getQueryPriceText(PartEnum.cooling)][0]['price'];
+    }
   }
 }

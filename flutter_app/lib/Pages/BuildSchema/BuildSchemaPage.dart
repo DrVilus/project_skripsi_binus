@@ -34,22 +34,37 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
   final ColorFilter disabledColor = ColorFilter.mode(Colors.grey.shade800, BlendMode.modulate);
   final ColorFilter enabledColor = const ColorFilter.mode(Colors.white, BlendMode.modulate);
 
+  ///Transform data from recommendation or import into schema
   @override
   void initState() {
     super.initState();
     if(widget.fullPcPartModelList != null){
-      buildSchemaStateModel.changeSelectedCPU([widget.fullPcPartModelList!.cpuMotherboardPair.cpuData]);
-      buildSchemaStateModel.changeSelectedMotherboard([widget.fullPcPartModelList!.cpuMotherboardPair.motherboardData]);
+      if(widget.fullPcPartModelList!.cpuMotherboardPair.cpuData != null){
+        buildSchemaStateModel.changeSelectedCPU([widget.fullPcPartModelList!.cpuMotherboardPair.cpuData]);
+      }
+      if(widget.fullPcPartModelList!.cpuMotherboardPair.motherboardData != null){
+        buildSchemaStateModel.changeSelectedMotherboard([widget.fullPcPartModelList!.cpuMotherboardPair.motherboardData]);
+      }
       if(widget.fullPcPartModelList!.gpuPsuPair.gpuData != null){
         buildSchemaStateModel.changeSelectedGPU([widget.fullPcPartModelList!.gpuPsuPair.gpuData]);
       }
-      buildSchemaStateModel.changeSelectedPSU([widget.fullPcPartModelList!.gpuPsuPair.psuData]);
-      buildSchemaStateModel.changeSelectedRAM([widget.fullPcPartModelList!.ramData]);
+      if(widget.fullPcPartModelList!.gpuPsuPair.psuData != null){
+        buildSchemaStateModel.changeSelectedPSU([widget.fullPcPartModelList!.gpuPsuPair.psuData]);
+      }
+      if(widget.fullPcPartModelList!.ramData != null){
+        buildSchemaStateModel.changeSelectedRAM([widget.fullPcPartModelList!.ramData]);
+      }
       buildSchemaStateModel.changeSelectedRAMCount(widget.fullPcPartModelList!.ramCount);
-      buildSchemaStateModel.changeSelectedStorage([widget.fullPcPartModelList!.storageData]);
-      buildSchemaStateModel.changeSelectedCooler([widget.fullPcPartModelList!.coolerData]);
-      buildSchemaStateModel.changeSelectedCase([widget.fullPcPartModelList!.caseData]);
 
+      if(widget.fullPcPartModelList!.storageData != null){
+        buildSchemaStateModel.changeSelectedStorage([widget.fullPcPartModelList!.storageData]);
+      }
+      if(widget.fullPcPartModelList!.coolerData != null){
+        buildSchemaStateModel.changeSelectedCooler([widget.fullPcPartModelList!.coolerData]);
+      }
+      if(widget.fullPcPartModelList!.caseData != null){
+        buildSchemaStateModel.changeSelectedCase([widget.fullPcPartModelList!.caseData]);
+      }
     }
   }
 

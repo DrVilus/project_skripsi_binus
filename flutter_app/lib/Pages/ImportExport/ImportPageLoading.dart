@@ -41,53 +41,78 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     setState(() {
       _loadingMessage = "Obtaining Case Data";
     });
-    var caseOutput = await _getCaseGraphQL(splitString[0]);
+    Map<String,dynamic>? caseOutput;
+    if(splitString[0] != "0"){
+      caseOutput = (await _getCaseGraphQL(splitString[0]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining Cooler Data";
     });
-    var coolingOutput = await _getCoolerGraphQL(splitString[1]);
+    Map<String,dynamic>? coolingOutput;
+    if(splitString[1] != "0"){
+      coolingOutput = coolingOutput = (await _getCoolerGraphQL(splitString[1]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining Motherboard Data";
     });
-    var motherboardOutput = await _getMotherboardGraphQL(splitString[2]);
+    Map<String,dynamic>? motherboardOutput;
+    if(splitString[2] != "0"){
+      motherboardOutput = (await _getMotherboardGraphQL(splitString[2]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining GPU Data";
     });
-    var gpuOutput = await _getGpuGraphQL(splitString[3]);
+    Map<String,dynamic>? gpuOutput;
+    if(splitString[3] != "0"){
+      gpuOutput = (await _getGpuGraphQL(splitString[3]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining CPU Data";
     });
-    var cpuOutput = await _getCpuGraphQL(splitString[4]);
+    Map<String,dynamic>? cpuOutput;
+    if(splitString[4] != "0"){
+      cpuOutput = (await _getCpuGraphQL(splitString[4]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining PSU Data";
     });
-    var psuOutput = await _getPsuGraphQL(splitString[5]);
+    Map<String,dynamic>? psuOutput;
+    if(splitString[5] != "0"){
+      psuOutput = (await _getPsuGraphQL(splitString[5]))[0];
+    }
 
     setState(() {
       _loadingMessage = "Obtaining RAM Data";
     });
-    var ramOutput = await _getRamGraphQL(splitString[6]);
+    Map<String,dynamic>? ramOutput;
+    if(splitString[6] != "0"){
+      ramOutput = (await _getRamGraphQL(splitString[6]))[0];
+    }
 
     var ramCount = int.parse(splitString[7]);
 
     setState(() {
       _loadingMessage = "Obtaining Storage Data";
     });
-    var storageOutput = await _getStorageGraphQL(splitString[8]);
+    Map<String,dynamic>? storageOutput;
+    if(splitString[8] != "0"){
+      storageOutput = (await _getStorageGraphQL(splitString[8]))[0];
+    }
+
 
     FullPcPartModel  fullPcPartModel = FullPcPartModel(
-        CpuMotherboardPair(cpuOutput[0], motherboardOutput[0]),
-        GpuPsuPair(gpuOutput[0], psuOutput[0]),
-        caseOutput[0],
-        storageOutput[0],
-        ramOutput[0],
+        CpuMotherboardPair(cpuOutput, motherboardOutput),
+        GpuPsuPair(gpuOutput, psuOutput),
+        caseOutput,
+        storageOutput,
+        ramOutput,
         ramCount,
-        coolingOutput[0]);
+        coolingOutput);
 
 
     Navigator.pushReplacement(

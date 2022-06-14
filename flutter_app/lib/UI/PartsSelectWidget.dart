@@ -43,7 +43,7 @@ class PartsSelectWidget extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Center(
-                        child: Text(selectedPart ?? "", style: TextStyles.sourceSans3,)
+                        child: Text(selectedPart, style: TextStyles.sourceSans3,)
                     ),
                   ],
                 ),
