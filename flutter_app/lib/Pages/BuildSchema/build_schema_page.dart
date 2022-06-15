@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Pages/BuildSchema/EstimatedPriceWidget.dart';
-import 'package:project_skripsi/UI/FadeBlackBackground.dart';
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_state_model.dart';
+import 'package:project_skripsi/Pages/BuildSchema/estimated_price_widget.dart';
+import 'package:project_skripsi/UI/fade_black_background.dart';
+import 'package:project_skripsi/Variables/global_variables.dart';
 import 'package:provider/provider.dart';
-import '../../Models/RecommendationModels.dart';
-import '../../UI/CustomAppbar.dart';
+import '../../Models/recommendation_models.dart';
+import '../../UI/custom_app_bar.dart';
 
 class BuildSchemaPage extends StatefulWidget {
   const BuildSchemaPage({Key? key, this.fullPcPartModelList}) : super(key: key);

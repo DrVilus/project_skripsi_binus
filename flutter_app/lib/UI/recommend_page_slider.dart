@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/UI/GradientRectSliderTrackShape.dart';
+import 'package:project_skripsi/UI/gradient_rect_slider_track_shape.dart';
 
 class RecommendPageSlider extends StatefulWidget {
   final Function(int) callback;

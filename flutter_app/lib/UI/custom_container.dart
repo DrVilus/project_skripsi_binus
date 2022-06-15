@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Palette.dart';
+import 'palette.dart';
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({

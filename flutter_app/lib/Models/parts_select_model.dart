@@ -1,4 +1,4 @@
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:project_skripsi/Variables/global_variables.dart';
 
 class PartsSelectModel {
   String name = '';

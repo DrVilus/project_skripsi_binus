@@ -6,12 +6,12 @@ import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../Functions/GenericUIFunctions.dart';
-import '../../UI/Palette.dart';
-import '../../Functions/CurrencyFormat.dart';
-import '../../Variables/GlobalVariables.dart';
-import 'BuildSchemaStateModel.dart';
-import 'ChoosePartsModelWidget.dart';
+import '../../Functions/generic_ui_functions.dart';
+import '../../UI/palette.dart';
+import '../../Functions/currency_format.dart';
+import '../../Variables/global_variables.dart';
+import 'build_schema_state_model.dart';
+import 'choose_parts_model_widget.dart';
 
 class PartsInfoWidget extends StatefulWidget {
   const PartsInfoWidget({Key? key, required this.id, required this.partEnum, required this.toggleMenu}) : super(key: key);
@@ -26,10 +26,10 @@ class PartsInfoWidget extends StatefulWidget {
 class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
   num getLowestPrice(List queryResult, int index){
-    if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
+    if(queryResult[index][GlobalVariables.getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }
-    return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
+    return queryResult[index][GlobalVariables.getQueryPriceText(widget.partEnum)][0]['price']!;
   }
 
   Widget createModelInformation(List query){
@@ -105,7 +105,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var selectedPartModel = partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
+    var selectedPartModel = GlobalVariables.partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
 
     return SafeArea(
         child: Stack(
@@ -175,7 +175,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                           );
                         }
 
-                        List? data = getQueryList(result, widget.partEnum);
+                        List? data = GlobalVariables.getQueryList(result, widget.partEnum);
 
                         if (data.isEmpty) {
                           return const Text('No repositories');
@@ -270,7 +270,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                                           children: [ElevatedButton(
                                               onPressed: () {
                                                 //print(data[0][getQueryPriceText(widget.partEnum)][0]['shop_link']!);
-                                                _launchUrl(data[0][getQueryPriceText(widget.partEnum)][0]['shop_link']!);
+                                                _launchUrl(data[0][GlobalVariables.getQueryPriceText(widget.partEnum)][0]['shop_link']!);
                                               },
                                               child: Text("Visit Store Page", style: TextStyles.interStyle1)
                                           ),],

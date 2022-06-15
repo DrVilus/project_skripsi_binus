@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/ImportExport/ImportPageLoading.dart';
-import 'package:project_skripsi/UI/CustomAppBarBack.dart';
-import 'package:project_skripsi/UI/TitledContainer.dart';
+import 'package:project_skripsi/Pages/ImportExport/import_page_loading.dart';
+import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/titled_container.dart';
 
 class ImportPage extends StatefulWidget {
   const ImportPage({Key? key}) : super(key: key);

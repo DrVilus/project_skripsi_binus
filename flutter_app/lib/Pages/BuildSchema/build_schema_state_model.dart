@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
+import 'package:project_skripsi/Variables/global_variables.dart';
 
-import '../../Functions/CompatibilityCheckFunctions.dart';
+import '../../Functions/compatibility_check_functions.dart';
 
 class BuildSchemaStateModel extends ChangeNotifier {
 

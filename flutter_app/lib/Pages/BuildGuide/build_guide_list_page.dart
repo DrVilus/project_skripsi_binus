@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Models/BuildGuideModel.dart';
-import 'package:project_skripsi/Pages/BuildGuide/BuildGuideDescriptionPage.dart';
-import 'package:project_skripsi/UI/CorneredButton.dart';
-import 'package:project_skripsi/UI/CustomAppBarBack.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/Models/build_guide_model.dart';
+import 'package:project_skripsi/Pages/BuildGuide/build_guide_description_page.dart';
+import 'package:project_skripsi/UI/cornered_button.dart';
+import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/palette.dart';
 
 class BuildGuideListPage extends StatefulWidget {
   const BuildGuideListPage({ Key? key, required this.buildGuideModelListWithTitle }) : super(key: key);

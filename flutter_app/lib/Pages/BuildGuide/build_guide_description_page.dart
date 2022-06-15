@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/UI/CustomAppBarBack.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/palette.dart';
 
-import '../../Models/BuildGuideModel.dart';
+import '../../Models/build_guide_model.dart';
 
 class BuildGuideDescriptionPage extends StatelessWidget {
   const BuildGuideDescriptionPage({Key? key,required this.buildGuideModel}) : super(key: key);

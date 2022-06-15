@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Functions/CurrencyFormat.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/UI/FadeBlackBackground.dart';
+import 'package:project_skripsi/Functions/currency_format.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_state_model.dart';
+import 'package:project_skripsi/UI/fade_black_background.dart';
 import 'package:provider/provider.dart';
 
-import '../../UI/Palette.dart';
+import '../../UI/palette.dart';
 
 class EstimatedPriceWidget extends StatefulWidget {
   const EstimatedPriceWidget({Key? key}) : super(key: key);
@@ -160,13 +160,13 @@ class WidgetPainter extends CustomPainter {
     path_0.lineTo(size.width*0.008596494,size.height*0.1290404);
     path_0.close();
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005747126;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005747126;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 
@@ -186,13 +186,13 @@ class ArrowDownPainter extends CustomPainter {
     path_0.lineTo(size.width*0.5000000,size.height*0.8750000);
     path_0.lineTo(size.width*0.03703704,size.height*0.06249994);
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.07407407;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.07407407;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 
@@ -212,13 +212,13 @@ class ArrowUpPainter extends CustomPainter {
     path_0.lineTo(13.5,2);
     path_0.lineTo(26,15);
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.07407407;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.07407407;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 

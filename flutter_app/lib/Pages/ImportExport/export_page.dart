@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_skripsi/Functions/GenericUIFunctions.dart';
-import 'package:project_skripsi/UI/TitledContainer.dart';
-import '../../UI/CustomAppBarBack.dart';
-import '../BuildSchema/BuildSchemaStateModel.dart';
+import 'package:project_skripsi/Functions/generic_ui_functions.dart';
+import 'package:project_skripsi/UI/titled_container.dart';
+import '../../UI/custom_app_bar_back.dart';
+import '../BuildSchema/build_schema_state_model.dart';
 
 class ExportPage extends StatefulWidget {
   const ExportPage({Key? key, required this.buildSchemaStateModel}) : super(key: key);

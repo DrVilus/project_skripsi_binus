@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
-import 'package:project_skripsi/UI/CustomAppBarBack.dart';
-import 'package:project_skripsi/UI/Palette.dart';
-import 'package:project_skripsi/Variables/Queries.dart';
-import 'package:project_skripsi/Variables/RecommendationQueries.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_page.dart';
+import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/palette.dart';
+import 'package:project_skripsi/Variables/recommendation_queries.dart';
 
-import '../../Models/RecommendationModels.dart';
-import '../../Variables/GlobalVariables.dart';
-import '../../Variables/GraphQLClient.dart';
+import '../../Models/recommendation_models.dart';
+import '../../Variables/Queries.dart';
+import '../../Variables/global_variables.dart';
+import '../../Variables/graphql_client.dart';
 
 class RecommendedLoadingPage extends StatefulWidget {
   const RecommendedLoadingPage({Key? key, required this.targetMarketCode, required this.budget, required this.chipset}) : super(key: key);
@@ -186,7 +186,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.cpu);
+    return GlobalVariables.getQueryList(result, PartEnum.cpu);
   }
 
   Future<List> _getMotherboardGraphQL(List<String> socketList) async {
@@ -202,7 +202,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.motherboard);
+    return GlobalVariables.getQueryList(result, PartEnum.motherboard);
   }
 
   Future<List> _getGpuGraphQL() async {
@@ -219,7 +219,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.gpu);
+    return GlobalVariables.getQueryList(result, PartEnum.gpu);
   }
 
   Future<List> _getPsuGraphQL(int maxWatt) async {
@@ -235,12 +235,12 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.psu);
+    return GlobalVariables.getQueryList(result, PartEnum.psu);
   }
 
   Future<List> _getRamGraphQL() async {
     final QueryOptions options = QueryOptions(
-      document: gql(ramQuery),
+      document: gql(Queries.ramQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -248,7 +248,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.ram);
+    return GlobalVariables.getQueryList(result, PartEnum.ram);
   }
 
   Future<List> _getStorageGraphQL() async {
@@ -268,12 +268,12 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.storage);
+    return GlobalVariables.getQueryList(result, PartEnum.storage);
   }
 
   Future<List> _getCoolerGraphQL() async {
     final QueryOptions options = QueryOptions(
-      document: gql(coolingQuery),
+      document: gql(Queries.coolingQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -281,7 +281,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.cooling);
+    return GlobalVariables.getQueryList(result, PartEnum.cooling);
   }
 
   Future<List> _getCaseGraphQL() async {
@@ -297,7 +297,7 @@ class _RecommendedLoadingPageState extends State<RecommendedLoadingPage> {
         print(result.exception.toString());
       }
     }
-    return getQueryList(result, PartEnum.pcCase);
+    return GlobalVariables.getQueryList(result, PartEnum.pcCase);
   }
 
   @override

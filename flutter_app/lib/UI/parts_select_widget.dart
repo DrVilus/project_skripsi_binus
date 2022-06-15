@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/UI/palette.dart';
 
 class PartsSelectWidget extends StatelessWidget {
   const PartsSelectWidget({Key? key, required this.imgPath, required this.name, required this.function, required this.selectedPart}) : super(key: key);

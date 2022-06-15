@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/UI/PartsSelectWidget.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_state_model.dart';
+import 'package:project_skripsi/UI/parts_select_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../UI/Palette.dart';
-import '../../Variables/GlobalVariables.dart';
+import '../../UI/palette.dart';
+import '../../Variables/global_variables.dart';
 
 //Bukan page, dijadikan widget dan di-toggle melalui CustomAppbar
 class ChoosePartsWidget extends StatefulWidget {
@@ -63,16 +63,16 @@ class _ChoosePartsWidgetState extends State<ChoosePartsWidget> {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: value.checkPartChosenId(convertIndexToEnum(index)).isNotEmpty
+                                        color: value.checkPartChosenId(GlobalVariables.convertIndexToEnum(index)).isNotEmpty
                                             ? Colors.grey.withAlpha(100) : null
                                     ),
                                     child: Consumer<BuildSchemaStateModel>(
                                       builder: (context, schemaState, child) => PartsSelectWidget(
-                                        selectedPart: schemaState.checkPartChosenName(partSelectModelList[index].partEnumVariable),
-                                        name: partSelectModelList[index].name,
-                                        imgPath: partSelectModelList[index].assetPath,
+                                        selectedPart: schemaState.checkPartChosenName(GlobalVariables.partSelectModelList[index].partEnumVariable),
+                                        name: GlobalVariables.partSelectModelList[index].name,
+                                        imgPath: GlobalVariables.partSelectModelList[index].assetPath,
                                         function: (){
-                                          schemaState.changeSelectedPartEnum(convertIndexToEnum(index));
+                                          schemaState.changeSelectedPartEnum(GlobalVariables.convertIndexToEnum(index));
                                           schemaState.changeSidebarState(1);
                                         },
                                       ),
@@ -130,13 +130,13 @@ class WidgetBackgroundPainter extends CustomPainter {
     path_0.cubicTo(size.width*0.8832921,size.height*0.001941748,size.width*0.8956489,size.height*0.005113301,size.width*0.9053371,size.height*0.01087961);
     path_0.close();
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005617978;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.005617978;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 
@@ -150,9 +150,9 @@ class LinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawLine(Offset(size.width*0.5000000,size.height*1.300935e-10),Offset(size.width*0.4999925,size.height),paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawLine(Offset(size.width*0.5000000,size.height*1.300935e-10),Offset(size.width*0.4999925,size.height),paint0Stroke);
 
   }
 
@@ -171,13 +171,13 @@ class ArrowPainter extends CustomPainter {
     path_0.lineTo(2,13.5);
     path_0.lineTo(15,1);
 
-    Paint paint_0_stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.1250000;
-    paint_0_stroke.color=Colors.white.withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_stroke);
+    Paint paint0Stroke = Paint()..style=PaintingStyle.stroke..strokeWidth=size.width*0.1250000;
+    paint0Stroke.color=Colors.white.withOpacity(1.0);
+    canvas.drawPath(path_0,paint0Stroke);
 
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Palette.widgetBackground1;
-    canvas.drawPath(path_0,paint_0_fill);
+    Paint paint0Fill = Paint()..style=PaintingStyle.fill;
+    paint0Fill.color = Palette.widgetBackground1;
+    canvas.drawPath(path_0,paint0Fill);
 
   }
 

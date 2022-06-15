@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/UI/CustomAppbar.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/UI/custom_app_bar.dart';
+import 'package:project_skripsi/UI/palette.dart';
 
 
 class CustomAppBarBack extends StatefulWidget {

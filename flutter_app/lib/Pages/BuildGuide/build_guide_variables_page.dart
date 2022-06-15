@@ -1,4 +1,4 @@
-import 'package:project_skripsi/Models/BuildGuideModel.dart';
+import 'package:project_skripsi/Models/build_guide_model.dart';
 
 class BuildGuideVariablePage{
 

@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project_skripsi/Pages/RecommendationPage/RecommendedLoadingPage.dart';
-import 'package:project_skripsi/UI/CorneredButton.dart';
-import 'package:project_skripsi/UI/CustomAppBarBack.dart';
-import 'package:project_skripsi/UI/CustomContainer.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/Pages/RecommendationPage/recommended_loading_page.dart';
+import 'package:project_skripsi/UI/cornered_button.dart';
+import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/custom_container.dart';
+import 'package:project_skripsi/UI/palette.dart';
 
-import '../../Functions/GenericUIFunctions.dart';
+import '../../Functions/generic_ui_functions.dart';
 
 class RecommendedFormPage extends StatefulWidget {
   const RecommendedFormPage({Key? key}) : super(key: key);

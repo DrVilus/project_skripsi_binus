@@ -1,4 +1,4 @@
-import '../Variables/GlobalVariables.dart';
+import '../Variables/global_variables.dart';
 
 class CpuMotherboardPair{
   late Map<String, dynamic>? cpuData;
@@ -10,10 +10,10 @@ class CpuMotherboardPair{
     motherboardData = motherboardInput;
 
     if(cpuInput != null){
-      price += cpuInput[getQueryPriceText(PartEnum.cpu)][0]['price'];
+      price += cpuInput[GlobalVariables.getQueryPriceText(PartEnum.cpu)][0]['price'];
     }
     if(motherboardInput != null){
-      price += motherboardInput[getQueryPriceText(PartEnum.motherboard)][0]['price'];
+      price += motherboardInput[GlobalVariables.getQueryPriceText(PartEnum.motherboard)][0]['price'];
     }
 
   }
@@ -29,10 +29,10 @@ class GpuPsuPair{
     psuData = psuInput;
 
     if(psuInput != null){
-      price += psuInput[getQueryPriceText(PartEnum.psu)][0]['price'];
+      price += psuInput[GlobalVariables.getQueryPriceText(PartEnum.psu)][0]['price'];
     }
     if(gpuInput != null){
-      price += gpuInput[getQueryPriceText(PartEnum.gpu)][0]['price'];
+      price += gpuInput[GlobalVariables.getQueryPriceText(PartEnum.gpu)][0]['price'];
     }
   }
 }
@@ -67,16 +67,16 @@ class FullPcPartModel{
         gpuPsuPairInput.price;
 
     if(caseInput != null){
-      price += caseInput[getQueryPriceText(PartEnum.pcCase)][0]['price'];
+      price += caseInput[GlobalVariables.getQueryPriceText(PartEnum.pcCase)][0]['price'];
     }
     if(storageInput != null){
-      price += storageInput[getQueryPriceText(PartEnum.storage)][0]['price'];
+      price += storageInput[GlobalVariables.getQueryPriceText(PartEnum.storage)][0]['price'];
     }
     if(ramInput != null){
-      price += (ramInput[getQueryPriceText(PartEnum.ram)][0]['price'] * ramCountInput);
+      price += (ramInput[GlobalVariables.getQueryPriceText(PartEnum.ram)][0]['price'] * ramCountInput);
     }
     if(coolerInput != null){
-      price += coolerInput[getQueryPriceText(PartEnum.cooling)][0]['price'];
+      price += coolerInput[GlobalVariables.getQueryPriceText(PartEnum.cooling)][0]['price'];
     }
   }
 }

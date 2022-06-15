@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/GetStarted.dart';
-import 'package:project_skripsi/UI/Palette.dart';
+import 'package:project_skripsi/Pages/get_started.dart';
+import 'package:project_skripsi/UI/palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'Variables/GraphQLClient.dart';
+import 'Variables/graphql_client.dart';
 
 void main() async {
   await initHiveForFlutter();

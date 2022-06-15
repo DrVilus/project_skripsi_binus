@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaPage.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Pages/RecommendationPage/RecommendedFormPage.dart';
-import 'package:project_skripsi/UI/CorneredButton.dart';
-import 'package:project_skripsi/UI/Palette.dart';
-import 'package:project_skripsi/UI/TitledContainer.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_page.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_state_model.dart';
+import 'package:project_skripsi/Pages/RecommendationPage/recommended_form_page.dart';
+import 'package:project_skripsi/UI/cornered_button.dart';
+import 'package:project_skripsi/UI/palette.dart';
+import 'package:project_skripsi/UI/titled_container.dart';
 import 'package:provider/provider.dart';
-import '../UI/CustomAppbar.dart';
-import 'ImportExport/ImportPage.dart';
+import '../UI/custom_app_bar.dart';
+import 'ImportExport/import_page.dart';
 
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({Key? key}) : super(key: key);

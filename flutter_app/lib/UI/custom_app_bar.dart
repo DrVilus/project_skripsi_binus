@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildGuide/BuildGuideListPage.dart';
-import 'package:project_skripsi/Pages/BuildGuide/BuildGuideVariablesPage.dart';
-import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
-import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
-import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
-import 'package:project_skripsi/UI/CustomContainer.dart';
+import 'package:project_skripsi/Pages/BuildGuide/build_guide_list_page.dart';
+import 'package:project_skripsi/Pages/BuildGuide/build_guide_variables_page.dart';
+import 'package:project_skripsi/Pages/BuildSchema/choose_parts_model_widget.dart';
+import 'package:project_skripsi/Pages/BuildSchema/choose_parts_widget.dart';
+import 'package:project_skripsi/Pages/BuildSchema/parts_info_widget.dart';
+import 'package:project_skripsi/UI/custom_container.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
-import '../Pages/BuildSchema/BuildSchemaStateModel.dart';
-import '../Pages/ImportExport/ExportPage.dart';
-import '../Pages/ImportExport/ImportPage.dart';
-import 'FadeBlackBackground.dart';
-import 'Palette.dart';
+import '../Pages/BuildSchema/build_schema_state_model.dart';
+import '../Pages/ImportExport/export_page.dart';
+import '../Pages/ImportExport/import_page.dart';
+import 'fade_black_background.dart';
+import 'palette.dart';
 
 class CustomAppbar extends StatefulWidget {
   const CustomAppbar({Key? key, this.isTextFieldEnabled = false, this.sideBarVisible = true, required this.children, this.isExportDisabled = true}) : super(key: key);

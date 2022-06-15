@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:project_skripsi/Functions/CompatibilityCheckFunctions.dart';
-import 'package:project_skripsi/Functions/GenericUIFunctions.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Functions/CurrencyFormat.dart';
+import 'package:project_skripsi/Functions/compatibility_check_functions.dart';
+import 'package:project_skripsi/Functions/generic_ui_functions.dart';
+import 'package:project_skripsi/Pages/BuildSchema/build_schema_state_model.dart';
+import 'package:project_skripsi/Functions/currency_format.dart';
 import 'package:provider/provider.dart';
-import '../../UI/Palette.dart';
-import '../../Variables/GlobalVariables.dart';
-import '../../Variables/GraphQLClient.dart';
+import '../../UI/palette.dart';
+import '../../Variables/global_variables.dart';
+import '../../Variables/graphql_client.dart';
 
 class ChoosePartsModelWidget extends StatefulWidget {
   const ChoosePartsModelWidget({Key? key, required this.toggleSideBar, required this.partEnum}) : super(key: key);
@@ -25,15 +25,15 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
   int _compatibleIndexLength = 10000;
 
   num _getLowestPrice(List queryResult, int index){
-    if(queryResult[index][getQueryPriceText(widget.partEnum)].length == 0){
+    if(queryResult[index][GlobalVariables.getQueryPriceText(widget.partEnum)].length == 0){
       return 0;
     }
-    return queryResult[index][getQueryPriceText(widget.partEnum)][0]['price']!;
+    return queryResult[index][GlobalVariables.getQueryPriceText(widget.partEnum)][0]['price']!;
   }
 
   Future<List> _getPartData(String id) async{
     final QueryOptions options = QueryOptions(
-      document: gql(partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first.queryById),
+      document: gql(GlobalVariables.partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first.queryById),
       variables: {
         'id': id,
       },
@@ -47,7 +47,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
       }
     }
 
-    return getQueryList(result, widget.partEnum);
+    return GlobalVariables.getQueryList(result, widget.partEnum);
 
   }
 
@@ -63,7 +63,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var selectedPartModel = partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
+    var selectedPartModel = GlobalVariables.partSelectModelList.where((q) => q.partEnumVariable == widget.partEnum).first;
     return SafeArea(
         child: Stack(
           children: [
@@ -134,7 +134,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                 );
                               }
 
-                              List? data = getQueryList(result, widget.partEnum);
+                              List? data = GlobalVariables.getQueryList(result, widget.partEnum);
                               if (data.isEmpty) {
                                 return const Text('No data found');
                               }

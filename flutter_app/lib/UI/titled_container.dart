@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Palette.dart';
+import 'palette.dart';
 
 class TitledContainer extends StatelessWidget {
   const TitledContainer({

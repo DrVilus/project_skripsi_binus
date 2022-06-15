@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:project_skripsi/Models/RecommendationModels.dart';
-import 'package:project_skripsi/Variables/Queries.dart';
+import 'package:project_skripsi/Models/recommendation_models.dart';
 
-import '../../UI/CustomAppBarBack.dart';
-import '../../UI/Palette.dart';
-import '../../Variables/GlobalVariables.dart';
-import '../../Variables/GraphQLClient.dart';
-import '../BuildSchema/BuildSchemaPage.dart';
+import '../../UI/custom_app_bar_back.dart';
+import '../../UI/palette.dart';
+import '../../Variables/Queries.dart';
+import '../../Variables/global_variables.dart';
+import '../../Variables/graphql_client.dart';
+import '../BuildSchema/build_schema_page.dart';
 
 class ImportLoadingPage extends StatefulWidget {
   const ImportLoadingPage({Key? key, required this.importBuildCode}) : super(key: key);
@@ -125,7 +125,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getCpuGraphQL(String cpuIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(cpuQuery),
+      document: gql(Queries.cpuQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -134,7 +134,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
 
-    var list = getQueryList(result, PartEnum.cpu);
+    var list = GlobalVariables.getQueryList(result, PartEnum.cpu);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(cpuIdFront)){
         return [list[i]];
@@ -145,7 +145,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getMotherboardGraphQL(String motherboardIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(motherboardQuery),
+      document: gql(Queries.motherboardQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -153,7 +153,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.motherboard);
+    var list = GlobalVariables.getQueryList(result, PartEnum.motherboard);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(motherboardIdFront)){
         return [list[i]];
@@ -164,7 +164,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getGpuGraphQL(String gpuIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(gpuQuery),
+      document: gql(Queries.gpuQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -172,7 +172,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list =  getQueryList(result, PartEnum.gpu);
+    var list =  GlobalVariables.getQueryList(result, PartEnum.gpu);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(gpuIdFront)){
         return [list[i]];
@@ -183,7 +183,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getPsuGraphQL(String psuIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(psuQuery),
+      document: gql(Queries.psuQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -191,7 +191,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.psu);
+    var list = GlobalVariables.getQueryList(result, PartEnum.psu);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(psuIdFront)){
         return [list[i]];
@@ -202,7 +202,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getRamGraphQL(String ramIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(ramQuery),
+      document: gql(Queries.ramQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -210,7 +210,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.ram);
+    var list = GlobalVariables.getQueryList(result, PartEnum.ram);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(ramIdFront)){
         return [list[i]];
@@ -221,7 +221,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getStorageGraphQL(String storageIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(storageQuery),
+      document: gql(Queries.storageQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -229,7 +229,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.storage);
+    var list = GlobalVariables.getQueryList(result, PartEnum.storage);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(storageIdFront)){
         return [list[i]];
@@ -240,7 +240,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getCoolerGraphQL(String coolingIdFront) async {
     final QueryOptions options = QueryOptions(
-      document: gql(coolingQuery),
+      document: gql(Queries.coolingQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -248,7 +248,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.cooling);
+    var list = GlobalVariables.getQueryList(result, PartEnum.cooling);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(coolingIdFront)){
         return [list[i]];
@@ -259,7 +259,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getCaseGraphQL(String caseIdFront) async {
     final QueryOptions options = QueryOptions(
-        document: gql(caseQuery),
+        document: gql(Queries.caseQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -267,7 +267,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list = getQueryList(result, PartEnum.pcCase);
+    var list = GlobalVariables.getQueryList(result, PartEnum.pcCase);
     for(int i = 0; i < list.length; i++){
       if(list[i]['id'].toString().startsWith(caseIdFront)){
         return [list[i]];
