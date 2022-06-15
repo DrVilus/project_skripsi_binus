@@ -5,7 +5,8 @@ import 'package:project_skripsi/UI/palette.dart';
 import '../../Models/build_guide_model.dart';
 
 class BuildGuideDescriptionPage extends StatelessWidget {
-  const BuildGuideDescriptionPage({Key? key,required this.buildGuideModel}) : super(key: key);
+  const BuildGuideDescriptionPage({Key? key, required this.buildGuideModel})
+      : super(key: key);
   final BuildGuideModel buildGuideModel;
 
   @override
@@ -15,40 +16,51 @@ class BuildGuideDescriptionPage extends StatelessWidget {
         child: CustomAppBarBack(
           children: [
             Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height*0.2,
-                  left: 30, right: 30, bottom: 30),
-              child: SingleChildScrollView(
-                child: Column(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.2,
+                    left: 30,
+                    right: 30,
+                    bottom: 30),
+                child: SingleChildScrollView(
+                    child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Flexible(child: Text(buildGuideModel.guideTitle, style: TextStyles.interStyleBuildGuidePageTitle,))
+                        Flexible(
+                            child: Text(
+                          buildGuideModel.guideTitle,
+                          style: TextStyles.interStyleBuildGuidePageTitle,
+                        ))
                       ],
                     ),
-
-                    if(buildGuideModel.guideImageLink.isNotEmpty)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Image.asset(buildGuideModel.guideImageLink)
-                          ),
-                        )
-                      ],
+                    if (buildGuideModel.guideImageLink.isNotEmpty)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                                child: Image.asset(
+                                    buildGuideModel.guideImageLink)),
+                          )
+                        ],
+                      ),
+                    const SizedBox(
+                      height: 15,
                     ),
-                    const SizedBox(height: 15,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Flexible(child: Text(buildGuideModel.guideDescription, style: TextStyles.interStyleBuildGuidePageDescription,), )
+                        Flexible(
+                          child: Text(
+                            buildGuideModel.guideDescription,
+                            style:
+                                TextStyles.interStyleBuildGuidePageDescription,
+                          ),
+                        )
                       ],
                     )
                   ],
-                )
-              )
-            )
+                )))
           ],
         ),
       ),

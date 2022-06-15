@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrackShape {
+class GradientRectSliderTrackShape extends SliderTrackShape
+    with BaseSliderTrackShape {
   /// Create a slider track that draws two rectangles with rounded outer edges.
   const GradientRectSliderTrackShape();
 

@@ -1,6 +1,5 @@
-
-class RecommendationQueries{
-  static String cpuQueryByPrice="""
+class RecommendationQueries {
+  static String cpuQueryByPrice = """
     query cpuQueryByPrice(\$_lt: numeric!, \$_in: [Int!], \$_manufacturer: String = "") {
   cpu(where: {_and: {release_date: {_gte: "2018-01-01"}, cpu_prices: {price: {_gte: "1", _lte: \$_lt}}, target_market_number: {_in: \$_in}}, manufacturer: {_eq: \$_manufacturer}}, order_by: {cpu_prices_aggregate: {sum: {price: asc}}}) {
     id

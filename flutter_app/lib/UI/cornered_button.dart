@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'palette.dart';
 
 class CorneredButton extends StatelessWidget {
-  const CorneredButton({Key? key, required this.child, required this.onPressed}) : super(key: key);
+  const CorneredButton({Key? key, required this.child, required this.onPressed})
+      : super(key: key);
   final Widget child;
   final Function onPressed;
 

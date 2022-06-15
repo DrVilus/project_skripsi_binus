@@ -7,7 +7,8 @@ class PartsSelectModel {
   String query = """""";
   String queryById = """""";
 
-  PartsSelectModel(String nameInput, String assetPathInput, PartEnum partEnumInput, String queryInput, String queryByIdInput){
+  PartsSelectModel(String nameInput, String assetPathInput,
+      PartEnum partEnumInput, String queryInput, String queryByIdInput) {
     name = nameInput;
     assetPath = assetPathInput;
     partEnumVariable = partEnumInput;

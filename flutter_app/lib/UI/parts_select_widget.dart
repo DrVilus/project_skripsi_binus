@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:project_skripsi/UI/palette.dart';
 
 class PartsSelectWidget extends StatelessWidget {
-  const PartsSelectWidget({Key? key, required this.imgPath, required this.name, required this.function, required this.selectedPart}) : super(key: key);
+  const PartsSelectWidget(
+      {Key? key,
+      required this.imgPath,
+      required this.name,
+      required this.function,
+      required this.selectedPart})
+      : super(key: key);
   final String imgPath;
   final String name;
   final Function function;
@@ -23,33 +29,35 @@ class PartsSelectWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Container(color: Palette.grey, width: 25, height: 25),
-                      Text(name, style: TextStyles.sourceSans3,)
+                      Text(
+                        name,
+                        style: TextStyles.sourceSans3,
+                      )
                     ],
-                  )
-              ),
+                  )),
               Expanded(
                 flex: 5,
                 child: Stack(
                   children: <Widget>[
-                    Center(
-                        child: Image.asset(imgPath)
-                    ),
+                    Center(child: Image.asset(imgPath)),
                   ],
                 ),
               ),
-              if(selectedPart != "")Expanded(
-                flex: 2,
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                        child: Text(selectedPart, style: TextStyles.sourceSans3,)
-                    ),
-                  ],
+              if (selectedPart != "")
+                Expanded(
+                  flex: 2,
+                  child: Stack(
+                    children: <Widget>[
+                      Center(
+                          child: Text(
+                        selectedPart,
+                        style: TextStyles.sourceSans3,
+                      )),
+                    ],
+                  ),
                 ),
-              ),
             ],
-          )
-      ),
+          )),
     );
   }
 }

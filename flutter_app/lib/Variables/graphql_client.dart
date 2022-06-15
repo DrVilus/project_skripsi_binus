@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-final HttpLink httpLink = HttpLink(
-    'https://hasura-skripsi-binus.herokuapp.com/v1/graphql'
-);
+final HttpLink httpLink =
+    HttpLink('https://hasura-skripsi-binus.herokuapp.com/v1/graphql');
 
 final AuthLink authLink = AuthLink(
   headerKey: 'x-hasura-admin-secret',

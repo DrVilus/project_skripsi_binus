@@ -45,7 +45,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                       margin: const EdgeInsets.only(top: 20, bottom: 10),
                       child: Container(
                         margin:
-                        const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
+                            const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 15.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +65,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   height: 25,
                                   margin: const EdgeInsets.only(left: 25),
                                   decoration:
-                                  const BoxDecoration(color: Colors.white),
+                                      const BoxDecoration(color: Colors.white),
                                   child: ButtonTheme(
                                     alignedDropdown: true,
                                     child: DropdownButtonHideUnderline(
@@ -102,7 +102,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   height: 25,
                                   margin: const EdgeInsets.only(left: 60),
                                   decoration:
-                                  const BoxDecoration(color: Colors.white),
+                                      const BoxDecoration(color: Colors.white),
                                   child: ButtonTheme(
                                     alignedDropdown: true,
                                     child: DropdownButtonHideUnderline(
@@ -150,7 +150,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   width: 150,
                                   height: 25,
                                   decoration:
-                                  const BoxDecoration(color: Colors.white),
+                                      const BoxDecoration(color: Colors.white),
                                   child: TextFormField(
                                     maxLength: 14,
                                     controller: userInput,
@@ -173,7 +173,6 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                 ),
                               ],
                             ),
-
                             const SizedBox(
                               height: 5,
                             ),
@@ -185,24 +184,31 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                               children: [
                                 CorneredButton(
                                   onPressed: () {
-                                    if(userInput.text.isEmpty){
-                                      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Budget field is empty"));
+                                    if (userInput.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                              GenericUIFunctions.snackBar(
+                                                  "Budget field is empty"));
                                       return;
                                     }
-                                    if(int.parse(userInput.text) < 5000000){
-                                      ScaffoldMessenger.of(context).showSnackBar(GenericUIFunctions.snackBar("Minimum budget value is 5,000,000"));
+                                    if (int.parse(userInput.text) < 5000000) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          GenericUIFunctions.snackBar(
+                                              "Minimum budget value is 5,000,000"));
                                       return;
                                     }
-                                    if(userInput.text.isNotEmpty){
+                                    if (userInput.text.isNotEmpty) {
                                       Navigator.pushReplacement(
                                         context,
                                         PageRouteBuilder(
-                                          pageBuilder: (context, animation1, animation2) =>
+                                          pageBuilder: (context, animation1,
+                                                  animation2) =>
                                               RecommendedLoadingPage(
-                                                budget: double.parse(userInput.text),
-                                                targetMarketCode: tempValue,
-                                                chipset: chipsetValue,
-                                              ),
+                                            budget:
+                                                double.parse(userInput.text),
+                                            targetMarketCode: tempValue,
+                                            chipset: chipsetValue,
+                                          ),
                                           transitionDuration: Duration.zero,
                                         ),
                                       );
@@ -210,7 +216,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                   },
                                   child: Container(
                                     padding:
-                                    const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                        const EdgeInsets.fromLTRB(15, 0, 15, 0),
                                     child: Text(
                                       "Continue",
                                       style: TextStyles.interStyle1,

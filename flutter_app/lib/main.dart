@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:project_skripsi/Pages/get_started.dart';
 import 'package:project_skripsi/UI/palette.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+
 import 'Variables/graphql_client.dart';
 
 void main() async {
@@ -19,25 +20,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-      client: client,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-          scaffoldBackgroundColor: Palette.mainBackground,
-        ),
-        home: const MyHomePage(),
-      )
-    );
+        client: client,
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+            scaffoldBackgroundColor: Palette.mainBackground,
+          ),
+          home: const MyHomePage(),
+        ));
   }
 }
 
@@ -49,7 +49,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -62,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => const GetStartedPage(),
+            pageBuilder: (context, animation1, animation2) =>
+                const GetStartedPage(),
             transitionDuration: Duration.zero,
           ),
         );
@@ -73,16 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-          color: Colors.white,
-        ),
-      )
-    );
+        body: Center(
+      child: CircularProgressIndicator(
+        color: Colors.white,
+      ),
+    ));
   }
 }
-
-
-
-
-

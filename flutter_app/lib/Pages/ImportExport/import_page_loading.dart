@@ -11,7 +11,8 @@ import '../../Variables/graphql_client.dart';
 import '../BuildSchema/build_schema_page.dart';
 
 class ImportLoadingPage extends StatefulWidget {
-  const ImportLoadingPage({Key? key, required this.importBuildCode}) : super(key: key);
+  const ImportLoadingPage({Key? key, required this.importBuildCode})
+      : super(key: key);
   final String importBuildCode;
 
   @override
@@ -30,7 +31,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<void> executeAfterBuild() async {
     var splitString = widget.importBuildCode.split("/");
-    if(splitString.length != 9 && widget.importBuildCode.length != 65){
+    if (splitString.length != 9 && widget.importBuildCode.length != 65) {
       setState(() {
         _isError = true;
         _loadingMessage = "Invalid Code";
@@ -41,56 +42,57 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     setState(() {
       _loadingMessage = "Obtaining Case Data";
     });
-    Map<String,dynamic>? caseOutput;
-    if(splitString[0] != "0"){
+    Map<String, dynamic>? caseOutput;
+    if (splitString[0] != "0") {
       caseOutput = (await _getCaseGraphQL(splitString[0]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining Cooler Data";
     });
-    Map<String,dynamic>? coolingOutput;
-    if(splitString[1] != "0"){
-      coolingOutput = coolingOutput = (await _getCoolerGraphQL(splitString[1]))[0];
+    Map<String, dynamic>? coolingOutput;
+    if (splitString[1] != "0") {
+      coolingOutput =
+          coolingOutput = (await _getCoolerGraphQL(splitString[1]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining Motherboard Data";
     });
-    Map<String,dynamic>? motherboardOutput;
-    if(splitString[2] != "0"){
+    Map<String, dynamic>? motherboardOutput;
+    if (splitString[2] != "0") {
       motherboardOutput = (await _getMotherboardGraphQL(splitString[2]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining GPU Data";
     });
-    Map<String,dynamic>? gpuOutput;
-    if(splitString[3] != "0"){
+    Map<String, dynamic>? gpuOutput;
+    if (splitString[3] != "0") {
       gpuOutput = (await _getGpuGraphQL(splitString[3]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining CPU Data";
     });
-    Map<String,dynamic>? cpuOutput;
-    if(splitString[4] != "0"){
+    Map<String, dynamic>? cpuOutput;
+    if (splitString[4] != "0") {
       cpuOutput = (await _getCpuGraphQL(splitString[4]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining PSU Data";
     });
-    Map<String,dynamic>? psuOutput;
-    if(splitString[5] != "0"){
+    Map<String, dynamic>? psuOutput;
+    if (splitString[5] != "0") {
       psuOutput = (await _getPsuGraphQL(splitString[5]))[0];
     }
 
     setState(() {
       _loadingMessage = "Obtaining RAM Data";
     });
-    Map<String,dynamic>? ramOutput;
-    if(splitString[6] != "0"){
+    Map<String, dynamic>? ramOutput;
+    if (splitString[6] != "0") {
       ramOutput = (await _getRamGraphQL(splitString[6]))[0];
     }
 
@@ -99,13 +101,12 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     setState(() {
       _loadingMessage = "Obtaining Storage Data";
     });
-    Map<String,dynamic>? storageOutput;
-    if(splitString[8] != "0"){
+    Map<String, dynamic>? storageOutput;
+    if (splitString[8] != "0") {
       storageOutput = (await _getStorageGraphQL(splitString[8]))[0];
     }
 
-
-    FullPcPartModel  fullPcPartModel = FullPcPartModel(
+    FullPcPartModel fullPcPartModel = FullPcPartModel(
         CpuMotherboardPair(cpuOutput, motherboardOutput),
         GpuPsuPair(gpuOutput, psuOutput),
         caseOutput,
@@ -114,11 +115,11 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         ramCount,
         coolingOutput);
 
-
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => BuildSchemaPage(fullPcPartModelList: fullPcPartModel),
+        pageBuilder: (context, animation1, animation2) =>
+            BuildSchemaPage(fullPcPartModelList: fullPcPartModel),
       ),
     );
   }
@@ -135,8 +136,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     }
 
     var list = GlobalVariables.getQueryList(result, PartEnum.cpu);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(cpuIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(cpuIdFront)) {
         return [list[i]];
       }
     }
@@ -154,8 +155,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.motherboard);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(motherboardIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(motherboardIdFront)) {
         return [list[i]];
       }
     }
@@ -172,9 +173,9 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
         print(result.exception.toString());
       }
     }
-    var list =  GlobalVariables.getQueryList(result, PartEnum.gpu);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(gpuIdFront)){
+    var list = GlobalVariables.getQueryList(result, PartEnum.gpu);
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(gpuIdFront)) {
         return [list[i]];
       }
     }
@@ -192,8 +193,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.psu);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(psuIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(psuIdFront)) {
         return [list[i]];
       }
     }
@@ -211,8 +212,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.ram);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(ramIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(ramIdFront)) {
         return [list[i]];
       }
     }
@@ -230,8 +231,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.storage);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(storageIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(storageIdFront)) {
         return [list[i]];
       }
     }
@@ -249,8 +250,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.cooling);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(coolingIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(coolingIdFront)) {
         return [list[i]];
       }
     }
@@ -259,7 +260,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
 
   Future<List> _getCaseGraphQL(String caseIdFront) async {
     final QueryOptions options = QueryOptions(
-        document: gql(Queries.caseQuery),
+      document: gql(Queries.caseQuery),
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
@@ -268,8 +269,8 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
       }
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.pcCase);
-    for(int i = 0; i < list.length; i++){
-      if(list[i]['id'].toString().startsWith(caseIdFront)){
+    for (int i = 0; i < list.length; i++) {
+      if (list[i]['id'].toString().startsWith(caseIdFront)) {
         return [list[i]];
       }
     }
@@ -280,33 +281,32 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomAppBarBack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if(_isError == false)
-                    const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  if(_isError)
-                    Container(),
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Text(_loadingMessage, style: TextStyles.sourceSans3),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+      children: [
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (_isError == false)
+                const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              if (_isError) Container(),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child:
+                          Text(_loadingMessage, style: TextStyles.sourceSans3),
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+            ],
+          ),
         )
-    );
+      ],
+    ));
   }
 }

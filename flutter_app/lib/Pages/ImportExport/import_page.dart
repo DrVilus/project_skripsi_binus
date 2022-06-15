@@ -12,6 +12,7 @@ class ImportPage extends StatefulWidget {
 
 class _ImportPageState extends State<ImportPage> {
   TextEditingController userInput = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +53,10 @@ class _ImportPageState extends State<ImportPage> {
                               Navigator.pushReplacement(
                                 context,
                                 PageRouteBuilder(
-                                  pageBuilder: (context, animation1, animation2) =>
-                                      ImportLoadingPage(
-                                        importBuildCode: userInput.text
-                                      ),
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          ImportLoadingPage(
+                                              importBuildCode: userInput.text),
                                   transitionDuration: Duration.zero,
                                 ),
                               );

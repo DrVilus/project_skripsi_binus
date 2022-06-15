@@ -1,4 +1,4 @@
-class Queries{
+class Queries {
   static String coolingQuery = """
   query coolingQuery {
     cooling {

@@ -4,7 +4,8 @@ class FadeBlackBackground extends StatelessWidget {
   const FadeBlackBackground({
     Key? key,
     required bool toggleVariable,
-  }) : isMenuButtonPressed = toggleVariable, super(key: key);
+  })  : isMenuButtonPressed = toggleVariable,
+        super(key: key);
 
   final bool isMenuButtonPressed;
 
@@ -14,7 +15,6 @@ class FadeBlackBackground extends StatelessWidget {
         visible: isMenuButtonPressed,
         child: Container(
           color: const Color(0xFF000000).withOpacity(0.5),
-        )
-    );
+        ));
   }
 }
