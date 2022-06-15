@@ -1,9 +1,7 @@
 class CompatibilityCheckFunctions{
 
   bool handlePcieCompatibility(String pcieInput, String pcieTarget){
-    int pcieInputVersion = int.parse(pcieInput[5]);
     String pcieInputPin = pcieInput.substring(pcieInput.indexOf('x'), pcieInput.length);
-    int pcieTargetVersion = int.parse(pcieTarget[5]);
     String pcieTargetPin = pcieInput.substring(pcieTarget.indexOf('x'), pcieInput.length);
 
     //Any PCIE version works

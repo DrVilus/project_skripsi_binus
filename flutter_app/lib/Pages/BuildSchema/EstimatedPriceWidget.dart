@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/Functions/CurrencyFormat.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/UI/FadeBlackBackground.dart';
-import 'package:project_skripsi/Variables/GlobalVariables.dart';
 import 'package:provider/provider.dart';
 
 import '../../UI/Palette.dart';
@@ -113,18 +111,18 @@ class _EstimatedPriceWidgetState extends State<EstimatedPriceWidget> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("Estimated Price: ", style: TextStyles.interStyleBuildGuidePage,),
+                                      Text("Estimated Price: ", style: TextStyles.interStyleBuildGuidePageButton,),
                                     ],
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(CurrencyFormat.convertToIdr(value.calculatePrice(), 0), style: TextStyles.interStyleBuildGuidePage,),
+                                      Text(CurrencyFormat.convertToIdr(value.calculatePrice(), 0), style: TextStyles.interStyleBuildGuidePageButton,),
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePage,),
+                                      Text("Performance Benchmark:", style: TextStyles.interStyleBuildGuidePageButton,),
                                     ],
                                   ),
                                   _getPerformanceBenchmark(value)

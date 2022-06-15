@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildGuide/BuildGuidePage.dart';
+import 'package:project_skripsi/Pages/BuildGuide/BuildGuideListPage.dart';
+import 'package:project_skripsi/Pages/BuildGuide/BuildGuideVariablesPage.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsWidget.dart';
 import 'package:project_skripsi/Pages/BuildSchema/PartsInfoWidget.dart';
-import 'package:project_skripsi/Pages/Help/HelpPage.dart';
-import 'package:project_skripsi/Pages/Settings/SettingsPage.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
@@ -152,7 +151,9 @@ class _CustomAppbarState extends State<CustomAppbar> {
                               PageRouteBuilder(
                                 pageBuilder:
                                   (context, animation1, animation2) =>
-                                    const BuildGuidePage(),
+                                    BuildGuideListPage(
+                                      buildGuideModelListWithTitle: BuildGuideVariablePage.buildGuideMainList,
+                                    ),
                                       transitionDuration: Duration.zero,
                               ),
                             );

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
 import 'package:project_skripsi/UI/Palette.dart';
 
 class PartsSelectWidget extends StatelessWidget {

@@ -29,7 +29,7 @@ class _HelpPageState extends State<HelpPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
                         child: Row(
                           children: [
@@ -42,7 +42,7 @@ class _HelpPageState extends State<HelpPage> {
                                     padding: const EdgeInsets.only(top: 15, bottom: 15),
                                     child: Text(
                                       "Help #1",
-                                      style: TextStyles.interStyleBuildGuidePage,
+                                      style: TextStyles.interStyleBuildGuidePageButton,
                                     ),
                                   ),
                                 ),
@@ -54,7 +54,7 @@ class _HelpPageState extends State<HelpPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
                         child: Row(
                           children: [
@@ -67,7 +67,7 @@ class _HelpPageState extends State<HelpPage> {
                                     padding: const EdgeInsets.only(top: 15, bottom: 15),
                                     child: Text(
                                       "Help #2",
-                                      style: TextStyles.interStyleBuildGuidePage,
+                                      style: TextStyles.interStyleBuildGuidePageButton,
                                     ),
                                   ),
                                 ),
@@ -79,7 +79,7 @@ class _HelpPageState extends State<HelpPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
                         child: Row(
                           children: [
@@ -92,7 +92,7 @@ class _HelpPageState extends State<HelpPage> {
                                     padding: const EdgeInsets.only(top: 15, bottom: 15),
                                     child: Text(
                                       "Help #3",
-                                      style: TextStyles.interStyleBuildGuidePage,
+                                      style: TextStyles.interStyleBuildGuidePageButton,
                                     ),
                                   ),
                                 ),
@@ -104,7 +104,7 @@ class _HelpPageState extends State<HelpPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.85,
                         child: Row(
                           children: [
@@ -117,7 +117,7 @@ class _HelpPageState extends State<HelpPage> {
                                     padding: const EdgeInsets.only(top: 15, bottom: 15),
                                     child: Text(
                                       "Help #4",
-                                      style: TextStyles.interStyleBuildGuidePage,
+                                      style: TextStyles.interStyleBuildGuidePageButton,
                                     ),
                                   ),
                                 ),

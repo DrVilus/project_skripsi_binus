@@ -1,18 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_skripsi/Pages/RecommendationPage/RecommendedLoadingPage.dart';
 import 'package:project_skripsi/UI/CorneredButton.dart';
 import 'package:project_skripsi/UI/CustomAppBarBack.dart';
 import 'package:project_skripsi/UI/CustomContainer.dart';
-import 'package:project_skripsi/UI/GradientRectSliderTrackShape.dart';
 import 'package:project_skripsi/UI/Palette.dart';
-import 'package:project_skripsi/UI/RecommendPageSlider.dart';
 
 import '../../Functions/GenericUIFunctions.dart';
-import '../../UI/CustomAppbar.dart';
 
 class RecommendedFormPage extends StatefulWidget {
   const RecommendedFormPage({Key? key}) : super(key: key);
@@ -130,6 +126,17 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Minimum Budget is Rp 5.000.000",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Text(
@@ -148,6 +155,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                     maxLength: 14,
                                     controller: userInput,
                                     decoration: const InputDecoration(
+                                      hintText: "",
                                       border: OutlineInputBorder(),
                                       labelText: "",
                                       counterText: '',
@@ -165,6 +173,7 @@ class _RecommendedFormPageState extends State<RecommendedFormPage> {
                                 ),
                               ],
                             ),
+
                             const SizedBox(
                               height: 5,
                             ),

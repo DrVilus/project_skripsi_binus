@@ -1,10 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:project_skripsi/Models/PartsSelectModel.dart';
 import 'package:project_skripsi/Pages/BuildSchema/BuildSchemaStateModel.dart';
-import 'package:project_skripsi/Pages/BuildSchema/ChoosePartsModelWidget.dart';
 import 'package:project_skripsi/UI/PartsSelectWidget.dart';
 import 'package:provider/provider.dart';
 

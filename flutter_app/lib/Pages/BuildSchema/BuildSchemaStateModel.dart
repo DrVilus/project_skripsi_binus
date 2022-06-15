@@ -236,7 +236,6 @@ class BuildSchemaStateModel extends ChangeNotifier {
         return 'error default';
       }
     }
-    notifyListeners();
   }
 
   void removePart(PartEnum partEnum){

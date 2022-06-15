@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
@@ -127,7 +126,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
               right: 10,
               top: MediaQuery.of(context).size.height*0.3,
               child: CustomPaint(
-                size: Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                size: const Size(16, 27), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
                 painter: ArrowPainter(),
               ),
             ),
@@ -135,7 +134,7 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                 top: 0,
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width*0.82,
                       height: (MediaQuery.of(context).size.height*0.07).toDouble(),
                       child: Row(

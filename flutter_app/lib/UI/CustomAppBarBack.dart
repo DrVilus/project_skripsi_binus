@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_skripsi/UI/CustomAppbar.dart';
 import 'package:project_skripsi/UI/Palette.dart';
@@ -29,22 +28,26 @@ class _CustomAppBarBackState extends State<CustomAppBarBack> {
                 width: MediaQuery.of(context).size.width*0.8,
                 height: MediaQuery.of(context).size.height*0.1,
                 child: Padding(
-                  padding:  EdgeInsets.only(
-                      top: 16,
-                      left: MediaQuery.of(context).size.width*0.2
+                  padding:  const EdgeInsets.only(
+                    left: 150,
+                    right: 30
                   ),
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
+                  child: Flex(
+                    direction: Axis.horizontal,
                     children: [
-                      Text(
-                        widget.title ?? "",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18),
-                        softWrap: true,
+                      Expanded(
+                          child: Center(
+                            child: Text(
+                              widget.title ?? "",
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18),
+                              softWrap: true,
+                            ),
+                          )
                       ),
                     ],
-                  ),
+                  )
                 )
             ),
           ),
