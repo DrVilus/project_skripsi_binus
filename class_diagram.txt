@@ -2,16 +2,16 @@
 left to right direction
 set namespaceSeparator ::
 
-class "project_skripsi::Functions::CompatibilityCheckFunctions.dart::CompatibilityCheckFunctions" {
+class "project_skripsi::Functions::compatibility_check_functions.dart::CompatibilityCheckFunctions" {
   +bool handlePcieCompatibility()
   +bool handlePcieCompatibilityWithJson()
 }
 
-class "project_skripsi::Functions::CurrencyFormat.dart::CurrencyFormat" {
+class "project_skripsi::Functions::currency_format.dart::CurrencyFormat" {
   {static} +String convertToIdr()
 }
 
-class "project_skripsi::Functions::GenericUIFunctions.dart::GenericUIFunctions" {
+class "project_skripsi::Functions::generic_ui_functions.dart::GenericUIFunctions" {
   {static} +SnackBar snackBar()
   {static} +void countInputModalBottomSheetRam()
 }
@@ -38,18 +38,18 @@ class "project_skripsi::main.dart::_MyHomePageState" {
 
 "flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::main.dart::_MyHomePageState"
 
-class "project_skripsi::Models::BuildGuideModel.dart::BuildGuideModel" {
+class "project_skripsi::Models::build_guide_model.dart::BuildGuideModel" {
   +String guideTitle
   +String guideDescription
   +String guideImageLink
 }
 
-class "project_skripsi::Models::BuildGuideModel.dart::BuildGuideModelListWithTitle" {
+class "project_skripsi::Models::build_guide_model.dart::BuildGuideModelListWithTitle" {
   +String guideTitle
   +List<dynamic> guideList
 }
 
-class "project_skripsi::Models::PartsSelectModel.dart::PartsSelectModel" {
+class "project_skripsi::Models::parts_select_model.dart::PartsSelectModel" {
   +String name
   +String assetPath
   +PartEnum partEnumVariable
@@ -57,21 +57,21 @@ class "project_skripsi::Models::PartsSelectModel.dart::PartsSelectModel" {
   +String queryById
 }
 
-"project_skripsi::Models::PartsSelectModel.dart::PartsSelectModel" o-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
+"project_skripsi::Models::parts_select_model.dart::PartsSelectModel" o-- "project_skripsi::Variables::global_variables.dart::PartEnum"
 
-class "project_skripsi::Models::RecommendationModels.dart::CpuMotherboardPair" {
+class "project_skripsi::Models::recommendation_models.dart::CpuMotherboardPair" {
   +Map<String, dynamic>? cpuData
   +Map<String, dynamic>? motherboardData
   +num price
 }
 
-class "project_skripsi::Models::RecommendationModels.dart::GpuPsuPair" {
+class "project_skripsi::Models::recommendation_models.dart::GpuPsuPair" {
   +Map<String, dynamic>? gpuData
   +Map<String, dynamic>? psuData
   +num price
 }
 
-class "project_skripsi::Models::RecommendationModels.dart::FullPcPartModel" {
+class "project_skripsi::Models::recommendation_models.dart::FullPcPartModel" {
   +CpuMotherboardPair cpuMotherboardPair
   +GpuPsuPair gpuPsuPair
   +Map<String, dynamic>? storageData
@@ -82,47 +82,47 @@ class "project_skripsi::Models::RecommendationModels.dart::FullPcPartModel" {
   +num price
 }
 
-"project_skripsi::Models::RecommendationModels.dart::FullPcPartModel" o-- "project_skripsi::Models::RecommendationModels.dart::CpuMotherboardPair"
-"project_skripsi::Models::RecommendationModels.dart::FullPcPartModel" o-- "project_skripsi::Models::RecommendationModels.dart::GpuPsuPair"
+"project_skripsi::Models::recommendation_models.dart::FullPcPartModel" o-- "project_skripsi::Models::recommendation_models.dart::CpuMotherboardPair"
+"project_skripsi::Models::recommendation_models.dart::FullPcPartModel" o-- "project_skripsi::Models::recommendation_models.dart::GpuPsuPair"
 
-class "project_skripsi::Pages::BuildGuide::BuildGuideDescriptionPage.dart::BuildGuideDescriptionPage" {
+class "project_skripsi::Pages::BuildGuide::build_guide_description_page.dart::BuildGuideDescriptionPage" {
   +BuildGuideModel buildGuideModel
   +Widget build()
 }
 
-"project_skripsi::Pages::BuildGuide::BuildGuideDescriptionPage.dart::BuildGuideDescriptionPage" o-- "project_skripsi::Models::BuildGuideModel.dart::BuildGuideModel"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::Pages::BuildGuide::BuildGuideDescriptionPage.dart::BuildGuideDescriptionPage"
+"project_skripsi::Pages::BuildGuide::build_guide_description_page.dart::BuildGuideDescriptionPage" o-- "project_skripsi::Models::build_guide_model.dart::BuildGuideModel"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::Pages::BuildGuide::build_guide_description_page.dart::BuildGuideDescriptionPage"
 
-class "project_skripsi::Pages::BuildGuide::BuildGuideListPage.dart::BuildGuideListPage" {
+class "project_skripsi::Pages::BuildGuide::build_guide_list_page.dart::BuildGuideListPage" {
   +BuildGuideModelListWithTitle buildGuideModelListWithTitle
   +State<BuildGuideListPage> createState()
 }
 
-"project_skripsi::Pages::BuildGuide::BuildGuideListPage.dart::BuildGuideListPage" o-- "project_skripsi::Models::BuildGuideModel.dart::BuildGuideModelListWithTitle"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildGuide::BuildGuideListPage.dart::BuildGuideListPage"
+"project_skripsi::Pages::BuildGuide::build_guide_list_page.dart::BuildGuideListPage" o-- "project_skripsi::Models::build_guide_model.dart::BuildGuideModelListWithTitle"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildGuide::build_guide_list_page.dart::BuildGuideListPage"
 
-class "project_skripsi::Pages::BuildGuide::BuildGuideListPage.dart::_BuildGuideListPageState" {
+class "project_skripsi::Pages::BuildGuide::build_guide_list_page.dart::_BuildGuideListPageState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildGuide::BuildGuideListPage.dart::_BuildGuideListPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildGuide::build_guide_list_page.dart::_BuildGuideListPageState"
 
-class "project_skripsi::Pages::BuildGuide::BuildGuideVariablesPage.dart::BuildGuideVariablePage" {
+class "project_skripsi::Pages::BuildGuide::build_guide_variables_page.dart::BuildGuideVariablePage" {
   {static} +BuildGuideModelListWithTitle buildGuideMainList
   {static} +List<dynamic> buildGuideList
 }
 
-"project_skripsi::Pages::BuildGuide::BuildGuideVariablesPage.dart::BuildGuideVariablePage" o-- "project_skripsi::Models::BuildGuideModel.dart::BuildGuideModelListWithTitle"
+"project_skripsi::Pages::BuildGuide::build_guide_variables_page.dart::BuildGuideVariablePage" o-- "project_skripsi::Models::build_guide_model.dart::BuildGuideModelListWithTitle"
 
-class "project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::BuildSchemaPage" {
+class "project_skripsi::Pages::BuildSchema::build_schema_page.dart::BuildSchemaPage" {
   +FullPcPartModel? fullPcPartModelList
   +State<BuildSchemaPage> createState()
 }
 
-"project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::BuildSchemaPage" o-- "project_skripsi::Models::RecommendationModels.dart::FullPcPartModel"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::BuildSchemaPage"
+"project_skripsi::Pages::BuildSchema::build_schema_page.dart::BuildSchemaPage" o-- "project_skripsi::Models::recommendation_models.dart::FullPcPartModel"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::build_schema_page.dart::BuildSchemaPage"
 
-class "project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::_BuildSchemaPageState" {
+class "project_skripsi::Pages::BuildSchema::build_schema_page.dart::_BuildSchemaPageState" {
   +BuildSchemaStateModel buildSchemaStateModel
   +ColorFilter disabledColor
   +ColorFilter enabledColor
@@ -132,11 +132,11 @@ class "project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::_BuildSchemaPa
   +Widget build()
 }
 
-"project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::_BuildSchemaPageState" o-- "project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel"
-"project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::_BuildSchemaPageState" o-- "dart::ui::ColorFilter"
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::BuildSchemaPage.dart::_BuildSchemaPageState"
+"project_skripsi::Pages::BuildSchema::build_schema_page.dart::_BuildSchemaPageState" o-- "project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel"
+"project_skripsi::Pages::BuildSchema::build_schema_page.dart::_BuildSchemaPageState" o-- "dart::ui::ColorFilter"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::build_schema_page.dart::_BuildSchemaPageState"
 
-class "project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel" {
+class "project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel" {
   -int _currentSidebarState
   -bool _currentSidebarToggle
   -bool _currentEstimatedPriceWidgetToggle
@@ -196,20 +196,20 @@ class "project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSch
   +double calculatePrice()
 }
 
-"project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel" o-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
-"project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel"
+"project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel" o-- "project_skripsi::Variables::global_variables.dart::PartEnum"
+"project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::ChoosePartsModelWidget" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::ChoosePartsModelWidget" {
   +Function toggleSideBar
   +PartEnum partEnum
   +State<ChoosePartsModelWidget> createState()
 }
 
-"project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::ChoosePartsModelWidget" o-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::ChoosePartsModelWidget"
+"project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::ChoosePartsModelWidget" o-- "project_skripsi::Variables::global_variables.dart::PartEnum"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::ChoosePartsModelWidget"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::_ChoosePartsModelWidgetState" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::_ChoosePartsModelWidgetState" {
   -int _compatibleIndexLength
   -num _getLowestPrice()
   -Future<List<dynamic>> _getPartData()
@@ -217,108 +217,108 @@ class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::_Choose
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::_ChoosePartsModelWidgetState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::_ChoosePartsModelWidgetState"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::WidgetBackgroundPainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::WidgetBackgroundPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::WidgetBackgroundPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::WidgetBackgroundPainter"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::LinePainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::LinePainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::LinePainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::LinePainter"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::ArrowPainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::ArrowPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsModelWidget.dart::ArrowPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_model_widget.dart::ArrowPainter"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::ChoosePartsWidget" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::ChoosePartsWidget" {
   +Function toggleSideBar
   +State<ChoosePartsWidget> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::ChoosePartsWidget"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::ChoosePartsWidget"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::_ChoosePartsWidgetState" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::_ChoosePartsWidgetState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::_ChoosePartsWidgetState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::_ChoosePartsWidgetState"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::WidgetBackgroundPainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::WidgetBackgroundPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::WidgetBackgroundPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::WidgetBackgroundPainter"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::LinePainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::LinePainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::LinePainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::LinePainter"
 
-class "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::ArrowPainter" {
+class "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::ArrowPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::ChoosePartsWidget.dart::ArrowPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::choose_parts_widget.dart::ArrowPainter"
 
-class "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::EstimatedPriceWidget" {
+class "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::EstimatedPriceWidget" {
   +State<EstimatedPriceWidget> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::EstimatedPriceWidget"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::EstimatedPriceWidget"
 
-class "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::_EstimatedPriceWidgetState" {
+class "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::_EstimatedPriceWidgetState" {
   -Widget _getPerformanceBenchmark()
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::_EstimatedPriceWidgetState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::_EstimatedPriceWidgetState"
 
-class "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::WidgetPainter" {
+class "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::WidgetPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::WidgetPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::WidgetPainter"
 
-class "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::ArrowDownPainter" {
+class "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::ArrowDownPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::ArrowDownPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::ArrowDownPainter"
 
-class "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::ArrowUpPainter" {
+class "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::ArrowUpPainter" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::EstimatedPriceWidget.dart::ArrowUpPainter"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::Pages::BuildSchema::estimated_price_widget.dart::ArrowUpPainter"
 
-class "project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::PartsInfoWidget" {
+class "project_skripsi::Pages::BuildSchema::parts_info_widget.dart::PartsInfoWidget" {
   +String id
   +PartEnum partEnum
   +Function toggleMenu
   +State<PartsInfoWidget> createState()
 }
 
-"project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::PartsInfoWidget" o-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::PartsInfoWidget"
+"project_skripsi::Pages::BuildSchema::parts_info_widget.dart::PartsInfoWidget" o-- "project_skripsi::Variables::global_variables.dart::PartEnum"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::BuildSchema::parts_info_widget.dart::PartsInfoWidget"
 
-class "project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::_PartsInfoWidgetState" {
+class "project_skripsi::Pages::BuildSchema::parts_info_widget.dart::_PartsInfoWidgetState" {
   +num getLowestPrice()
   +Widget createModelInformation()
   +String reformatStringInfo()
@@ -327,71 +327,59 @@ class "project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::_PartsInfoWidg
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::PartsInfoWidget.dart::_PartsInfoWidgetState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::BuildSchema::parts_info_widget.dart::_PartsInfoWidgetState"
 
-class "project_skripsi::Pages::GetStarted.dart::GetStartedPage" {
+class "project_skripsi::Pages::get_started.dart::GetStartedPage" {
   +State<GetStartedPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::GetStarted.dart::GetStartedPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::get_started.dart::GetStartedPage"
 
-class "project_skripsi::Pages::GetStarted.dart::_GetStartedPageState" {
+class "project_skripsi::Pages::get_started.dart::_GetStartedPageState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::GetStarted.dart::_GetStartedPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::get_started.dart::_GetStartedPageState"
 
-class "project_skripsi::Pages::Help::HelpPage.dart::HelpPage" {
-  +State<HelpPage> createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::Help::HelpPage.dart::HelpPage"
-
-class "project_skripsi::Pages::Help::HelpPage.dart::_HelpPageState" {
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::Help::HelpPage.dart::_HelpPageState"
-
-class "project_skripsi::Pages::ImportExport::ExportPage.dart::ExportPage" {
+class "project_skripsi::Pages::ImportExport::export_page.dart::ExportPage" {
   +BuildSchemaStateModel buildSchemaStateModel
   +State<ExportPage> createState()
 }
 
-"project_skripsi::Pages::ImportExport::ExportPage.dart::ExportPage" o-- "project_skripsi::Pages::BuildSchema::BuildSchemaStateModel.dart::BuildSchemaStateModel"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::ExportPage.dart::ExportPage"
+"project_skripsi::Pages::ImportExport::export_page.dart::ExportPage" o-- "project_skripsi::Pages::BuildSchema::build_schema_state_model.dart::BuildSchemaStateModel"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::export_page.dart::ExportPage"
 
-class "project_skripsi::Pages::ImportExport::ExportPage.dart::_ExportPageState" {
+class "project_skripsi::Pages::ImportExport::export_page.dart::_ExportPageState" {
   +TextEditingController txt
   +void generateExportCode()
   +Widget build()
 }
 
-"project_skripsi::Pages::ImportExport::ExportPage.dart::_ExportPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::ExportPage.dart::_ExportPageState"
+"project_skripsi::Pages::ImportExport::export_page.dart::_ExportPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::export_page.dart::_ExportPageState"
 
-class "project_skripsi::Pages::ImportExport::ImportPage.dart::ImportPage" {
+class "project_skripsi::Pages::ImportExport::import_page.dart::ImportPage" {
   +State<ImportPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::ImportPage.dart::ImportPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::import_page.dart::ImportPage"
 
-class "project_skripsi::Pages::ImportExport::ImportPage.dart::_ImportPageState" {
+class "project_skripsi::Pages::ImportExport::import_page.dart::_ImportPageState" {
   +TextEditingController userInput
   +Widget build()
 }
 
-"project_skripsi::Pages::ImportExport::ImportPage.dart::_ImportPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::ImportPage.dart::_ImportPageState"
+"project_skripsi::Pages::ImportExport::import_page.dart::_ImportPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::import_page.dart::_ImportPageState"
 
-class "project_skripsi::Pages::ImportExport::ImportPageLoading.dart::ImportLoadingPage" {
+class "project_skripsi::Pages::ImportExport::import_page_loading.dart::ImportLoadingPage" {
   +String importBuildCode
   +State<ImportLoadingPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::ImportPageLoading.dart::ImportLoadingPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::ImportExport::import_page_loading.dart::ImportLoadingPage"
 
-class "project_skripsi::Pages::ImportExport::ImportPageLoading.dart::_ImportLoadingPageState" {
+class "project_skripsi::Pages::ImportExport::import_page_loading.dart::_ImportLoadingPageState" {
   -bool _isError
   -String _loadingMessage
   +void initState()
@@ -407,34 +395,34 @@ class "project_skripsi::Pages::ImportExport::ImportPageLoading.dart::_ImportLoad
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::ImportPageLoading.dart::_ImportLoadingPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::ImportExport::import_page_loading.dart::_ImportLoadingPageState"
 
-class "project_skripsi::Pages::RecommendationPage::RecommendedFormPage.dart::RecommendedFormPage" {
+class "project_skripsi::Pages::RecommendationPage::recommended_form_page.dart::RecommendedFormPage" {
   +State<RecommendedFormPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::RecommendationPage::RecommendedFormPage.dart::RecommendedFormPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::RecommendationPage::recommended_form_page.dart::RecommendedFormPage"
 
-class "project_skripsi::Pages::RecommendationPage::RecommendedFormPage.dart::_RecommendedFormPageState" {
+class "project_skripsi::Pages::RecommendationPage::recommended_form_page.dart::_RecommendedFormPageState" {
   +String tempValue
   +String chipsetValue
   +TextEditingController userInput
   +Widget build()
 }
 
-"project_skripsi::Pages::RecommendationPage::RecommendedFormPage.dart::_RecommendedFormPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::RecommendationPage::RecommendedFormPage.dart::_RecommendedFormPageState"
+"project_skripsi::Pages::RecommendationPage::recommended_form_page.dart::_RecommendedFormPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::RecommendationPage::recommended_form_page.dart::_RecommendedFormPageState"
 
-class "project_skripsi::Pages::RecommendationPage::RecommendedLoadingPage.dart::RecommendedLoadingPage" {
+class "project_skripsi::Pages::RecommendationPage::recommended_loading_page.dart::RecommendedLoadingPage" {
   +String targetMarketCode
   +double budget
   +String chipset
   +State<RecommendedLoadingPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::RecommendationPage::RecommendedLoadingPage.dart::RecommendedLoadingPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::RecommendationPage::recommended_loading_page.dart::RecommendedLoadingPage"
 
-class "project_skripsi::Pages::RecommendationPage::RecommendedLoadingPage.dart::_RecommendedLoadingPageState" {
+class "project_skripsi::Pages::RecommendationPage::recommended_loading_page.dart::_RecommendedLoadingPageState" {
   -String _loadingMessage
   -bool _isError
   +List<FullPcPartModel> fullPcPartModelList
@@ -451,30 +439,18 @@ class "project_skripsi::Pages::RecommendationPage::RecommendedLoadingPage.dart::
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::RecommendationPage::RecommendedLoadingPage.dart::_RecommendedLoadingPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::RecommendationPage::recommended_loading_page.dart::_RecommendedLoadingPageState"
 
-class "project_skripsi::Pages::Settings::SettingsPage.dart::SettingsPage" {
-  +State<SettingsPage> createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::Pages::Settings::SettingsPage.dart::SettingsPage"
-
-class "project_skripsi::Pages::Settings::SettingsPage.dart::_SettingsPageState" {
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::Pages::Settings::SettingsPage.dart::_SettingsPageState"
-
-class "project_skripsi::UI::CorneredButton.dart::CorneredButton" {
+class "project_skripsi::UI::cornered_button.dart::CorneredButton" {
   +Widget child
   +Function onPressed
   +Widget build()
 }
 
-"project_skripsi::UI::CorneredButton.dart::CorneredButton" o-- "flutter::src::widgets::framework.dart::Widget"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::CorneredButton.dart::CorneredButton"
+"project_skripsi::UI::cornered_button.dart::CorneredButton" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::cornered_button.dart::CorneredButton"
 
-class "project_skripsi::UI::CustomAppbar.dart::CustomAppbar" {
+class "project_skripsi::UI::custom_app_bar.dart::CustomAppbar" {
   +bool isTextFieldEnabled
   +bool sideBarVisible
   +bool isExportDisabled
@@ -482,17 +458,17 @@ class "project_skripsi::UI::CustomAppbar.dart::CustomAppbar" {
   +State<CustomAppbar> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::UI::CustomAppbar.dart::CustomAppbar"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::UI::custom_app_bar.dart::CustomAppbar"
 
-class "project_skripsi::UI::CustomAppbar.dart::_CustomAppbarState" {
+class "project_skripsi::UI::custom_app_bar.dart::_CustomAppbarState" {
   -bool _isMenuButtonPressed
   -void _toggleMenu()
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::UI::CustomAppbar.dart::_CustomAppbarState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::UI::custom_app_bar.dart::_CustomAppbarState"
 
-class "project_skripsi::UI::CustomAppbar.dart::MenuButton" {
+class "project_skripsi::UI::custom_app_bar.dart::MenuButton" {
   +Function onPressed
   +IconData iconData
   +String text
@@ -500,42 +476,42 @@ class "project_skripsi::UI::CustomAppbar.dart::MenuButton" {
   +Widget build()
 }
 
-"project_skripsi::UI::CustomAppbar.dart::MenuButton" o-- "flutter::src::widgets::icon_data.dart::IconData"
-"project_skripsi::UI::CustomAppbar.dart::MenuButton" o-- "flutter::src::painting::border_radius.dart::BorderRadius"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::CustomAppbar.dart::MenuButton"
+"project_skripsi::UI::custom_app_bar.dart::MenuButton" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"project_skripsi::UI::custom_app_bar.dart::MenuButton" o-- "flutter::src::painting::border_radius.dart::BorderRadius"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::custom_app_bar.dart::MenuButton"
 
-class "project_skripsi::UI::CustomAppbar.dart::CustomPainterAppbar" {
+class "project_skripsi::UI::custom_app_bar.dart::CustomPainterAppbar" {
   +void paint()
   +bool shouldRepaint()
 }
 
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::UI::CustomAppbar.dart::CustomPainterAppbar"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::UI::custom_app_bar.dart::CustomPainterAppbar"
 
-class "project_skripsi::UI::CustomAppbar.dart::CustomPainterSidebar" {
+class "project_skripsi::UI::custom_app_bar.dart::CustomPainterSidebar" {
   +BuildContext context
   +Function toggleSideBar
   +void paint()
   +bool shouldRepaint()
 }
 
-"project_skripsi::UI::CustomAppbar.dart::CustomPainterSidebar" o-- "flutter::src::widgets::framework.dart::BuildContext"
-"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::UI::CustomAppbar.dart::CustomPainterSidebar"
+"project_skripsi::UI::custom_app_bar.dart::CustomPainterSidebar" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "project_skripsi::UI::custom_app_bar.dart::CustomPainterSidebar"
 
-class "project_skripsi::UI::CustomAppBarBack.dart::CustomAppBarBack" {
+class "project_skripsi::UI::custom_app_bar_back.dart::CustomAppBarBack" {
   +String? title
   +List<Widget> children
   +State<CustomAppBarBack> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::UI::CustomAppBarBack.dart::CustomAppBarBack"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::UI::custom_app_bar_back.dart::CustomAppBarBack"
 
-class "project_skripsi::UI::CustomAppBarBack.dart::_CustomAppBarBackState" {
+class "project_skripsi::UI::custom_app_bar_back.dart::_CustomAppBarBackState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::UI::CustomAppBarBack.dart::_CustomAppBarBackState"
+"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::UI::custom_app_bar_back.dart::_CustomAppBarBackState"
 
-class "project_skripsi::UI::CustomContainer.dart::CustomContainer" {
+class "project_skripsi::UI::custom_container.dart::CustomContainer" {
   +Widget? child
   +double? width
   +double? height
@@ -545,34 +521,27 @@ class "project_skripsi::UI::CustomContainer.dart::CustomContainer" {
   +Widget build()
 }
 
-"project_skripsi::UI::CustomContainer.dart::CustomContainer" o-- "flutter::src::widgets::framework.dart::Widget"
-"project_skripsi::UI::CustomContainer.dart::CustomContainer" o-- "flutter::src::painting::edge_insets.dart::EdgeInsets"
-"project_skripsi::UI::CustomContainer.dart::CustomContainer" o-- "flutter::src::painting::border_radius.dart::BorderRadius"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::CustomContainer.dart::CustomContainer"
+"project_skripsi::UI::custom_container.dart::CustomContainer" o-- "flutter::src::widgets::framework.dart::Widget"
+"project_skripsi::UI::custom_container.dart::CustomContainer" o-- "flutter::src::painting::edge_insets.dart::EdgeInsets"
+"project_skripsi::UI::custom_container.dart::CustomContainer" o-- "flutter::src::painting::border_radius.dart::BorderRadius"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::custom_container.dart::CustomContainer"
 
-class "project_skripsi::UI::FadeBlackBackground.dart::FadeBlackBackground" {
+class "project_skripsi::UI::fade_black_background.dart::FadeBlackBackground" {
   +bool isMenuButtonPressed
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::FadeBlackBackground.dart::FadeBlackBackground"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::fade_black_background.dart::FadeBlackBackground"
 
-class "project_skripsi::UI::GradientRectSliderTrackShape.dart::GradientRectSliderTrackShape" {
-  +void paint()
-}
-
-"flutter::src::material::slider_theme.dart::SliderTrackShape" <|-- "project_skripsi::UI::GradientRectSliderTrackShape.dart::GradientRectSliderTrackShape"
-"flutter::src::material::slider_theme.dart::BaseSliderTrackShape" <|-- "project_skripsi::UI::GradientRectSliderTrackShape.dart::GradientRectSliderTrackShape"
-
-class "project_skripsi::UI::Palette.dart::Palette" {
+class "project_skripsi::UI::palette.dart::Palette" {
   {static} +Color mainBackground
   {static} +Color widgetBackground1
   {static} +Color grey
 }
 
-"project_skripsi::UI::Palette.dart::Palette" o-- "dart::ui::Color"
+"project_skripsi::UI::palette.dart::Palette" o-- "dart::ui::Color"
 
-class "project_skripsi::UI::Palette.dart::TextStyles" {
+class "project_skripsi::UI::palette.dart::TextStyles" {
   {static} +TextStyle interStyle1
   {static} +TextStyle sourceSans3
   {static} +TextStyle interStyleBuildGuidePageButton
@@ -580,9 +549,9 @@ class "project_skripsi::UI::Palette.dart::TextStyles" {
   {static} +TextStyle interStyleBuildGuidePageDescription
 }
 
-"project_skripsi::UI::Palette.dart::TextStyles" o-- "flutter::src::painting::text_style.dart::TextStyle"
+"project_skripsi::UI::palette.dart::TextStyles" o-- "flutter::src::painting::text_style.dart::TextStyle"
 
-class "project_skripsi::UI::PartsSelectWidget.dart::PartsSelectWidget" {
+class "project_skripsi::UI::parts_select_widget.dart::PartsSelectWidget" {
   +String imgPath
   +String name
   +Function function
@@ -590,25 +559,9 @@ class "project_skripsi::UI::PartsSelectWidget.dart::PartsSelectWidget" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::PartsSelectWidget.dart::PartsSelectWidget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::parts_select_widget.dart::PartsSelectWidget"
 
-class "project_skripsi::UI::RecommendPageSlider.dart::RecommendPageSlider" {
-  +dynamic Function(int) callback
-  +String? sliderName
-  +int sliderValue
-  +State<RecommendPageSlider> createState()
-}
-
-"project_skripsi::UI::RecommendPageSlider.dart::RecommendPageSlider" o-- "null::dynamic Function(int)"
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "project_skripsi::UI::RecommendPageSlider.dart::RecommendPageSlider"
-
-class "project_skripsi::UI::RecommendPageSlider.dart::_RecommendPageSliderState" {
-  +Widget build()
-}
-
-"flutter::src::widgets::framework.dart::State" <|-- "project_skripsi::UI::RecommendPageSlider.dart::_RecommendPageSliderState"
-
-class "project_skripsi::UI::TitledContainer.dart::TitledContainer" {
+class "project_skripsi::UI::titled_container.dart::TitledContainer" {
   +Widget? child
   +bool withBottomRightBorder
   +String? title
@@ -617,10 +570,17 @@ class "project_skripsi::UI::TitledContainer.dart::TitledContainer" {
   +Widget build()
 }
 
-"project_skripsi::UI::TitledContainer.dart::TitledContainer" o-- "flutter::src::widgets::framework.dart::Widget"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::TitledContainer.dart::TitledContainer"
+"project_skripsi::UI::titled_container.dart::TitledContainer" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "project_skripsi::UI::titled_container.dart::TitledContainer"
 
-class "project_skripsi::Variables::GlobalVariables.dart::PartEnum" {
+class "project_skripsi::Variables::global_variables.dart::GlobalVariables" {
+  {static} +List<PartsSelectModel> partSelectModelList
+  {static} +PartEnum convertIndexToEnum()
+  {static} +List<dynamic> getQueryList()
+  {static} +String getQueryPriceText()
+}
+
+class "project_skripsi::Variables::global_variables.dart::PartEnum" {
   +int index
   {static} +List<PartEnum> values
   {static} +PartEnum pcCase
@@ -634,10 +594,29 @@ class "project_skripsi::Variables::GlobalVariables.dart::PartEnum" {
   {static} +PartEnum others
 }
 
-"project_skripsi::Variables::GlobalVariables.dart::PartEnum" o-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
-"dart::core::Enum" <|-- "project_skripsi::Variables::GlobalVariables.dart::PartEnum"
+"project_skripsi::Variables::global_variables.dart::PartEnum" o-- "project_skripsi::Variables::global_variables.dart::PartEnum"
+"dart::core::Enum" <|-- "project_skripsi::Variables::global_variables.dart::PartEnum"
 
-class "project_skripsi::Variables::RecommendationQueries.dart::RecommendationQueries" {
+class "project_skripsi::Variables::queries.dart::Queries" {
+  {static} +String coolingQuery
+  {static} +String coolingQueryById
+  {static} +String cpuQuery
+  {static} +String cpuQueryById
+  {static} +String gpuQuery
+  {static} +String gpuQueryById
+  {static} +String motherboardQuery
+  {static} +String motherboardQueryById
+  {static} +String psuQuery
+  {static} +String psuQueryById
+  {static} +String ramQuery
+  {static} +String ramQueryById
+  {static} +String storageQuery
+  {static} +String storageQueryById
+  {static} +String caseQuery
+  {static} +String caseQueryById
+}
+
+class "project_skripsi::Variables::recommendation_queries.dart::RecommendationQueries" {
   {static} +String cpuQueryByPrice
   {static} +String motherboardQueryBySocket
   {static} +String gpuQueryByPriceAndTargetMarket
