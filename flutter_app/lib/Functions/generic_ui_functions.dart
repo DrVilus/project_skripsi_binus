@@ -28,7 +28,7 @@ class GenericUIFunctions {
               TextField(
                 controller: textEditingController,
                 decoration:
-                    const InputDecoration(labelText: "Enter your number"),
+                    const InputDecoration(labelText: "Enter your number (1-4)"),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
