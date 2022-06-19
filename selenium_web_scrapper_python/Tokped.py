@@ -22,7 +22,7 @@ class Tokopedia:
 
     # get item's title
     def get_title(self, content):
-        return content.find('h1', {'class': 'css-t9du53'}).get_text()
+        return content.find('h1', {'class': 'css-1320e6c'}).get_text()
 
     # get item's price
     # return in form of int

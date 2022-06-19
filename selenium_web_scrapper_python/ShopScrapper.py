@@ -1,4 +1,6 @@
 import pandas as pd
+import requests
+
 import Shop
 from Shopee import Shopee
 from Tokped import Tokopedia
@@ -43,15 +45,19 @@ class ShopScrapper:
             print(item)
 
             if item['shop'] == "Tokopedia":
-                tp = Tokopedia(item)
-                tp_result = tp.run()
-                data.append(tp_result)
+                try:
+                    tp = Tokopedia(item)
+                    tp_result = tp.run()
+                    data.append(tp_result)
+                except:
+                    print("Failed fetching data")
             elif item['shop'] == "Shopee":
-                sp = Shopee(item)
-                sp_result = sp.run()
-                data.append(sp_result)
-                print("sssss")
-
+                try:
+                    sp = Shopee(item)
+                    sp_result = sp.run()
+                    data.append(sp_result)
+                except:
+                    print("Failed fetching data")
             datas.extend(data)
             i += 1
 
