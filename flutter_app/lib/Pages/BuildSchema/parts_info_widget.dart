@@ -214,8 +214,9 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                         GlobalVariables.getQueryList(result, widget.partEnum);
 
                     if (data.isEmpty) {
-                      return const Text('No repositories');
+                      return const Flexible(child: Text('Unable to find data, check if device is connected to the internet.'));
                     }
+
                     return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.82,
                         height: (MediaQuery.of(context).size.height * 0.9)

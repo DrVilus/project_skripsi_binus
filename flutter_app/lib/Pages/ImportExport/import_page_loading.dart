@@ -130,9 +130,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
 
     var list = GlobalVariables.getQueryList(result, PartEnum.cpu);
@@ -150,9 +148,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.motherboard);
     for (int i = 0; i < list.length; i++) {
@@ -169,9 +165,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.gpu);
     for (int i = 0; i < list.length; i++) {
@@ -188,9 +182,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.psu);
     for (int i = 0; i < list.length; i++) {
@@ -207,9 +199,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.ram);
     for (int i = 0; i < list.length; i++) {
@@ -226,9 +216,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.storage);
     for (int i = 0; i < list.length; i++) {
@@ -245,9 +233,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.cooling);
     for (int i = 0; i < list.length; i++) {
@@ -264,9 +250,7 @@ class _ImportLoadingPageState extends State<ImportLoadingPage> {
     );
     final QueryResult result = await client.query(options);
     if (result.hasException) {
-      if (kDebugMode) {
-        print(result.exception.toString());
-      }
+      return List.empty();
     }
     var list = GlobalVariables.getQueryList(result, PartEnum.pcCase);
     for (int i = 0; i < list.length; i++) {

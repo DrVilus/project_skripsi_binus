@@ -163,7 +163,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                         List? data = GlobalVariables.getQueryList(
                             result, widget.partEnum);
                         if (data.isEmpty) {
-                          return const Text('No data found');
+                          return const Flexible(child: Text('Unable to find data, check if device is connected to the internet.'));
                         }
 
                         //////////////////////////////////////////////////////////////////////////////////////
