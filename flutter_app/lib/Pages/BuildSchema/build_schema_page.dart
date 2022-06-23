@@ -95,8 +95,49 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
         children: [
           Container(),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.5,
-              left: MediaQuery.of(context).size.width * 0.15,
+              top: MediaQuery.of(context).size.height * 0.2,
+              left: MediaQuery.of(context).size.width * 0.3,
+              child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, value, child) => ColorFiltered(
+                    colorFilter: value.selectedCase.isNotEmpty
+                        ? enabledColor
+                        : disabledColor,
+                    child: Image.asset(
+                      'assets/img/caseBack.png',
+                      fit: BoxFit.fill, // Fixes border issues
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      height: MediaQuery.of(context).size.width * 0.75,
+                    ),
+                  ))),
+          Positioned(
+              top: MediaQuery.of(context).size.height * 0.2,
+              left: MediaQuery.of(context).size.width * 0.2,
+              child: Consumer<BuildSchemaStateModel>(
+                  builder: (context, value, child) => GestureDetector(
+                      onTap: () {
+                        if (value.selectedCase.isNotEmpty) {
+                          value.changeSidebarToggle();
+                          _goToPartInfoPage(value, PartEnum.pcCase,
+                              value.selectedCase[0]['id']);
+                        } else {
+                          value.changeSidebarToggle();
+                          _goToPartModelListPage(value, PartEnum.pcCase);
+                        }
+                      }, // Image tapped
+                      child: ColorFiltered(
+                        colorFilter: value.selectedCase.isNotEmpty
+                            ? enabledColor
+                            : disabledColor,
+                        child: Image.asset(
+                          'assets/img/caseSide.png',
+                          fit: BoxFit.fill, // Fixes border issues
+                          width: MediaQuery.of(context).size.width * 0.1,
+                          height: MediaQuery.of(context).size.width * 0.96,
+                        ),
+                      )))),
+          Positioned(
+              top: MediaQuery.of(context).size.height * 0.4,
+              left: MediaQuery.of(context).size.width * 0.5,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -116,13 +157,13 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/motherboard2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          height: MediaQuery.of(context).size.width * 0.9 * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.88 * 0.4,
+                          height: MediaQuery.of(context).size.width * 0.49 * 0.4,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.45,
-              left: MediaQuery.of(context).size.width * 0.4,
+              top: MediaQuery.of(context).size.height * 0.21,
+              left: MediaQuery.of(context).size.width * 0.6,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -142,14 +183,13 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/psu2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          height:
-                              MediaQuery.of(context).size.width * 0.25 * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.637 * 0.3,
+                          height: MediaQuery.of(context).size.width * 0.463 * 0.3,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.45,
-              left: MediaQuery.of(context).size.width * 0.2,
+              top: MediaQuery.of(context).size.height * 0.43,
+              left: MediaQuery.of(context).size.width * 0.32,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -169,14 +209,14 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/cooling2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: MediaQuery.of(context).size.width * 0.25 * 0.51,
                           height:
-                              MediaQuery.of(context).size.width * 0.25 * 0.5,
+                              MediaQuery.of(context).size.width * 0.25 * 0.51,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.54,
-              left: MediaQuery.of(context).size.width * 0.25,
+              top: MediaQuery.of(context).size.height * 0.6,
+              left: MediaQuery.of(context).size.width * 0.5,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -196,13 +236,13 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/gpu2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.width * 0.4 * 0.3,
+                          width: MediaQuery.of(context).size.width * 0.647 * 0.4,
+                          height: MediaQuery.of(context).size.width * 0.258 * 0.4,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.46,
-              left: MediaQuery.of(context).size.width * 0.78,
+              top: MediaQuery.of(context).size.height * 0.33,
+              left: MediaQuery.of(context).size.width * 0.5,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -223,13 +263,13 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                           'assets/img/ram.png',
                           fit: BoxFit.fill, // Fixes border issues
                           width:
-                              MediaQuery.of(context).size.width * 0.17 * 0.84,
-                          height: MediaQuery.of(context).size.width * 0.17,
+                              MediaQuery.of(context).size.width * 0.544 * 0.5,
+                          height: MediaQuery.of(context).size.width * 0.117 * 0.5,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.57,
-              left: MediaQuery.of(context).size.width * 0.65,
+              top: MediaQuery.of(context).size.height * 0.58,
+              left: MediaQuery.of(context).size.width * 0.8,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -249,14 +289,14 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/storage2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.205 *0.4,
                           height:
-                              MediaQuery.of(context).size.width * 0.35 * 0.2,
+                              MediaQuery.of(context).size.width * 0.353 * 0.4,
                         ),
                       )))),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.52,
-              left: MediaQuery.of(context).size.width * 0.58,
+              top: MediaQuery.of(context).size.height * 0.33,
+              left: MediaQuery.of(context).size.width * 0.8,
               child: Consumer<BuildSchemaStateModel>(
                   builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -276,9 +316,9 @@ class _BuildSchemaPageState extends State<BuildSchemaPage> {
                         child: Image.asset(
                           'assets/img/processor2.png',
                           fit: BoxFit.fill, // Fixes border issues
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: MediaQuery.of(context).size.width * 0.161 * 0.6,
                           height:
-                              MediaQuery.of(context).size.width * 0.25 * 0.2,
+                              MediaQuery.of(context).size.width * 0.112 * 0.6,
                         ),
                       )))),
           Consumer<BuildSchemaStateModel>(
