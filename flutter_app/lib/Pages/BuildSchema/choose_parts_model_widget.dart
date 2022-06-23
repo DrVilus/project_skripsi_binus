@@ -26,6 +26,7 @@ class ChoosePartsModelWidget extends StatefulWidget {
 
 class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
   int _compatibleIndexLength = 10000;
+  bool _isLoadingChangePart = false;
 
   num _getLowestPrice(List queryResult, int index) {
     if (queryResult[index][GlobalVariables.getQueryPriceText(widget.partEnum)]
@@ -59,7 +60,7 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
     return GlobalVariables.getQueryList(result, widget.partEnum);
   }
 
-  void _addPart(BuildSchemaStateModel schemaState, List data, int index) async {
+  Future<void> _addPart(BuildSchemaStateModel schemaState, List data, int index) async {
     var result = schemaState.changePart(
         await _getPartData(data[index]['id']), widget.partEnum);
     if (result.isEmpty) {
@@ -163,7 +164,11 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                         List? data = GlobalVariables.getQueryList(
                             result, widget.partEnum);
                         if (data.isEmpty) {
-                          return const Flexible(child: Text('Unable to find data, check if device is connected to the internet.'));
+                          return Row(
+                            children: const [
+                              Flexible(child: Text('Unable to find data, check if device is connected to the internet.'))
+                            ],
+                          );
                         }
 
                         //////////////////////////////////////////////////////////////////////////////////////
@@ -389,27 +394,35 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                                                               onPressed:
                                                                   () async {
                                                                 //For multi count part input check
-                                                                if (widget
-                                                                        .partEnum ==
-                                                                    PartEnum
-                                                                        .ram) {
-                                                                  GenericUIFunctions
-                                                                      .countInputModalBottomSheetRam(
-                                                                          context,
-                                                                          (input) async {
-                                                                    _addPart(
+                                                                if (widget.partEnum ==
+                                                                    PartEnum.ram) {
+                                                                  GenericUIFunctions.countInputModalBottomSheetRam(
+                                                                          context, (input) async {
+                                                                    setState(() {
+                                                                      _isLoadingChangePart = true;
+                                                                    });
+                                                                    await _addPart(
                                                                         schemaState,
                                                                         data,
                                                                         index);
                                                                     schemaState
                                                                             .currentSelectedRAMCount =
                                                                         input;
+                                                                    setState(() {
+                                                                      _isLoadingChangePart = false;
+                                                                    });
                                                                   });
                                                                 } else {
-                                                                  _addPart(
+                                                                  setState(() {
+                                                                    _isLoadingChangePart = true;
+                                                                  });
+                                                                  await _addPart(
                                                                       schemaState,
                                                                       data,
                                                                       index);
+                                                                  setState(() {
+                                                                    _isLoadingChangePart = false;
+                                                                  });
                                                                 }
                                                               },
                                                               child: Text("Add",
@@ -463,6 +476,23 @@ class _ChoosePartsModelWidgetState extends State<ChoosePartsModelWidget> {
                 ),
               ],
             )),
+        if(_isLoadingChangePart == true)Positioned(
+            child: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.82,
+                  height:
+                  (MediaQuery.of(context).size.height * 0.99).toDouble(),
+                  color: Colors.black26.withAlpha(126),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            )
+        ),
         Positioned(
           right: 0,
           top: 10,

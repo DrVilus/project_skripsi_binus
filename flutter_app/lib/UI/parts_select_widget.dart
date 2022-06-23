@@ -36,7 +36,7 @@ class PartsSelectWidget extends StatelessWidget {
                     ],
                   )),
               Expanded(
-                flex: 5,
+                flex: selectedPart == "" ? 5 : 3,
                 child: Stack(
                   children: <Widget>[
                     Center(child: Image.asset(imgPath)),
@@ -51,7 +51,7 @@ class PartsSelectWidget extends StatelessWidget {
                       Center(
                           child: Text(
                         selectedPart,
-                        style: TextStyles.sourceSans3,
+                        style: TextStyles.sourceSans3partsSelectWidgetPartName,
                       )),
                     ],
                   ),

@@ -18,4 +18,6 @@ class TextStyles {
       color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
   static var interStyleBuildGuidePageDescription =
       GoogleFonts.sourceSans3(color: Colors.white, fontSize: 20);
+  static var sourceSans3partsSelectWidgetPartName =
+    GoogleFonts.sourceSans3(color: Colors.white, fontSize: 15);
 }

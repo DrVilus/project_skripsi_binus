@@ -41,6 +41,26 @@ class _CustomAppbarState extends State<CustomAppbar> {
     });
   }
 
+  Future<void> _onBackToMenu() async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text('Do you want to go back to menu?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -204,10 +224,9 @@ class _CustomAppbarState extends State<CustomAppbar> {
                     const Divider(height: 1, thickness: 2, color: Colors.white),
                     Expanded(
                         child: MenuButton(
-                      onPressed: () {
+                      onPressed: () async {
                         _toggleMenu();
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        await _onBackToMenu();
                       },
                       iconData: Icons.settings,
                       text: 'Back to menu',

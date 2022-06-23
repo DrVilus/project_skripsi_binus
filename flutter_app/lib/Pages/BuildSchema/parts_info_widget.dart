@@ -203,9 +203,14 @@ class _PartsInfoWidgetState extends State<PartsInfoWidget> {
                     }
 
                     if (result.isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.82,
+                        height: (MediaQuery.of(context).size.height * 0.9)
+                            .toDouble(),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
                         ),
                       );
                     }
