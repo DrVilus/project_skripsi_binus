@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:project_skripsi/Pages/get_started.dart';
 import 'package:project_skripsi/UI/palette.dart';
@@ -7,8 +8,12 @@ import 'Variables/graphql_client.dart';
 
 void main() async {
   await initHiveForFlutter();
-
-  runApp(MyApp(client: valueNotifierClient));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  runApp(MyApp(client: valueNotifierClient,));
 }
 
 class MyApp extends StatelessWidget {
