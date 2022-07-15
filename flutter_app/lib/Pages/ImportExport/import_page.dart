@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_skripsi/Functions/generic_ui_functions.dart';
 import 'package:project_skripsi/Pages/ImportExport/import_page_loading.dart';
 import 'package:project_skripsi/UI/custom_app_bar_back.dart';
+import 'package:project_skripsi/UI/palette.dart';
 import 'package:project_skripsi/UI/titled_container.dart';
 
 class ImportPage extends StatefulWidget {
@@ -37,6 +38,13 @@ class _ImportPageState extends State<ImportPage> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(0),
+                        child: Text(
+                          "Please input Build Code below",
+                          style: TextStyles.sourceSans3,
+                        )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0),
                         child: TextField(
                           controller: userInput,
                           decoration: const InputDecoration(
@@ -53,7 +61,8 @@ class _ImportPageState extends State<ImportPage> {
                             onPressed: () {
                               var splitString = userInput.text.split("/");
                               if (splitString.length != 9 && userInput.text.length != 65) {
-                                GenericUIFunctions.snackBar("Incorrect Code Format");
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(GenericUIFunctions.snackBar("Incorrect Code Format"));
                                 return;
                               }
                               Navigator.pushReplacement(

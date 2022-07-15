@@ -228,8 +228,8 @@ class _CustomAppbarState extends State<CustomAppbar> {
                         _toggleMenu();
                         await _onBackToMenu();
                       },
-                      iconData: Icons.settings,
-                      text: 'Back to menu',
+                      iconData: Icons.home,
+                      text: 'Back to Start Menu',
                     )),
                     // Expanded(
                     //     child: MenuButton(

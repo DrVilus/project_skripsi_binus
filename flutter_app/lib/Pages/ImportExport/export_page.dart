@@ -4,6 +4,7 @@ import 'package:project_skripsi/Functions/generic_ui_functions.dart';
 import 'package:project_skripsi/UI/titled_container.dart';
 
 import '../../UI/custom_app_bar_back.dart';
+import '../../UI/palette.dart';
 import '../BuildSchema/build_schema_state_model.dart';
 
 class ExportPage extends StatefulWidget {
@@ -104,6 +105,13 @@ class _ExportPageState extends State<ExportPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
+                      Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Text(
+                            "Use the Build Code below to export your schema",
+                            style: TextStyles.sourceSans3,
+                          )
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(0),
                         child: TextField(
