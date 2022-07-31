@@ -11,6 +11,7 @@ class Queries {
       cooling_prices(order_by: {price: asc}, limit: 1) {
         price
         shop
+        shop_link
       }
     }
   }
@@ -49,6 +50,8 @@ class Queries {
       Cores
       cpu_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
     }
   }
@@ -90,6 +93,8 @@ class Queries {
       release_date
       gpu_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
     }
   }
@@ -129,6 +134,8 @@ class Queries {
       release_year
       motherboard_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
       pcie_slots_json
       sata3_slot_count
@@ -170,6 +177,8 @@ class Queries {
       efficiency
       power_supply_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
     }
   }
@@ -201,6 +210,8 @@ class Queries {
       ram_frequency_mhz
       ram_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
     }
   }
@@ -236,6 +247,8 @@ class Queries {
       storage_type
       storage_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
     }
   }
@@ -266,6 +279,8 @@ class Queries {
     case {
       case_prices(limit: 1, order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
       form_factor_json
       height
@@ -282,6 +297,8 @@ class Queries {
     case(where: {id: {_eq: \$id}}) {
       case_prices(order_by: {price: asc}) {
         price
+        shop
+        shop_link
       }
       form_factor_json
       height
